@@ -2,10 +2,10 @@ package jp.ac.morijyobi.equipmentmanagementsystem.bean.entity;
 
 public class Student {
     public int id;
-    public int account_id;
-    public int course_id;
-    public int admission_year;
-    public int graduation_year;
+    public final int account_id;
+    public final int course_id;
+    public final int admission_year;
+    public final int graduation_year;
 
     public Student(int account_id, int course_id, int admission_year, int graduation_year) {
         this.account_id = account_id;
