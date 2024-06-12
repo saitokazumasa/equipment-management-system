@@ -35,7 +35,7 @@ public class Student {
         return graduation_year;
     }
 
-    public void setId(int id) {
+    public void setId(final int id) {
         this.id = id;
     }
 }
