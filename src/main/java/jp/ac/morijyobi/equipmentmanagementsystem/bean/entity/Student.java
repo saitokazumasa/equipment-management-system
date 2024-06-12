@@ -7,7 +7,7 @@ public class Student {
     public final int admission_year;
     public final int graduation_year;
 
-    public Student(int id, final int account_id, final int course_id, final int admission_year, final int graduation_year) {
+    public Student(final int id, final int account_id, final int course_id, final int admission_year, final int graduation_year) {
         this.id = id;
         this.account_id = account_id;
         this.course_id = course_id;
