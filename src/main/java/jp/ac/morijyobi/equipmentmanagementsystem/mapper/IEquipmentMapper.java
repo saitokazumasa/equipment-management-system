@@ -11,5 +11,5 @@ public interface IEquipmentMapper {
     @Insert("INSERT INTO equipment (name, category_id, storage_location_id, state, lending_period, notification_date, remark) " +
             "VALUES (#{name}, #{categoryId}, #{storageLocationId}, #{state}, #{lendingPeriod}, #{notificationDate}, #{remark})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    public void insert(Equipment equipment);
+    public void insert(final Equipment equipment);
 }
