@@ -2,6 +2,8 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/site_common.css">
+    <link rel="stylesheet" href="../css/login_top.css">
     <title>ログイン</title>
 </head>
 <body>
@@ -14,14 +16,23 @@
             <img src="../../static/images/camera.png" alt="顔認証のボタン">
             <a href="#">顔認証でログイン</a>
         </div>
-        <form method="post">
-            <label>
-                <input type="text" name="email" placeholder="メールアドレス　*">
-            </label>
-            <label>
-                パスワード<input type="password" name="password">
-            </label>
-            <button type="submit">ログイン</button>
+        <form method="post" class="flex-content">
+            <div class="contents">
+                <label>
+                    <input type="text" name="email" placeholder="メールアドレス　*">
+                </label>
+            </div>
+            <br>
+            <div class="contents">
+                <label>
+                    パスワード<br>
+                    <input type="password" name="password">
+                </label>
+            </div>
+            <br>
+            <div>
+                <button type="submit">ログイン</button>
+            </div>
         </form>
         <a href="#">パスワードを忘れた方はこちら</a>
     </main>

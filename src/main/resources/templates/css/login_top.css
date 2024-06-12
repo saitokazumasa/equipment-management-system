@@ -1,0 +1,28 @@
+@charset "UTF-8";
+header {
+    margin: 30px;
+}
+
+main {
+    text-align: center;
+}
+
+h1 {
+    border-width: 1rem;
+    border-bottom: 3px solid #0078C8;
+    width: 40%;
+    margin: 0 auto;
+}
+
+form {
+    margin: 2rem;
+    text-align: center;
+}
+
+input {
+    outline: solid 2px #0078C8;
+    width: 50%;
+    height: 30px;
+    margin: 2rem;
+}
+
