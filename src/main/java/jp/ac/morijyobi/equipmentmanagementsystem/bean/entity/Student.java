@@ -35,19 +35,7 @@ public class Student {
         return graduation_year;
     }
 
-    public void setAccountId(int account_id) {
-        this.account_id = account_id;
-    }
-
-    public void setCourseId(int course_id) {
-        this.course_id = course_id;
-    }
-
-    public void setAdmissionYear(int admission_year) {
-        this.admission_year = admission_year;
-    }
-
-    public void setGraduationYear(int graduation_year) {
-        this.graduation_year = graduation_year;
+    public void setId(int id) {
+        this.id = id;
     }
 }
