@@ -7,8 +7,8 @@ import org.apache.ibatis.annotations.Options;
 
 @Mapper
 public interface ICheckoutApplicationMapper {
-    @Insert("insert into checkout_applications (equipment_id, account_id) " +
-            "values (#{equipmentId}, #{accountId})")
+    @Insert("INSERT INTO checkout_applications (equipment_id, account_id) " +
+            "VALUES (#{equipmentId}, #{accountId})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     public void insert(final CheckoutApplication checkoutApplication);
 }
