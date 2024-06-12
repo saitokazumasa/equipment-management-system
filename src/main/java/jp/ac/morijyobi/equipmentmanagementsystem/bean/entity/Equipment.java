@@ -61,7 +61,7 @@ public class Equipment {
         return createdAt;
     }
 
-    public void setId(int id) {
+    public void setId(final int id) {
         this.id = id;
     }
 }
