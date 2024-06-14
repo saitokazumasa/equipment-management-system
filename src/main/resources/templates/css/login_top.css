@@ -1,6 +1,6 @@
 @charset "UTF-8";
 header {
-    margin: 30px;
+    margin: 20px;
 }
 
 main {
@@ -42,13 +42,23 @@ form {
     text-align: center;
 }
 
-input {
+.form {
     outline: solid 2px #0078C8;
     width: 50%;
-    height: 30px;
+    height: 40px;
     margin: 1rem;
     text-align: center;
     font-size: medium;
+}
+
+.button {
+    text-align: center;
+    font-size: xx-large;
+    background-color: #A8DCFF;
+    color: #0078C8;
+    border: none;
+    border-radius: 100vh;
+    width: 20%;
 }
 
 .password {
