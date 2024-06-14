@@ -12,29 +12,37 @@
     </header>
     <main>
         <h1>ログイン</h1>
-        <div>
-            <img src="../../static/images/camera.png" alt="顔認証のボタン">
-            <a href="#">顔認証でログイン</a>
+        <div class="page">
+            <div class="face">
+                <div id="circle">
+                    <div id="img">
+                        <img src="../../static/images/camera.png" alt="顔認証のボタン">
+                    </div>
+                </div>
+                <a href="#">顔認証でログイン</a>
+            </div>
+            <form method="post" class="flex-content">
+                <div class="contents">
+                    <label>
+                        <input type="text" name="email" placeholder="メールアドレス　*">
+                    </label>
+                </div>
+                <br>
+                <div class="contents">
+                    <label>
+                        パスワード<br>
+                        <input type="password" name="password">
+                    </label>
+                </div>
+                <br>
+                <div>
+                    <button type="submit">ログイン</button>
+                </div>
+            </form>
+            <div class="password">
+                <a href="#">パスワードを忘れた方はこちら</a>
+            </div>
         </div>
-        <form method="post" class="flex-content">
-            <div class="contents">
-                <label>
-                    <input type="text" name="email" placeholder="メールアドレス　*">
-                </label>
-            </div>
-            <br>
-            <div class="contents">
-                <label>
-                    パスワード<br>
-                    <input type="password" name="password">
-                </label>
-            </div>
-            <br>
-            <div>
-                <button type="submit">ログイン</button>
-            </div>
-        </form>
-        <a href="#">パスワードを忘れた方はこちら</a>
     </main>
 </body>
 </html>
