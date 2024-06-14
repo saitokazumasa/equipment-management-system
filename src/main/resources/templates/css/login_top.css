@@ -49,6 +49,8 @@ form {
     margin: 1rem;
     text-align: center;
     font-size: medium;
+    border: none;
+    border-radius: 1vh;
 }
 
 .button {
