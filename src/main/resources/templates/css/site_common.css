@@ -4,3 +4,9 @@ body {
     font-family: monospace;
     font-size: x-large;
 }
+
+.error-message {
+    color: #C82400;
+    /*display: none;*/
+    margin: 0.5rem;
+}

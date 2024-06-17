@@ -16,7 +16,7 @@
             <div class="face">
                 <div id="circle">
                     <div id="img">
-                        <img src="../../static/images/camera.png" alt="顔認証のボタン">
+                        <img src="/images/camera.png" alt="顔認証のボタン">
                     </div>
                 </div>
                 <a href="#">顔認証でログイン</a>
@@ -25,6 +25,7 @@
                 <div class="contents">
                     <label for="email"></label>
                     <input type="text" name="email" class="form" placeholder="メールアドレス　*" id="email" required>
+                    <p class="error-message">有効なメールアドレスを入力してください。</p>
                 </div>
                 <br>
                 <div class="contents">
@@ -32,6 +33,7 @@
                         パスワード<br>
                     </label>
                     <input type="password" name="password" class="form" id="password" required>
+                    <p class="error-message">メールアドレスかパスワードが間違っています。</p>
                 </div>
                 <br>
                     <input type="submit" value="ログイン" class="button">
