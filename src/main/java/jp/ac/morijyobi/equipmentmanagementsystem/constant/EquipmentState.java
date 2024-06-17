@@ -1,4 +1,4 @@
-package jp.ac.morijyobi.equipmentmanagementsystem.bean.entity;
+package jp.ac.morijyobi.equipmentmanagementsystem.constant;
 
 public enum EquipmentState {
     AVAILABLE_FOR_LOAN,
