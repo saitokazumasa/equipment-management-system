@@ -23,14 +23,15 @@
             </div>
             <form method="post" class="flex-content">
                 <div class="contents">
-                    <input type="text" name="email" class="form" placeholder="メールアドレス　*" required>
+                    <label for="email"></label>
+                    <input type="text" name="email" class="form" placeholder="メールアドレス　*" id="email" required>
                 </div>
                 <br>
                 <div class="contents">
-                    <label>
+                    <label for="password" class="password">
                         パスワード<br>
                     </label>
-                    <input type="password" name="password" class="form" required>
+                    <input type="password" name="password" class="form" id="password" required>
                 </div>
                 <br>
                     <input type="submit" value="ログイン" class="button">
