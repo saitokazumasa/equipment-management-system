@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Options;
 
 @Mapper
 public interface IReturnApplicationMapper {
-    @Insert("INSERT INTO return_applications (checkout_log_id) " +
+    @Insert("INSERT INTO return_applications (checkout_application_id) " +
             "VALUES (#{checkoutApplicationId})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     public void inset(final ReturnApplication returnApplication);

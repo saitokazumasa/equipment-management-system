@@ -8,8 +8,7 @@ import org.apache.ibatis.annotations.Options;
 @Mapper
 public interface ICourseMapper {
 
-    @Insert("INSERT INTO courses (name) " +
-            "VALUES (#{name})")
+    @Insert("INSERT INTO courses (name) VALUES (#{name})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     public void insert(final Course course);
 }
