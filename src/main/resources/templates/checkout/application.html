@@ -15,3 +15,36 @@
 <button id="application">申請</button>
 </body>
 </html>
+
+<script>
+    // 備品のIDを格納する配列
+    let equipmentIds = [];
+
+    // ＋ボタンをクリックしたときの処理
+    document.getElementById('add-que').addEventListener('click', () => {
+        // Elementを取得
+        const equipmentIdElement = document.getElementById('equipmentId');
+        const equipmentInfoElement = document.getElementById('equipment-info');
+
+        // equipmentIdの値を取得
+        const equipmentIdValue = equipmentIdElement.value;
+
+        // equipmentIdsにequipmentIdの値が含まれていない場合の処理
+        if (!equipmentIds.includes(equipmentIdValue)) {
+            // equipmentIdsに追加
+            equipmentIds.push(equipmentIdValue);
+
+            // equipmentInfoElementに追加された備品の情報を表示（仮）
+            // TODO:備品情報を非同期で取得して表示する
+            // TODO:表示形式を整える
+            equipmentInfoElement.innerHTML += `<div id="${equipmentIdValue}">
+                ${equipmentIdValue}
+                <button>✕</button>
+                </div>`;
+        }
+
+        // 入力欄を空にする
+        equipmentIdElement.value = '';
+
+        console.log('申請する備品のID',equipmentIds);
+    });
