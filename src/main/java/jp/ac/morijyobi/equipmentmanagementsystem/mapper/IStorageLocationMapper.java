@@ -9,5 +9,5 @@ import org.apache.ibatis.annotations.Options;
 public interface IStorageLocationMapper {
     @Insert("INSERT INTO storage_location (name) VALUES (#{name})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    void insert(final StorageLocation storageLocation);
+    public void insert(final StorageLocation storageLocation);
 }
