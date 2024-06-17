@@ -26,15 +26,17 @@ h1 {
     position: relative;
     background: #A8DCFF;
     border-radius: 50%;
-    width: 90px;
-    height: 90px;
+    width: 51px;
+    height: 51px;
     margin: 1rem;
 }
 
-#img {
+#img img{
     position: absolute;
     top: 15%;
-    left: 15%;
+    left: 18%;
+    width: 34px;
+    height: auto;
 }
 
 form {
@@ -46,7 +48,7 @@ form {
     outline: solid 2px #0078C8;
     width: 50%;
     height: 40px;
-    margin: 1rem;
+    margin: 1.5rem;
     text-align: center;
     font-size: medium;
     border: none;
