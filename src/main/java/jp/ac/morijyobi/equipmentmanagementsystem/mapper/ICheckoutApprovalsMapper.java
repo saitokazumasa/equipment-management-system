@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 
 @Mapper
-public interface ICheckoutApprovalMapper {
+public interface ICheckoutApprovalsMapper {
     @Insert("INSERT INTO checkout_approvals (checkout_application_id, account_id) " +
             "VALUES (#{checkoutApplicationId}, #{accountId})")
     @Options(useGeneratedKeys = true, keyProperty = "id")

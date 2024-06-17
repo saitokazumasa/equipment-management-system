@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 
 @Mapper
-public interface IAccountMapper {
+public interface IAccountsMapper {
 
     @Insert("INSERT INTO accounts (name, mail, password, salt, category, state) " +
             "VALUES (#{name}, #{mail}, #{password}, #{salt}, #{category}, #{state})")
