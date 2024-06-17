@@ -21,25 +21,25 @@ public class JsonTypeHandler<T> extends BaseTypeHandler<T> {
 
     @Override
     public void setNonNullParameter(final PreparedStatement ps, final int i, final T parameter, final JdbcType jdbcType) throws SQLException {
-        var json = tryToString(parameter);
+        final String json = tryToString(parameter);
         ps.setObject(i, json, Types.OTHER);
     }
 
     @Override
     public T getNullableResult(final ResultSet rs, final String columnName) throws SQLException {
-        var json = rs.getObject(columnName);
+        final Object json = rs.getObject(columnName);
         return tryToObject(json);
     }
 
     @Override
     public T getNullableResult(final ResultSet rs, final int columnIndex) throws SQLException {
-        var json = rs.getObject(columnIndex);
+        final Object json = rs.getObject(columnIndex);
         return tryToObject(json);
     }
 
     @Override
     public T getNullableResult(final CallableStatement cs, final int columnIndex) throws SQLException {
-        var json = cs.getObject(columnIndex);
+        final Object json = cs.getObject(columnIndex);
         return tryToObject(json);
     }
 

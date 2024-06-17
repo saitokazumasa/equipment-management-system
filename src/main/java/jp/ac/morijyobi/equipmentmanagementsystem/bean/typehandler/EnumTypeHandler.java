@@ -20,19 +20,19 @@ public class EnumTypeHandler<T extends Enum<T>> extends BaseTypeHandler<T> {
 
     @Override
     public T getNullableResult(ResultSet rs, String columnName) throws SQLException {
-        var enumName = rs.getString(columnName);
+        final String enumName = rs.getString(columnName);
         return toEnum(enumName);
     }
 
     @Override
     public T getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
-        var enumName = rs.getString(columnIndex);
+        final String enumName = rs.getString(columnIndex);
         return toEnum(enumName);
     }
 
     @Override
     public T getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
-        var enumName = cs.getString(columnIndex);
+        final String enumName = cs.getString(columnIndex);
         return toEnum(enumName);
     }
 
