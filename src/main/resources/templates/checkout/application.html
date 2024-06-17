@@ -58,3 +58,22 @@
             console.log('申請する備品がありません');
         }
     });
+
+    // ✕ボタンをクリックしたときの処理
+    document.getElementById('equipment-info').addEventListener('click', (e) => {
+        // クリックされた要素がbutton要素である場合のみ処理を実行
+        if (e.target.tagName === 'BUTTON') {
+            // クリックされた要素の親要素のidを取得
+            const equipmentId = e.target.parentElement.id;
+
+            // equipmentIdsから対象のequipmentIdを削除
+            equipmentIds = equipmentIds.filter(id => id !== equipmentId);
+
+            // 要素を削除
+            e.target.parentElement.remove();
+
+            console.log('削除後のやつ',equipmentIds);
+        }
+    });
+
+</script>
