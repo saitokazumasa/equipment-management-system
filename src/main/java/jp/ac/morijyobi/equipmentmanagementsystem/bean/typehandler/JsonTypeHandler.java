@@ -1,4 +1,4 @@
-package jp.ac.morijyobi.equipmentmanagementsystem.bean;
+package jp.ac.morijyobi.equipmentmanagementsystem.bean.type_handler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
