@@ -5,12 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
-import org.apache.ibatis.type.MappedTypes;
 
 import java.sql.*;
-import java.util.List;
 
-@MappedTypes({List.class})
 public class JsonTypeHandler<T> extends BaseTypeHandler<T> {
 
     private final ObjectMapper objectMapper;
