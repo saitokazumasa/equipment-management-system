@@ -2,9 +2,11 @@ package jp.ac.morijyobi.equipmentmanagementsystem.mapper;
 
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.CheckoutApproval;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 
-public interface ICheckoutApprovalMapper {
+@Mapper
+public interface ICheckoutApprovalsMapper {
     @Insert("INSERT INTO checkout_approvals (checkout_application_id, account_id) " +
             "VALUES (#{checkoutApplicationId}, #{accountId})")
     @Options(useGeneratedKeys = true, keyProperty = "id")

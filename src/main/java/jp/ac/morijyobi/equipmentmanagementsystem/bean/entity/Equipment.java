@@ -1,5 +1,6 @@
 package jp.ac.morijyobi.equipmentmanagementsystem.bean.entity;
 
+import jp.ac.morijyobi.equipmentmanagementsystem.constant.EquipmentState;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
