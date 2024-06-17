@@ -16,9 +16,7 @@ h1 {
 }
 
 .face {
-    margin-top: 1rem;
-    margin-left: 25%;
-    margin-right: 25%;
+    margin: 1.5rem 25% 1.5rem 25%;
     width: 50%;
     min-width: 250px;
     display: flex;
@@ -48,19 +46,26 @@ h1 {
     height: auto;
 }
 
-.contents .password {
-    text-align: left;
-}
-
 form {
     text-align: center;
+}
+
+form .contents .password {
+    margin-left: 25%;
+    margin-right: 25%;
+    width: 50%;
+    min-width: 250px;
+    /*margin-bottom: 20px;*/
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .form {
     outline: solid 2px #0078C8;
     width: 50%;
     height: 40px;
-    margin: 1.5rem;
+    margin-bottom: 1.5rem;
     text-align: center;
     font-size: medium;
     border: none;
