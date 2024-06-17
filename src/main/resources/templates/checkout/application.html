@@ -48,3 +48,13 @@
 
         console.log('申請する備品のID',equipmentIds);
     });
+
+    // 申請ボタンをクリックしたときの処理
+    document.getElementById('application').addEventListener('click', () => {
+        if (equipmentIds.length > 0) {
+            // TODO:非同期で申請を送信する
+            console.log('申請します',equipmentIds);
+        } else {
+            console.log('申請する備品がありません');
+        }
+    });
