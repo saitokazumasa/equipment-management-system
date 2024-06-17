@@ -14,6 +14,8 @@ public class WebSecurityConfiguration {
     public SecurityFilterChain securityFilterChain(final HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .authorizeHttpRequests(requests -> requests
+                        // TODO: 以下は削除する
+                        .requestMatchers("/**").permitAll()
                         .anyRequest().authenticated()
                 ).build();
     }
