@@ -9,9 +9,12 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CheckoutApproval {
+public class EditLog {
     private int id;
-    private int checkoutApplicationId;
+    private int equipmentId;
     private int accountId;
+    private String reason;
+    private Equipment beforeEquipmentData;
+    private Equipment afterEquipmentData;
     private LocalDateTime createdAt;
 }
