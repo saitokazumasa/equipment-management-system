@@ -2,59 +2,55 @@ package jp.ac.morijyobi.equipmentmanagementsystem.bean;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.EditLog;
-import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Sample;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedTypes;
 
-import java.sql.CallableStatement;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 @MappedTypes({List.class})
 public class JsonTypeHandler<T> extends BaseTypeHandler<T> {
 
     private final ObjectMapper objectMapper;
-    private final TypeReference<T> typeReference;
+    private final Class<T> javaType;
 
-    public JsonTypeHandler(final TypeReference<T> typeReference) {
+    public JsonTypeHandler(final Class<T> javaType) {
         this.objectMapper = new ObjectMapper()
                 .registerModule(new JavaTimeModule());
-        this.typeReference = typeReference;
+        this.javaType = javaType;
     }
 
     @Override
-    public void setNonNullParameter(final PreparedStatement ps, final int index, final T parameter, final JdbcType jdbcType) throws SQLException {
+    public void setNonNullParameter(final PreparedStatement ps, final int i, final T parameter, final JdbcType jdbcType) throws SQLException {
         var json = tryToString(parameter);
-        ps.setString(index, json);
+        ps.setObject(i, json, Types.OTHER);
     }
 
     @Override
     public T getNullableResult(final ResultSet rs, final String columnName) throws SQLException {
-        var json = rs.getString(columnName);
-        return tryToClass(json);
+        var json = rs.getObject(columnName);
+        return tryToObject(json);
     }
 
     @Override
     public T getNullableResult(final ResultSet rs, final int columnIndex) throws SQLException {
-        var json = rs.getString(columnIndex);
-        return tryToClass(json);
+        var json = rs.getObject(columnIndex);
+        return tryToObject(json);
     }
 
     @Override
     public T getNullableResult(final CallableStatement cs, final int columnIndex) throws SQLException {
-        var json = cs.getString(columnIndex);
-        return tryToClass(json);
+        var json = cs.getObject(columnIndex);
+        return tryToObject(json);
     }
 
-    private T tryToClass(final String json) {
+    private T tryToObject(final Object json) {
+        if (json == null) return null;
+
         try {
-            return objectMapper.readValue(json, typeReference);
+            return objectMapper.readValue(json.toString(), javaType);
         } catch (final JsonProcessingException e) {
             throw new RuntimeException(e);
         }
