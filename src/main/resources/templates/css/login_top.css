@@ -17,10 +17,14 @@ h1 {
 
 .face {
     display: flex;
-    text-align: justify;
+    text-align: center;
     align-items: center;
     justify-content: center;
-    margin-left: 1rem;
+    width: 65%;
+}
+
+.face #circle {
+    display: table;
 }
 
 #circle {
@@ -40,8 +44,12 @@ h1 {
     height: auto;
 }
 
+.contents label {
+    text-align: left;
+    width: 65%;
+}
+
 form {
-    /*margin: 1rem;*/
     text-align: center;
 }
 

@@ -16,23 +16,21 @@
             <div class="face">
                 <div id="circle">
                     <div id="img">
-                        <img src="images/camera.png" alt="顔認証のボタン">
+                        <img src="../../static/images/camera.png" alt="顔認証のボタン">
                     </div>
                 </div>
                 <a href="#">顔認証でログイン</a>
             </div>
             <form method="post" class="flex-content">
                 <div class="contents">
-                    <label>
-                        <input type="text" name="email" class="form" placeholder="メールアドレス　*">
-                    </label>
+                    <input type="text" name="email" class="form" placeholder="メールアドレス　*" required>
                 </div>
                 <br>
                 <div class="contents">
                     <label>
                         パスワード<br>
-                        <input type="password" name="password" class="form">
                     </label>
+                    <input type="password" name="password" class="form" required>
                 </div>
                 <br>
                     <input type="submit" value="ログイン" class="button">
