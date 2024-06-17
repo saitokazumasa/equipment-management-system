@@ -5,12 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
-import org.apache.ibatis.type.MappedTypes;
 
 import java.sql.*;
-import java.util.List;
 
-@MappedTypes({List.class})
 public class JsonTypeHandler<T> extends BaseTypeHandler<T> {
 
     private final ObjectMapper objectMapper;
@@ -24,25 +21,25 @@ public class JsonTypeHandler<T> extends BaseTypeHandler<T> {
 
     @Override
     public void setNonNullParameter(final PreparedStatement ps, final int i, final T parameter, final JdbcType jdbcType) throws SQLException {
-        var json = tryToString(parameter);
+        final String json = tryToString(parameter);
         ps.setObject(i, json, Types.OTHER);
     }
 
     @Override
     public T getNullableResult(final ResultSet rs, final String columnName) throws SQLException {
-        var json = rs.getObject(columnName);
+        final Object json = rs.getObject(columnName);
         return tryToObject(json);
     }
 
     @Override
     public T getNullableResult(final ResultSet rs, final int columnIndex) throws SQLException {
-        var json = rs.getObject(columnIndex);
+        final Object json = rs.getObject(columnIndex);
         return tryToObject(json);
     }
 
     @Override
     public T getNullableResult(final CallableStatement cs, final int columnIndex) throws SQLException {
-        var json = cs.getObject(columnIndex);
+        final Object json = cs.getObject(columnIndex);
         return tryToObject(json);
     }
 
