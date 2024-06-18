@@ -9,7 +9,7 @@ main {
 }
 
 .face {
-    margin: 1.5rem 25% 1.5rem 25%;
+    margin: 4rem 25% 1.5rem 25%;
     width: 50%;
     min-width: 250px;
     display: flex;
