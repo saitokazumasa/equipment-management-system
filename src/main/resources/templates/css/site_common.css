@@ -10,3 +10,11 @@ body {
     /*display: none;*/
     margin: 0.5rem;
 }
+
+a, .button {
+    color: #0078C8;
+}
+
+label, ::placeholder {
+    color: #323232;
+}
