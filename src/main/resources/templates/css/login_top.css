@@ -56,11 +56,12 @@ form .contents .password {
 .form {
     width: 50%;
     height: 40px;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 .button {
     text-align: center;
+    font-family: serif;
     font-size: xx-large;
     background-color: #A8DCFF;
     border: none;
@@ -69,6 +70,6 @@ form .contents .password {
 }
 
 .password {
-    margin: 1rem;
+    margin-top: 1rem;
 }
 

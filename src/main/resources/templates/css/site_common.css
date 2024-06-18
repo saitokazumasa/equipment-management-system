@@ -9,13 +9,13 @@ h1 {
 body {
     background-color: #F2FAFF;
     font-family: serif;
-    font-size: x-large;
+    font-size: large;
 }
 
 .error-message {
     color: #C82400;
     /*display: none;*/
-    margin: 0.5rem;
+    margin: 0.2rem;
 }
 
 a, .button {
