@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ログイン</title>
+</head>
+<body>
+    <div th:if="${param.error}">
+        ユーザ名、またはパスワードが違います
+    </div>
+
+    <form th:action="@{/login}" method="post">
+        <!-- TODO: 本番コードでは以下コメントを削除する -->
+        <!-- NOTE: フォームの name は "mail" にすること！！ -->
+        <p>メール：<input type="text" name="mail" aria-label="mail"></p>
+        <p>パスワード：<input type="password" name="password" aria-label="password"></p>
+        <button type="submit">ログイン</button>
+    </form>
+</body>
+</html>

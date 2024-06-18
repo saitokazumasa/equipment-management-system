@@ -6,9 +6,9 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 
 @Mapper
-public interface IEquipmentCategoryMapper {
+public interface IEquipmentCategoriesMapper {
 
-    @Insert("INSERT INTO equipment_category (name) VALUES (#{name})")
+    @Insert("INSERT INTO equipment_categories (name) VALUES (#{name})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    void insert(final EquipmentCategory equipmentCategory);
+    public void insert(final EquipmentCategory equipmentCategory);
 }
