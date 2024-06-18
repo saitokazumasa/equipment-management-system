@@ -13,7 +13,6 @@ public class Account {
     public String name;
     public String mail;
     public String password;
-    public String salt;
     public AccountCategory category;
     public Boolean state;
 }
