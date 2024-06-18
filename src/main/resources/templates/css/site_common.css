@@ -1,4 +1,11 @@
 @charset "UTF-8";
+h1 {
+    border-width: 1rem;
+    border-bottom: 3px solid #0078C8;
+    width: 40%;
+    margin: 0 auto;
+}
+
 body {
     background-color: #F2FAFF;
     font-family: monospace;
@@ -17,4 +24,12 @@ a, .button {
 
 label, ::placeholder {
     color: #323232;
+}
+
+.form {
+    outline: solid 2px #0078C8;
+    text-align: center;
+    font-size: medium;
+    border: none;
+    border-radius: 0.3vh;
 }

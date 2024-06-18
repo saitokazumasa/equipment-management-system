@@ -8,13 +8,6 @@ main {
     margin: 0 auto;
 }
 
-h1 {
-    border-width: 1rem;
-    border-bottom: 3px solid #0078C8;
-    width: 40%;
-    margin: 0 auto;
-}
-
 .face {
     margin: 1.5rem 25% 1.5rem 25%;
     width: 50%;
@@ -55,21 +48,15 @@ form .contents .password {
     margin-right: 25%;
     width: 50%;
     min-width: 250px;
-    /*margin-bottom: 20px;*/
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
 
 .form {
-    outline: solid 2px #0078C8;
     width: 50%;
     height: 40px;
     margin-bottom: 1.5rem;
-    text-align: center;
-    font-size: medium;
-    border: none;
-    border-radius: 0.3vh;
 }
 
 .button {
