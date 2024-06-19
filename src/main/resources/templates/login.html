@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.w3.org/1999/html">
+<th:block th:replace="component :: head-component(ログイン)"/>
+<body>
+
+<main class="w-2/5 mx-auto">
+    <th:block th:replace="component :: h-component('ログイン')" />
+
+    <form>
+        <div class="flex my-2">
+            <a href="#" class="flex justify-center items-center">
+                <div class="flex justify-center items-center bg-secondary rounded-full w-9 h-9">
+                    <img src="/images/CameraIcon.png" alt="カメラアイコン" class="w-3/5 h-3/5">
+                </div>
+                <span class="ml-2 text-primary underline">顔認証でログイン</span>
+            </a>
+        </div>
+
+        <th:block th:replace="component :: input-component('mail', 'mail', 'メールアドレス *', '入力項目に誤りがあります。')" />
+        <th:block th:replace="component :: input-component('password', 'password', 'パスワード *', '入力項目に誤りがあります。')" />
+        <th:block th:replace="component :: button-component('submit', 'ログイン')" />
+
+        <div class="flex justify-center my-5">
+            <a href="#" class="text-primary underline">パスワードを忘れた方はこちら</a>
+        </div>
+    </form>
+</main>
+
+</body>
+</html>
