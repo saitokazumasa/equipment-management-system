@@ -1,20 +1,49 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>ログイン</title>
-</head>
+<th:block th:replace="layout :: head(ログイン)"/>
 <body>
-    <div th:if="${param.error}">
-        ユーザ名、またはパスワードが違います
+<th:block th:replace="layout :: header"/>
+<main class="w-2/5 min-w-96 mx-auto">
+    <div class="w-full flex justify-center my-10 ">
+        <h1 class="w-11/12 py-1.5 text-center text-4xl font-bold border-b-2 border-primary">ログイン</h1>
     </div>
 
     <form th:action="@{/login}" method="post">
-        <!-- TODO: 本番コードでは以下コメントを削除する -->
-        <!-- NOTE: フォームの name は "mail" にすること！！ -->
-        <p>メール：<input type="text" name="mail" aria-label="mail"></p>
-        <p>パスワード：<input type="password" name="password" aria-label="password"></p>
-        <button type="submit">ログイン</button>
+        <div class="flex my-2">
+            <a href="#" class="flex justify-center items-center">
+                <div class="flex justify-center items-center bg-secondary rounded-full w-9 h-9">
+                    <img src="/images/CameraIcon.png" alt="カメラアイコン" class="w-3/5 h-3/5">
+                </div>
+                <span class="ml-2 text-primary underline">顔認証でログイン</span>
+            </a>
+        </div>
+
+        <div class="my-5">
+            <label for="mail"
+                   class="w-full ml-3 text-sm text-gray">メールアドレス&nbsp;<span class="text-primary">*</span>
+            </label>
+            <input type="email" name="mail" placeholder="メールアドレス" id="mail" required
+                   class="w-full py-2 text-center border-4 border-primary outline-0 rounded-md bg-white">
+        </div>
+
+        <div class="my-5">
+            <label for="password"
+                   class="w-full ml-3 text-sm text-gray">パスワード&nbsp;<span class="text-primary">*</span>
+            </label>
+            <input type="password" name="password" placeholder="パスワード" id="password" required
+                   class="w-full py-2 text-center border-4 border-primary outline-0 rounded-md bg-white">
+        </div>
+
+        <div class="flex justify-center my-10">
+            <button type="submit"
+                    class="px-20 py-2 text-primary font-semibold rounded-full bg-secondary whitespace-nowrap">ログイン
+            </button>
+        </div>
+
+        <div class="flex justify-center my-5">
+            <a href="#" class="text-primary underline">パスワードを忘れた方はこちら</a>
+        </div>
     </form>
+</main>
 </body>
 </html>
