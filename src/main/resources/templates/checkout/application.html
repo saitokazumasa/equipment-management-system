@@ -58,10 +58,13 @@
                 equipmentIdsElement.value = equipmentIds;
 
                 // TODO:表示形式を整える
-                // equipmentInfoElement.innerHTML += `<div id="${reserved}">
-                // ${reserved}
-                // <button>✕</button>
-                // </div>`;
+                equipmentInfoElement.innerHTML += `<div id="${reserved.id}">
+                <span>${reserved.id}</span>
+                <span>${reserved.name}</span>
+                <span>${reserved.lendingPeriod}</span>
+                <span>${reserved.notificationDate}</span>
+                <button>✕</button>
+                </div>`;
             }
         } catch (err_msg) {
             alert(err_msg);
