@@ -16,9 +16,9 @@ public class MyBatisConfiguration {
     @Bean
     public ConfigurationCustomizer mybatisConfigurationCustomizer() {
         return config -> {
-            config
-                    .getTypeHandlerRegistry()
-                    .register(Equipment.class, JsonTypeHandler.class);
+//            config
+//                    .getTypeHandlerRegistry()
+//                    .register(Equipment.class, JsonTypeHandler.class);
             config
                     .getTypeHandlerRegistry()
                     .register(AccountCategory.class, EnumTypeHandler.class);
