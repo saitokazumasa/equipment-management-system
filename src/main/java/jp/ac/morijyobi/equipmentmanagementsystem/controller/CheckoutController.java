@@ -40,9 +40,8 @@ public class CheckoutController {
     // 対象の備品の情報を返す
     @GetMapping("/application/addList")
     @ResponseBody
-    public Map<String, Integer> addList(@RequestParam int equipmentId) {
-        Equipment equipment = equipmentsService.selectById(equipmentId);
-        return Map.of("id", equipmentId);
+    public Equipment addList(@RequestParam int equipmentId) {
+        return equipmentsService.selectById(equipmentId);
     }
 
     @GetMapping("/application-result")
