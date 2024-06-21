@@ -6,13 +6,17 @@
 </head>
 <body>
 <h1>貸出申請</h1>
-<input type="text" name="equipmentId" id="equipmentId">
-<button id="add-que">＋</button>
+<input type="number" name="equipmentId" id="equipmentId">
+<button type="submit" id="add-que">＋</button>
+
 <div id="equipment-info">
     <!-- ここに備品情報を表示 -->
 </div>
 
-<button id="application">申請</button>
+<form th:action="@{/checkout/application}" method="post" >
+    <input type="hidden" name="equipmentIds" id="equipmentIds" value="" >
+    <button type="submit">申請</button>
+</form>
 </body>
 </html>
 
@@ -20,43 +24,64 @@
     // 備品のIDを格納する配列
     let equipmentIds = [];
 
+    // Elementを取得
+    const equipmentIdElement = document.getElementById('equipmentId');
+    const equipmentInfoElement = document.getElementById('equipment-info');
+    const equipmentIdsElement = document.getElementById('equipmentIds');
+
+
+    //　入力されたIDの備品情報を取得する非同期処理
+    async function getEquipmentInfo(equipmentIdValue) {
+        try {
+            const url = "http://localhost:8080/checkout/application/addList?equipmentId=" + equipmentIdValue;
+            //例外が発生した場合は、catchへ移動
+            const response = await fetch(url, {
+                method: "GET",
+            });
+            console.log(response);
+            if (!response.ok) {
+                switch (response.status) {
+                    default:
+                        //不明なエラーの場合は、ステータスを含めて表示する
+                        const err_code = response.status;
+                        const err_msg = "情報を取得できませんでした。（E:" + err_code + ")";
+                        throw new Error(err_msg);
+                }
+            } else {
+                const reserved = await response.json();
+
+                console.log(reserved);
+
+                // equipmentIdsに追加
+                equipmentIds.push(equipmentIdValue);
+                // equipmentIdsをhiddenに設定
+                equipmentIdsElement.value = equipmentIds;
+
+                // TODO:表示形式を整える
+                // equipmentInfoElement.innerHTML += `<div id="${reserved}">
+                // ${reserved}
+                // <button>✕</button>
+                // </div>`;
+            }
+        } catch (err_msg) {
+            alert(err_msg);
+        }
+    }
+
+
     // ＋ボタンをクリックしたときの処理
     document.getElementById('add-que').addEventListener('click', () => {
-        // Elementを取得
-        const equipmentIdElement = document.getElementById('equipmentId');
-        const equipmentInfoElement = document.getElementById('equipment-info');
-
-        // equipmentIdの値を取得
         const equipmentIdValue = equipmentIdElement.value;
 
         // equipmentIdsにequipmentIdの値が含まれていない場合の処理
         if (!equipmentIds.includes(equipmentIdValue)) {
-            // equipmentIdsに追加
-            equipmentIds.push(equipmentIdValue);
-
-            // equipmentInfoElementに追加された備品の情報を表示（仮）
-            // TODO:備品情報を非同期で取得して表示する
-            // TODO:表示形式を整える
-            equipmentInfoElement.innerHTML += `<div id="${equipmentIdValue}">
-                ${equipmentIdValue}
-                <button>✕</button>
-                </div>`;
+            // 対象の備品情報を取得
+            getEquipmentInfo(equipmentIdValue);
+            console.log('申請する備品のID',equipmentIds);
         }
 
         // 入力欄を空にする
         equipmentIdElement.value = '';
-
-        console.log('申請する備品のID',equipmentIds);
-    });
-
-    // 申請ボタンをクリックしたときの処理
-    document.getElementById('application').addEventListener('click', () => {
-        if (equipmentIds.length > 0) {
-            // TODO:非同期で申請を送信する
-            console.log('申請します',equipmentIds);
-        } else {
-            console.log('申請する備品がありません');
-        }
     });
 
     // ✕ボタンをクリックしたときの処理
@@ -68,6 +93,9 @@
 
             // equipmentIdsから対象のequipmentIdを削除
             equipmentIds = equipmentIds.filter(id => id !== equipmentId);
+
+            // 削除後のequipmentIdsをhiddenに設定
+            equipmentIdsElement.value = equipmentIds;
 
             // 要素を削除
             e.target.parentElement.remove();
