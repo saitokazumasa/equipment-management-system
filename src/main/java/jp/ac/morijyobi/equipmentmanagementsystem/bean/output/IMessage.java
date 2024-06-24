@@ -7,8 +7,8 @@ public interface IMessage {
     }
 
     /**
-     * メッセージのカテゴリを文字列として返す
-     * @return "SUCCESS" / "ERROR"
+     * MessageCategory を文字列として返す
+     * @return MessageCategory.toString()
      */
     public String category();
     public String content();
