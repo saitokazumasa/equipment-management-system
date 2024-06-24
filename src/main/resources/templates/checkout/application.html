@@ -42,7 +42,7 @@
         } else {
             messageElement.innerText = "すでに追加されています。";
         }
-        equipmentIdElement.value = '';
+        equipmentIdElement.value = "";
     });
 
     // ✕ボタンをクリックしたときの処理
@@ -59,6 +59,8 @@
 
             // 要素を削除
             e.target.parentElement.remove();
+
+            messageElement.innerText = "";
         }
 
         if(equipmentIds.length === 0) {
