@@ -32,7 +32,6 @@ public class CheckoutController {
     public String application(@RequestParam String[] equipmentIds, RedirectAttributes redirectAttributes) {
         // 備品が選択されていない場合は申請画面に戻る
         if (equipmentIds.length == 0) {
-            redirectAttributes.addFlashAttribute("message", "備品が選択されていません");
             return "redirect:/checkout/application";
         }
 
