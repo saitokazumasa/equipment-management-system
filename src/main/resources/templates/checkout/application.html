@@ -38,19 +38,13 @@
             const response = await fetch(url, {
                 method: "GET",
             });
-            console.log(response);
             if (!response.ok) {
                 switch (response.status) {
                     default:
-                        //不明なエラーの場合は、ステータスを含めて表示する
-                        const err_code = response.status;
-                        const err_msg = "情報を取得できませんでした。（E:" + err_code + ")";
-                        throw new Error(err_msg);
+                        new Error("備品情報を取得できませんでした。");
                 }
             } else {
                 const reserved = await response.json();
-
-                console.log(reserved);
 
                 // equipmentIdsに追加
                 equipmentIds.push(equipmentIdValue);
@@ -58,16 +52,17 @@
                 equipmentIdsElement.value = equipmentIds;
 
                 // TODO:表示形式を整える
-                equipmentInfoElement.innerHTML += `<div id="${reserved.id}">
-                <span>${reserved.id}</span>
-                <span>${reserved.name}</span>
-                <span>${reserved.lendingPeriod}</span>
-                <span>${reserved.notificationDate}</span>
-                <button>✕</button>
-                </div>`;
+                equipmentInfoElement.innerHTML +=
+                    `<div id="${reserved.id}">
+                        ID:${reserved.id}<br />
+                        備品名:${reserved.name}<br />
+                        貸出期間:${reserved.lendingPeriod}日<br />
+                        通知日:${reserved.notificationDate}日前
+                        <button>✕</button>
+                    </div>`;
             }
         } catch (err_msg) {
-            alert(err_msg);
+            alert("備品情報を取得できませんでした。");
         }
     }
 
@@ -80,7 +75,6 @@
         if (!equipmentIds.includes(equipmentIdValue)) {
             // 対象の備品情報を取得
             getEquipmentInfo(equipmentIdValue);
-            console.log('申請する備品のID',equipmentIds);
         }
 
         // 入力欄を空にする
@@ -89,7 +83,6 @@
 
     // ✕ボタンをクリックしたときの処理
     document.getElementById('equipment-info').addEventListener('click', (e) => {
-        // クリックされた要素がbutton要素である場合のみ処理を実行
         if (e.target.tagName === 'BUTTON') {
             // クリックされた要素の親要素のidを取得
             const equipmentId = e.target.parentElement.id;
@@ -102,8 +95,6 @@
 
             // 要素を削除
             e.target.parentElement.remove();
-
-            console.log('削除後のやつ',equipmentIds);
         }
     });
 
