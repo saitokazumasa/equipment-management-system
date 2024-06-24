@@ -14,7 +14,7 @@ public class EditLog {
     private int equipmentId;
     private int accountId;
     private String reason;
-    private Equipment beforeEquipmentData;
-    private Equipment afterEquipmentData;
+    private JsonEquipment beforeEquipmentData;
+    private JsonEquipment afterEquipmentData;
     private LocalDateTime createdAt;
 }
