@@ -6,5 +6,8 @@
 </head>
 <body>
 貸出申請結果画面
+<div th:if="${result}" th:text="${result}">result</div>
+<div th:if="${message}" th:text="${message}">message</div>
+<a th:href="@{/checkout/application}">確認</a>
 </body>
 </html>
