@@ -32,7 +32,6 @@ public class CheckoutController {
             int id = Integer.parseInt(equipmentId);
             CheckoutApplication checkoutApplication = new CheckoutApplication(-1, id, 1, LocalDateTime.now());
             checkoutApplicationsService.insert(checkoutApplication);
-            System.out.println("申請した備品：" + id);
         }
         return "redirect:/checkout/application-result";
     }
