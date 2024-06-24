@@ -32,6 +32,7 @@ public class CheckoutController {
     public String application(@RequestParam String[] equipmentIds, RedirectAttributes redirectAttributes) {
         // 備品が選択されていない場合は申請画面に戻る
         if (equipmentIds.length == 0) {
+            redirectAttributes.addFlashAttribute("message", "備品が選択されていません。");
             return "redirect:/checkout/application";
         }
 
@@ -45,7 +46,7 @@ public class CheckoutController {
             redirectAttributes.addFlashAttribute("message", "備品を持ち、管理者に承認をお願いしてください。");
             return "redirect:/checkout/application-result";
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("result", "送信時にエラーが発生しました");
+            redirectAttributes.addFlashAttribute("result", "送信時にエラーが発生しました。");
             redirectAttributes.addFlashAttribute("message", "時間をおいて再度 送信してください。\n" +
                     "何度もエラーが出る場合はサポートにお問い合わせください。");
             return "redirect:/checkout/application-result";
