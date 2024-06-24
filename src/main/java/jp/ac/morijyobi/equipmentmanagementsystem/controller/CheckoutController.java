@@ -39,6 +39,8 @@ public class CheckoutController {
         try {
             for (String equipmentId : equipmentIds) {
                 int id = Integer.parseInt(equipmentId);
+
+                // TODO: ログイン中のアカウントIDを取得する
                 CheckoutApplication checkoutApplication = new CheckoutApplication(-1, id, 1, LocalDateTime.now());
                 checkoutApplicationsService.insert(checkoutApplication);
             }
