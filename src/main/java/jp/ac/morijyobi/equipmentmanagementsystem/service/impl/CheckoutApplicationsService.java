@@ -7,10 +7,10 @@ import jp.ac.morijyobi.equipmentmanagementsystem.service.ICheckoutApplicationsSe
 import org.springframework.stereotype.Service;
 
 @Service
-public class CheckoutApplications implements ICheckoutApplicationsService {
+public class CheckoutApplicationsService implements ICheckoutApplicationsService {
     private final ICheckoutApplicationsMapper checkoutApplicationsMapper;
 
-    public CheckoutApplications(final ICheckoutApplicationsMapper checkoutApplicationsMapper) {
+    public CheckoutApplicationsService(final ICheckoutApplicationsMapper checkoutApplicationsMapper) {
         this.checkoutApplicationsMapper = checkoutApplicationsMapper;
     }
 
