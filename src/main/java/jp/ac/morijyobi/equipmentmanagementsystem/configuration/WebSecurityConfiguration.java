@@ -18,6 +18,8 @@ public class WebSecurityConfiguration {
                 .authorizeHttpRequests(a -> a
                         .requestMatchers("/images/**").permitAll()
                         .requestMatchers("/css/**").permitAll()
+                        .requestMatchers("/js/**").permitAll()
+                        .requestMatchers("/checkout/**").permitAll()
                         .anyRequest().denyAll()
                 ).formLogin(a -> a
                         .loginPage("/login")
