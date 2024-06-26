@@ -14,11 +14,11 @@ import java.time.LocalDateTime;
 @Controller
 @RequestMapping("/checkout")
 public class CheckoutController {
-    private final IEquipmentsService IEquipmentsService;
+    private final IEquipmentsService equipmentsService;
     private final ICheckoutApplicationsService ICheckoutApplicationsService;
 
-    public CheckoutController(final IEquipmentsService IEquipmentsService, final ICheckoutApplicationsService ICheckoutApplicationsService) {
-        this.IEquipmentsService = IEquipmentsService;
+    public CheckoutController(final IEquipmentsService equipmentsService, final ICheckoutApplicationsService ICheckoutApplicationsService) {
+        this.equipmentsService = equipmentsService;
         this.ICheckoutApplicationsService = ICheckoutApplicationsService;
     }
 
@@ -59,7 +59,7 @@ public class CheckoutController {
     @GetMapping("/application/addList")
     @ResponseBody
     public Equipment addList(final @RequestParam int equipmentId) {
-        return IEquipmentsService.selectById(equipmentId);
+        return equipmentsService.selectById(equipmentId);
     }
 
     @GetMapping("/application-result")
