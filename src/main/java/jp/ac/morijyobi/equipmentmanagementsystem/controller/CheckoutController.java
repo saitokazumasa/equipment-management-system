@@ -15,11 +15,11 @@ import java.time.LocalDateTime;
 @RequestMapping("/checkout")
 public class CheckoutController {
     private final IEquipmentsService equipmentsService;
-    private final ICheckoutApplicationsService ICheckoutApplicationsService;
+    private final ICheckoutApplicationsService checkoutApplicationsService;
 
-    public CheckoutController(final IEquipmentsService equipmentsService, final ICheckoutApplicationsService ICheckoutApplicationsService) {
+    public CheckoutController(final IEquipmentsService equipmentsService, final ICheckoutApplicationsService checkoutApplicationsService) {
         this.equipmentsService = equipmentsService;
-        this.ICheckoutApplicationsService = ICheckoutApplicationsService;
+        this.checkoutApplicationsService = checkoutApplicationsService;
     }
 
     @GetMapping("/application")
@@ -42,7 +42,7 @@ public class CheckoutController {
 
                 // TODO: ログイン中のアカウントIDを取得する
                 CheckoutApplication checkoutApplication = new CheckoutApplication(-1, id, 1, LocalDateTime.now());
-                ICheckoutApplicationsService.insert(checkoutApplication);
+                checkoutApplicationsService.insert(checkoutApplication);
             }
             redirectAttributes.addFlashAttribute("result", "送信しました。");
             redirectAttributes.addFlashAttribute("message", "備品を持ち、管理者に承認をお願いしてください。");
