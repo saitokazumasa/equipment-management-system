@@ -29,7 +29,7 @@ public class CheckoutController {
     }
 
     @PostMapping("/application")
-    public String application(@RequestParam final String[]equipmentIds, final RedirectAttributes redirectAttributes) {
+    public String application(final @RequestParam String[]equipmentIds, final RedirectAttributes redirectAttributes) {
         // 備品が選択されていない場合は申請画面に戻る
         if (equipmentIds.length == 0) {
             redirectAttributes.addFlashAttribute("message", "備品が選択されていません。");
@@ -58,7 +58,7 @@ public class CheckoutController {
     // 対象の備品の情報を返す
     @GetMapping("/application/addList")
     @ResponseBody
-    public Equipment addList(@RequestParam final int equipmentId) {
+    public Equipment addList(final @RequestParam int equipmentId) {
         return IEquipmentsService.selectById(equipmentId);
     }
 
