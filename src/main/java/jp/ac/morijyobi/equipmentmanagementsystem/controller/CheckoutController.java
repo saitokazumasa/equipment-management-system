@@ -17,19 +17,19 @@ public class CheckoutController {
     private final EquipmentsService equipmentsService;
     private final CheckoutApplicationsService checkoutApplicationsService;
 
-    public CheckoutController(EquipmentsService equipmentsService, CheckoutApplicationsService checkoutApplicationsService) {
+    public CheckoutController(final EquipmentsService equipmentsService, final CheckoutApplicationsService checkoutApplicationsService) {
         this.equipmentsService = equipmentsService;
         this.checkoutApplicationsService = checkoutApplicationsService;
     }
 
     @GetMapping("/application")
-    public String application(Model model) {
+    public String application(final Model model) {
         model.addAttribute("message", "備品が選択されていません。");
         return "checkout/application";
     }
 
     @PostMapping("/application")
-    public String application(@RequestParam String[] equipmentIds, RedirectAttributes redirectAttributes) {
+    public String application(@RequestParam final String[]equipmentIds, final RedirectAttributes redirectAttributes) {
         // 備品が選択されていない場合は申請画面に戻る
         if (equipmentIds.length == 0) {
             redirectAttributes.addFlashAttribute("message", "備品が選択されていません。");
@@ -58,7 +58,7 @@ public class CheckoutController {
     // 対象の備品の情報を返す
     @GetMapping("/application/addList")
     @ResponseBody
-    public Equipment addList(@RequestParam int equipmentId) {
+    public Equipment addList(@RequestParam final int equipmentId) {
         return equipmentsService.selectById(equipmentId);
     }
 
