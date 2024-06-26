@@ -3,7 +3,7 @@ package jp.ac.morijyobi.equipmentmanagementsystem.controller;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.CheckoutApplication;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Equipment;
 import jp.ac.morijyobi.equipmentmanagementsystem.service.ICheckoutApplicationsService;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.EquipmentsService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.IEquipmentsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,11 +14,11 @@ import java.time.LocalDateTime;
 @Controller
 @RequestMapping("/checkout")
 public class CheckoutController {
-    private final EquipmentsService equipmentsService;
+    private final IEquipmentsService IEquipmentsService;
     private final ICheckoutApplicationsService ICheckoutApplicationsService;
 
-    public CheckoutController(final EquipmentsService equipmentsService, final ICheckoutApplicationsService ICheckoutApplicationsService) {
-        this.equipmentsService = equipmentsService;
+    public CheckoutController(final IEquipmentsService IEquipmentsService, final ICheckoutApplicationsService ICheckoutApplicationsService) {
+        this.IEquipmentsService = IEquipmentsService;
         this.ICheckoutApplicationsService = ICheckoutApplicationsService;
     }
 
@@ -59,7 +59,7 @@ public class CheckoutController {
     @GetMapping("/application/addList")
     @ResponseBody
     public Equipment addList(@RequestParam final int equipmentId) {
-        return equipmentsService.selectById(equipmentId);
+        return IEquipmentsService.selectById(equipmentId);
     }
 
     @GetMapping("/application-result")
