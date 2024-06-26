@@ -6,10 +6,10 @@ import jp.ac.morijyobi.equipmentmanagementsystem.service.IEquipmentsService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class IEquipmentsImpl implements IEquipmentsService {
+public class Equipments implements IEquipmentsService {
     private final IEquipmentsMapper equipmentsMapper;
 
-    public IEquipmentsImpl(final IEquipmentsMapper equipmentsMapper) {
+    public Equipments(final IEquipmentsMapper equipmentsMapper) {
         this.equipmentsMapper = equipmentsMapper;
     }
 
