@@ -12,13 +12,13 @@ import java.util.List;
 public class CheckoutApplicationsImpl implements CheckoutApplicationsService{
     private final ICheckoutApplicationsMapper checkoutApplicationsMapper;
 
-    public CheckoutApplicationsImpl(ICheckoutApplicationsMapper checkoutApplicationsMapper) {
+    public CheckoutApplicationsImpl(final ICheckoutApplicationsMapper checkoutApplicationsMapper) {
         this.checkoutApplicationsMapper = checkoutApplicationsMapper;
     }
 
 
     @Override
-    public void insert(CheckoutApplication checkoutApplication) {
+    public void insert(final CheckoutApplication checkoutApplication) {
         checkoutApplicationsMapper.insert(checkoutApplication);
     }
 }

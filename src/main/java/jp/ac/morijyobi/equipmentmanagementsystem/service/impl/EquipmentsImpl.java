@@ -9,17 +9,17 @@ import org.springframework.stereotype.Service;
 public class EquipmentsImpl implements EquipmentsService {
     private final IEquipmentsMapper equipmentsMapper;
 
-    public EquipmentsImpl(IEquipmentsMapper equipmentsMapper) {
+    public EquipmentsImpl(final IEquipmentsMapper equipmentsMapper) {
         this.equipmentsMapper = equipmentsMapper;
     }
 
     @Override
-    public void insert(Equipment equipment) {
+    public void insert(final Equipment equipment) {
         equipmentsMapper.insert(equipment);
     }
 
     @Override
-    public Equipment selectById(int id) {
+    public Equipment selectById(final int id) {
         return equipmentsMapper.selectById(id);
     }
 }
