@@ -2,7 +2,7 @@ package jp.ac.morijyobi.equipmentmanagementsystem.controller;
 
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.CheckoutApplication;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Equipment;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.CheckoutApplicationsService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.ICheckoutApplicationsService;
 import jp.ac.morijyobi.equipmentmanagementsystem.service.EquipmentsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,11 +15,11 @@ import java.time.LocalDateTime;
 @RequestMapping("/checkout")
 public class CheckoutController {
     private final EquipmentsService equipmentsService;
-    private final CheckoutApplicationsService checkoutApplicationsService;
+    private final ICheckoutApplicationsService ICheckoutApplicationsService;
 
-    public CheckoutController(final EquipmentsService equipmentsService, final CheckoutApplicationsService checkoutApplicationsService) {
+    public CheckoutController(final EquipmentsService equipmentsService, final ICheckoutApplicationsService ICheckoutApplicationsService) {
         this.equipmentsService = equipmentsService;
-        this.checkoutApplicationsService = checkoutApplicationsService;
+        this.ICheckoutApplicationsService = ICheckoutApplicationsService;
     }
 
     @GetMapping("/application")
@@ -42,7 +42,7 @@ public class CheckoutController {
 
                 // TODO: ログイン中のアカウントIDを取得する
                 CheckoutApplication checkoutApplication = new CheckoutApplication(-1, id, 1, LocalDateTime.now());
-                checkoutApplicationsService.insert(checkoutApplication);
+                ICheckoutApplicationsService.insert(checkoutApplication);
             }
             redirectAttributes.addFlashAttribute("result", "送信しました。");
             redirectAttributes.addFlashAttribute("message", "備品を持ち、管理者に承認をお願いしてください。");
