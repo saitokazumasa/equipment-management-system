@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 @Mapper
 public interface IEquipmentsMapper {
 
@@ -16,4 +18,7 @@ public interface IEquipmentsMapper {
 
     @Select("SELECT * FROM equipments WHERE id = #{id}")
     public Equipment selectById(final int id);
+
+    @Select("SELECT * FROM equipments")
+    public List<Equipment> selectAll();
 }

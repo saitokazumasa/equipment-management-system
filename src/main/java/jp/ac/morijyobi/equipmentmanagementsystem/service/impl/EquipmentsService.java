@@ -5,6 +5,8 @@ import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IEquipmentsMapper;
 import jp.ac.morijyobi.equipmentmanagementsystem.service.IEquipmentsService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class EquipmentsService implements IEquipmentsService {
     private final IEquipmentsMapper equipmentsMapper;
@@ -21,5 +23,10 @@ public class EquipmentsService implements IEquipmentsService {
     @Override
     public Equipment selectById(final int id) {
         return equipmentsMapper.selectById(id);
+    }
+
+    @Override
+    public List<Equipment> selectAll() {
+        return equipmentsMapper.selectAll();
     }
 }

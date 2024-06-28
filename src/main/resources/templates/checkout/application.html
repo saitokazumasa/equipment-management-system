@@ -8,22 +8,24 @@
 <h1>貸出申請</h1>
 
 <form action="#">
-    <input type="number" id="inputId" aria-label="equipmentId">
+    <input type="number" id="idInput" aria-label="idInput">
     <button type="submit" id="addButton">＋</button>
 </form>
 
-
-
-<div id="message" th:if="${message}" th:text="${message}">message info</div>
+<div id="errorMessage">Error Message</div>
 
 <div id="equipment-info">
     <!-- 追加ボタンが押されると、ここに備品情報が追加される。 -->
 </div>
 
 <form th:action="@{/checkout/application}" method="post">
-    <input type="hidden" name="equipmentIds" id="equipmentIds" value="">
+    <input type="hidden" name="idList" id="idList" value="">
     <button type="submit">申請</button>
 </form>
+
 </body>
 </html>
-<script src="/js/checkout-application.js"></script>
+<script src="/js/checkout/checkout-application.js"></script>
+<script th:inline="javascript">
+    const equipmentList = /*[[${equipmentList}]]*/"equipmentList";
+</script>

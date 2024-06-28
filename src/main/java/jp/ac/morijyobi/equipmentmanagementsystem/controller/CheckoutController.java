@@ -23,8 +23,8 @@ public class CheckoutController {
     }
 
     @GetMapping("/application")
-    public String application(final Model model) {
-        model.addAttribute("message", "備品が選択されていません。");
+    public String application(Model model) {
+        model.addAttribute("equipmentList", equipmentsService.selectAll());
         return "checkout/application";
     }
 

@@ -1,10 +1,6 @@
-// TODO: 変数名を要検討
-const _useEquipmentIds    = new UseEquipmentIdList();
-const addButtonElement    = document.getElementById('addButton');
-const deleteButtonElement = document.getElementById('deleteButton');
-
-const emptyMessageElement = document.getElementById('emptyMessage');
-const errorMessageElement = document.getElementById('errorMessage');
+const ALREADY_VALUE_ERROR_MESSAGE = "既に追加されています";
+const NOT_EXIST_ID_ERROR_MESSAGE = "存在しないIDが指定されました";
+const LIST_EMPTY_MESSAGE = "備品を選択してください";
 
 class Callback {
     constructor(message, isFailed) {
@@ -21,7 +17,7 @@ class Callback {
     }
 }
 
-class UseEquipmentIdList {
+class UseEquipmentList {
     constructor() {
         this._array = new Array(0);
     }
@@ -30,16 +26,27 @@ class UseEquipmentIdList {
         return this._array;
     }
 
-    add(id) {
-        if (this._array.includes(id)) return new Callback("既に追加されています", true);
+    ids() {
+        return this._array.map(a => a.id);
+    }
 
-        this._array.push(id);
+    add(id) {
+        const equipment = equipmentList.find(a => a.id === parseInt(id));
+
+        if (equipment === undefined) return new Callback(NOT_EXIST_ID_ERROR_MESSAGE, true);
+        if (this._array.includes(id)) return new Callback(ALREADY_VALUE_ERROR_MESSAGE, true);
+
+        this._array.push(equipment);
         return new Callback("", false);
     }
 
     delete(id) {
-        const index = this._array.indexOf(id);
+        const index = this._array.findIndex(a => a.id === parseInt(id));
+
+        if (index === -1) return new Callback(NOT_EXIST_ID_ERROR_MESSAGE, true);
+
         this._array.splice(index, 1);
+        return new Callback("", false);
     }
 
     isEmpty() {
@@ -47,19 +54,29 @@ class UseEquipmentIdList {
     }
 }
 
+const useEquipmentList = new UseEquipmentList();
+
+const idInputElement      = document.getElementById('idInput');
+const addButtonElement    = document.getElementById('addButton');
+// const deleteButtonElement = document.getElementById('deleteButton');
+const idListElement       = document.getElementById("idList");
+
+const emptyMessageElement = document.getElementById('emptyMessage');
+const errorMessageElement = document.getElementById('errorMessage');
+
 function onAddButtonClick(event) {
     event.preventDefault();
 
-    const inputId = document
-        .getElementById('inputId')
-        .value;
-
-    const callback = _useEquipmentIds.add(inputId);
+    const callback = useEquipmentList.add(idInputElement.value);
     errorMessageElement.innerText = callback.message();
 
     if (callback.isFailed()) return;
 
-    // TODO: ページをリロード
+    idListElement.value = useEquipmentList.ids()
+
+    // TODO: 選択された備品の情報をリストから取得
+    // TODO: その情報を元に、表示用のHTMLを作成
+    // TODO: 表示
 }
 
 function onDeleteButtonClick(event) {
@@ -68,18 +85,19 @@ function onDeleteButtonClick(event) {
     // 親要素に備品IDの情報が保持されている
     const id = event.target.parentElement.id;
 
-    _useEquipmentIds.delete(id);
-    emptyMessageElement.hidden = _useEquipmentIds.isEmpty();
+    const callback = useEquipmentList.delete(id);
+    errorMessageElement.innerText = callback.message();
 
-    // TODO: ページをリロード
+    if (callback.isFailed()) return;
+
+    idListElement.value = useEquipmentList.ids()
+
+    // 備品が一つも選択されていない時は、その旨を表示
+    emptyMessageElement.innerText = useEquipmentList.isEmpty() ? LIST_EMPTY_MESSAGE : "";
 }
 
 addButtonElement.addEventListener('click', onAddButtonClick);
-deleteButtonElement.addEventListener('click', onDeleteButtonClick);
-
-// TODO: 以下、ページ読み込み時に動かす
-// TODO: URL などから _useEquipmentIds の値を取得
-// TODO: _useEquipmentIds の値をフォームに反映
+// deleteButtonElement.addEventListener('click', onDeleteButtonClick);
 
 // ----------------------------------------------------------------------------------
 
