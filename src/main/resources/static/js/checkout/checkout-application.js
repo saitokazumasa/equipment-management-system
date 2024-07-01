@@ -35,10 +35,6 @@ class UseEquipmentList {
 
         if (equipment === undefined) return new Callback(NOT_EXIST_ID_ERROR_MESSAGE, true);
 
-        console.log(this._array);
-
-        console.log(this._array.includes(1));
-
         // TODO: bug fix
         //if (this._array.includes(id)) return new Callback(ALREADY_VALUE_ERROR_MESSAGE, true);
         if (checkIdExists(this._array, parseInt(id))) return new Callback(ALREADY_VALUE_ERROR_MESSAGE, true);
@@ -106,8 +102,6 @@ function onAddButtonClick(event) {
     displayInfoElement.innerHTML += displayEquipmentData;
 
     idInputElement.value = "";
-
-    console.log(useEquipmentList.get());
 }
 
 function calculateReturnDate(n) {
@@ -136,8 +130,6 @@ function onDeleteButtonClick(event) {
         // 備品が一つも選択されていない時は、その旨を表示
         emptyMessageElement.innerText = useEquipmentList.isEmpty() ? LIST_EMPTY_MESSAGE : "";
     }
-
-    console.log(useEquipmentList.get());
 }
 
 emptyMessageElement.innerText = new Callback(LIST_EMPTY_MESSAGE, true).message();
