@@ -35,8 +35,6 @@ class UseEquipmentList {
 
         if (equipment === undefined) return new Callback(NOT_EXIST_ID_ERROR_MESSAGE, true);
 
-        // TODO: bug fix
-        //if (this._array.includes(id)) return new Callback(ALREADY_VALUE_ERROR_MESSAGE, true);
         if (checkIdExists(this._array, parseInt(id))) return new Callback(ALREADY_VALUE_ERROR_MESSAGE, true);
 
         this._array.push(equipment);
