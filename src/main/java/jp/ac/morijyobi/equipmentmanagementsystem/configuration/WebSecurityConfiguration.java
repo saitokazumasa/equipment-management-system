@@ -2,6 +2,7 @@ package jp.ac.morijyobi.equipmentmanagementsystem.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,7 +21,7 @@ public class WebSecurityConfiguration {
                         .requestMatchers("/css/**").permitAll()
                         .requestMatchers("/js/**").permitAll()
                         .requestMatchers("/checkout/**").permitAll()
-                        .anyRequest().denyAll()
+                        .anyRequest().authenticated()
                 ).formLogin(a -> a
                         .loginPage("/login")
                         .loginProcessingUrl("/login")

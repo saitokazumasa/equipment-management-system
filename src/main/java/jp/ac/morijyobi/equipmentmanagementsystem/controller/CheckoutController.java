@@ -29,15 +29,14 @@ public class CheckoutController {
     }
 
     @PostMapping("/application")
-    public String application(final @RequestParam String[]equipmentIds, final RedirectAttributes redirectAttributes) {
+    public String application(final @RequestParam String[] idList, final RedirectAttributes redirectAttributes) {
         // 備品が選択されていない場合は申請画面に戻る
-        if (equipmentIds.length == 0) {
-            redirectAttributes.addFlashAttribute("message", "備品が選択されていません。");
+        if (idList.length == 0) {
             return "redirect:/checkout/application";
         }
 
         try {
-            for (String equipmentId : equipmentIds) {
+            for (String equipmentId : idList) {
                 int id = Integer.parseInt(equipmentId);
 
                 // TODO: ログイン中のアカウントIDを取得する
