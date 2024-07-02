@@ -16,17 +16,17 @@ public class EquipmentsService implements IEquipmentsService {
     }
 
     @Override
-    public void insert(final Equipment equipment) {
+    public void register(final Equipment equipment) {
         equipmentsMapper.insert(equipment);
     }
 
     @Override
-    public Equipment selectById(final int id) {
+    public Equipment getById(final int id) {
         return equipmentsMapper.selectById(id);
     }
 
     @Override
-    public List<Equipment> selectAll() {
+    public List<Equipment> getAll() {
         return equipmentsMapper.selectAll();
     }
 }

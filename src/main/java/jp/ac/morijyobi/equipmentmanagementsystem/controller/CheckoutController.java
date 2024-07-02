@@ -24,7 +24,7 @@ public class CheckoutController {
 
     @GetMapping("/application")
     public String application(Model model) {
-        model.addAttribute("equipmentList", equipmentsService.selectAll());
+        model.addAttribute("equipmentList", equipmentsService.getAll());
         return "checkout/application";
     }
 
@@ -41,7 +41,7 @@ public class CheckoutController {
 
                 // TODO: ログイン中のアカウントIDを取得する
                 CheckoutApplication checkoutApplication = new CheckoutApplication(-1, id, 1, LocalDateTime.now());
-                checkoutApplicationsService.insert(checkoutApplication);
+                checkoutApplicationsService.checkoutExec(checkoutApplication);
             }
             redirectAttributes.addFlashAttribute("result", "送信しました。");
             redirectAttributes.addFlashAttribute("message", "備品を持ち、管理者に承認をお願いしてください。");
@@ -58,7 +58,7 @@ public class CheckoutController {
     @GetMapping("/application/addList")
     @ResponseBody
     public Equipment addList(final @RequestParam int equipmentId) {
-        return equipmentsService.selectById(equipmentId);
+        return equipmentsService.getById(equipmentId);
     }
 
     @GetMapping("/application-result")
