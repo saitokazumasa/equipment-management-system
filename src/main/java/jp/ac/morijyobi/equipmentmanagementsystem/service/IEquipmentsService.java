@@ -5,9 +5,9 @@ import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Equipment;
 import java.util.List;
 
 public interface IEquipmentsService {
-    void insert(final Equipment equipment);
+    void register(final Equipment equipment);
 
-    Equipment selectById(final int id);
+    Equipment getById(final int id);
 
-    List<Equipment> selectAll();
+    List<Equipment> getAll();
 }
