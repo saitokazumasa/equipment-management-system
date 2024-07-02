@@ -14,16 +14,15 @@
     <div class="absolute left-1/2 flex justify-center items-center pl-4 pr-6 py-3 font-semibold rounded-xl bg-white shadow-lg"
          style="transform: translate(-50%, 0);">
 
-        <!-- TODO: アイコンを置き換える -->
         <th:block th:if="${category} == 'SUCCESS'">
             <div class="flex justify-center items-center bg-success rounded-full w-9 h-9">
-                <img src="/images/CameraIcon.png" alt="チェックアイコン" class="w-3/5 h-3/5">
+                <img src="/images/check-icon.png" alt="チェックアイコン" class="w-3/5 h-3/5">
             </div>
         </th:block>
         <!-- TODO: アイコンを置き換える -->
         <th:block th:if="${category} == 'ERROR'">
             <div class="flex justify-center items-center bg-error rounded-full w-9 h-9">
-                <img src="/images/CameraIcon.png" alt="バツアイコン" class="w-3/5 h-3/5">
+                <img src="/images/check-icon.png" alt="バツアイコン" class="w-3/5 h-3/5">
             </div>
         </th:block>
         <span class="ml-2" th:text="${content}">メッセージ</span>
