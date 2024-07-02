@@ -34,8 +34,7 @@ class UseEquipmentList {
         const equipment = equipmentList.find(a => a.id === parseInt(id));
 
         if (equipment === undefined) return new Callback(NOT_EXIST_ID_ERROR_MESSAGE, true);
-
-        if (checkIdExists(this._array, parseInt(id))) return new Callback(ALREADY_VALUE_ERROR_MESSAGE, true);
+        if (isExist) return new Callback(ALREADY_VALUE_ERROR_MESSAGE, true);
 
         this._array.push(equipment);
         return new Callback("", false);
@@ -53,6 +52,7 @@ class UseEquipmentList {
     isEmpty() {
         return this._array.length <= 0;
     }
+
 }
 
 const useEquipmentList = new UseEquipmentList();
@@ -64,16 +64,6 @@ const idListElement       = document.getElementById("idList");
 
 const emptyMessageElement = document.getElementById('emptyMessage');
 const errorMessageElement = document.getElementById('errorMessage');
-
-
-function checkIdExists(array, idToCheck) {
-    for (let i = 0; i < array.length; i++) {
-        if (array[i].id === idToCheck) {
-            return true;
-        }
-    }
-    return false;
-}
 
 function onAddButtonClick(event) {
     event.preventDefault();
