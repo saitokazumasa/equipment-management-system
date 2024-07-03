@@ -4,5 +4,5 @@ import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.CheckoutApplication
 
 public interface ICheckoutApplicationsService {
 
-    public void checkoutExec(final CheckoutApplication checkoutApplication);
+    public void execute(final CheckoutApplication checkoutApplication);
 }

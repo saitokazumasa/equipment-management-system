@@ -16,7 +16,7 @@ public class CheckoutApplicationsService implements ICheckoutApplicationsService
 
 
     @Override
-    public void checkoutExec(final CheckoutApplication checkoutApplication) {
+    public void execute(final CheckoutApplication checkoutApplication) {
         checkoutApplicationsMapper.insert(checkoutApplication);
     }
 }

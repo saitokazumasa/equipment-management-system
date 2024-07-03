@@ -41,7 +41,7 @@ public class CheckoutController {
 
                 // TODO: ログイン中のアカウントIDを取得する
                 CheckoutApplication checkoutApplication = new CheckoutApplication(-1, id, 1, LocalDateTime.now());
-                checkoutApplicationsService.checkoutExec(checkoutApplication);
+                checkoutApplicationsService.execute(checkoutApplication);
             }
             redirectAttributes.addFlashAttribute("result", "送信しました。");
             redirectAttributes.addFlashAttribute("message", "備品を持ち、管理者に承認をお願いしてください。");
