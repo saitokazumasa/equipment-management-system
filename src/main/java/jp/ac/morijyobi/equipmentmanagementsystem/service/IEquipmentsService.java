@@ -7,7 +7,7 @@ import java.util.List;
 public interface IEquipmentsService {
     void register(final Equipment equipment);
 
-    Equipment getById(final int id);
+    Equipment fetchById(final int id);
 
-    List<Equipment> getAll();
+    List<Equipment> fetchAll();
 }

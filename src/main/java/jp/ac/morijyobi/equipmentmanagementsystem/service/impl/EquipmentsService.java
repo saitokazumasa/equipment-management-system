@@ -21,12 +21,12 @@ public class EquipmentsService implements IEquipmentsService {
     }
 
     @Override
-    public Equipment getById(final int id) {
+    public Equipment fetchById(final int id) {
         return equipmentsMapper.selectById(id);
     }
 
     @Override
-    public List<Equipment> getAll() {
+    public List<Equipment> fetchAll() {
         return equipmentsMapper.selectAll();
     }
 }

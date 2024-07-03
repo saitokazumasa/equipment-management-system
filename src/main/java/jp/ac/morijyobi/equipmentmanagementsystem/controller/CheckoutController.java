@@ -24,7 +24,7 @@ public class CheckoutController {
 
     @GetMapping("/application")
     public String application(final Model model) {
-        model.addAttribute("equipmentList", equipmentsService.getAll());
+        model.addAttribute("equipmentList", equipmentsService.fetchAll());
         return "checkout/application";
     }
 
