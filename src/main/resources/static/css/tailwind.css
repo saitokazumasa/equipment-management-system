@@ -809,6 +809,11 @@ video {
   color: rgb(0 120 200 / var(--tw-text-opacity));
 }
 
+.text-error {
+  --tw-text-opacity: 1;
+  color: rgb(200 36 0 / var(--tw-text-opacity));
+}
+
 .underline {
   text-decoration-line: underline;
 }
