@@ -10,6 +10,7 @@ module.exports = {
         "warning": "#C8B400",
         "error": "#C82400",
         "secondary-error": "#FFB5A5",
+        "status-able": "#04C800",
         "gray": "#323232",
         "content-text": "#050505",
         "background": "#F2FAFF",
