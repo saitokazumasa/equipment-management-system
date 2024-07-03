@@ -54,13 +54,6 @@ public class CheckoutController {
         }
     }
 
-    // 対象の備品の情報を返す
-    @GetMapping("/application/addList")
-    @ResponseBody
-    public Equipment addList(final @RequestParam int equipmentId) {
-        return equipmentsService.getById(equipmentId);
-    }
-
     @GetMapping("/application-result")
     public String applicationResult() {
         return "checkout/application-result";
