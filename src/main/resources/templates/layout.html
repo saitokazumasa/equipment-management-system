@@ -40,14 +40,29 @@
         </a>
 
         <div sec:authorize="isAuthenticated()">
-            <a href="#" class="flex justify-center items-center">
+            <a href="#" class="flex justify-center items-center" id="account-icon">
                 <span class="text-gray" th:text="${username}">アカウント名</span>
                 <div class="flex justify-center items-center ml-2 bg-secondary rounded-full w-9 h-9">
                     <img src="/images/account-icon.png" alt="アカウントアイコン" class="w-3/5 h-3/5">
                 </div>
             </a>
+
+            <ul class="absolute px-2 py-1 text-nowrap border-2 border-gray bg-white" id="account-menu"
+                style="transform: translate(-100%, 0);" hidden>
+                <li>
+                    <a href="#" class="text-primary">マイアカウント</a>
+                </li>
+                <li>
+                    <form th:action="@{/logout}" method="post">
+                        <button type="submit" class="text-primary">ログアウト</button>
+                    </form>
+                </li>
+            </ul>
         </div>
     </header>
 </th:block>
 </body>
 </html>
+<th:block th:fragment="scripts">
+    <script src="/js/common.js"></script>
+</th:block>
