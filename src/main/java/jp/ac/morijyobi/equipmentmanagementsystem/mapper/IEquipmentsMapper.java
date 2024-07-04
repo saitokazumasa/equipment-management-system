@@ -4,6 +4,9 @@ import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Equipment;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 @Mapper
 public interface IEquipmentsMapper {
@@ -12,4 +15,10 @@ public interface IEquipmentsMapper {
             "VALUES (#{name}, #{categoryId}, #{storageLocationId}, #{state}, #{lendingPeriod}, #{notificationDate}, #{remark})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     public void insert(final Equipment equipment);
+
+    @Select("SELECT * FROM equipments WHERE id = #{id} ORDER BY id ASC")
+    public Equipment selectById(final int id);
+
+    @Select("SELECT * FROM equipments ORDER BY id ASC")
+    public List<Equipment> selectAll();
 }
