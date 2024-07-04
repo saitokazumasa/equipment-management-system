@@ -28,8 +28,12 @@ class UseEquipmentList {
         this._values = new Array(0);
     }
 
-    ids() {
-        return this._values.map(a => a.id);
+    get() {
+        return this._values;
+    }
+
+    toJson() {
+        return JSON.stringify(this._values);
     }
 
     add(id) {
@@ -88,7 +92,7 @@ const idInputElement = document.getElementById('idInput');
 const addButtonElement = document.getElementById('addButton');
 
 const equipmentListElement = document.getElementById('equipment-list');
-const idListElement = document.getElementById('idList');
+const formEquipmentListElement = document.getElementById('form-equipment-list');
 
 const emptyMessageElement = document.getElementById('emptyMessage');
 const errorMessageElement = document.getElementById('errorMessage');
@@ -109,7 +113,7 @@ function onAddButtonClick(event) {
     if (callback.isFailed()) return;
 
     // フォームの value を更新
-    idListElement.value = useEquipmentList.ids()
+    formEquipmentListElement.value = useEquipmentList.toJson();
 
     // 表示
     const equipment = callback.value();
@@ -142,7 +146,7 @@ function onDeleteButtonClick(event) {
     if (callback.isFailed()) return;
 
     // フォームの value を更新
-    idListElement.value = useEquipmentList.ids()
+    formEquipmentListElement.value = useEquipmentList.toJson()
 
     event.target.parentElement.remove();
 

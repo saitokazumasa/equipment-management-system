@@ -2,16 +2,16 @@ package jp.ac.morijyobi.equipmentmanagementsystem.service.impl;
 
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Equipment;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IEquipmentsMapper;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.IEquipmentsService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.IEquipmentService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class EquipmentsService implements IEquipmentsService {
+public class EquipmentService implements IEquipmentService {
     private final IEquipmentsMapper equipmentsMapper;
 
-    public EquipmentsService(final IEquipmentsMapper equipmentsMapper) {
+    public EquipmentService(final IEquipmentsMapper equipmentsMapper) {
         this.equipmentsMapper = equipmentsMapper;
     }
 

@@ -19,8 +19,9 @@
     <!-- 追加ボタンが押されると、ここに備品情報が追加される。 -->
 </div>
 
-<form th:action="@{/checkout/application}" method="post">
-    <input type="hidden" name="idList" id="idList" value="">
+<form th:action="@{/checkout/application}" method="post" th:object="${checkoutApplicationForm}">
+    <input type="hidden" th:field="*{json}" id="form-equipment-list">
+    <input type="hidden" th:field="*{mail}">
     <button type="submit">申請</button>
 </form>
 

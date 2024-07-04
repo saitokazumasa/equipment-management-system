@@ -1,5 +1,6 @@
 package jp.ac.morijyobi.equipmentmanagementsystem.configuration;
 
+import jp.ac.morijyobi.equipmentmanagementsystem.constant.AccountCategory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -20,7 +21,7 @@ public class WebSecurityConfiguration {
                         .requestMatchers("/images/**").permitAll()
                         .requestMatchers("/css/**").permitAll()
                         .requestMatchers("/js/**").permitAll()
-                        .requestMatchers("/checkout/**").permitAll()
+                        .requestMatchers("/checkout/**").authenticated()
                         .anyRequest().authenticated()
                 ).formLogin(a -> a
                         .loginPage("/login")
