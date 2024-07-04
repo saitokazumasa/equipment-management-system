@@ -41,7 +41,7 @@ public class CheckoutApplicationForm {
     public Equipment[] equipments() {
         final Equipment[] equipments = tryToArray(json);
 
-        if (equipments.length == 0) throw new EmptyStackException();
+        if (equipments.length == 0) throw new ArrayIndexOutOfBoundsException();
 
         return equipments;
     }
