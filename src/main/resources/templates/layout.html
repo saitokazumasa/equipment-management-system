@@ -33,31 +33,40 @@
     <header class="w-10/12 h-9 flex justify-between items-center mx-auto mt-3 mb-5">
         <a href="#" sec:authorize="isAnonymous()" class="text-primary underline">返却はこちら</a>
 
-        <a href="#" sec:authorize="isAuthenticated()" class="w-fit h-fit">
+        <button sec:authorize="isAuthenticated()" class="w-fit h-fit" id="menu-open-button">
             <div class="w-9 h-2 rounded-full bg-secondary"></div>
             <div class="w-9 h-2 mt-1 rounded-full bg-secondary"></div>
             <div class="w-9 h-2 mt-1 rounded-full bg-secondary"></div>
-        </a>
+        </button>
 
         <div sec:authorize="isAuthenticated()">
-            <a href="#" class="flex justify-center items-center" id="account-icon">
+            <a class="flex justify-center items-center">
                 <span class="text-gray" th:text="${mail}">xxx@mail.com</span>
                 <div class="flex justify-center items-center ml-2 bg-secondary rounded-full w-9 h-9">
                     <img src="/images/account-icon.png" alt="アカウントアイコン" class="w-3/5 h-3/5">
                 </div>
             </a>
+        </div>
 
-            <ul class="absolute px-2 py-1 text-nowrap border-2 border-gray bg-white" id="account-menu"
-                style="transform: translate(-100%, 0);" hidden>
-                <li>
-                    <a href="#" class="text-primary">マイアカウント</a>
-                </li>
-                <li>
+        <div class="absolute top-0 left-0 w-screen h-screen bg-white" id="menu" hidden>
+            <div class="w-10/12 mx-auto mt-3">
+                <button class="w-9 h-9" id="menu-close-button">
+                    <div class="relative top-1 w-9 h-2 rounded-full bg-secondary" style="transform: rotate(45deg);"></div>
+                    <div class="relative bottom-1 w-9 h-2 rounded-full bg-secondary" style="transform: rotate(-45deg);"></div>
+                </button>
+
+                <div>
+                    <a class="block mt-3 py-5 text-center text-primary text-4xl font-bold border-2 border-primary">借りる</a>
+                    <a class="block mt-3 py-5 text-center text-primary text-4xl font-bold border-2 border-primary">返す</a>
+                    <a class="block mt-10 py-5 text-center text-primary text-3xl font-bold border-2 border-primary">備品一覧</a>
+                    <a class="block mt-3 py-5 text-center text-primary text-3xl font-bold border-2 border-primary">備品登録</a>
+                    <a class="block mt-3 py-5 text-center text-primary text-3xl font-bold border-2 border-primary">アカウント一覧</a>
+                    <a class="block mt-3 py-5 text-center text-primary text-3xl font-bold border-2 border-primary">アカウント登録</a>
                     <form th:action="@{/logout}" method="post">
-                        <button type="submit" class="text-primary">ログアウト</button>
+                        <button type="submit" class="block w-full mt-10 py-5 text-center text-error text-3xl font-bold border-2 border-error">ログアウト</button>
                     </form>
-                </li>
-            </ul>
+                </div>
+            </div>
         </div>
     </header>
 </th:block>
