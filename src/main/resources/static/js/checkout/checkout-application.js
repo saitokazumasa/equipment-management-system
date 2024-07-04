@@ -58,7 +58,7 @@ class UseEquipmentList {
     }
 
     isEmpty() {
-        return this._values.length <= 0;
+        return this._values.length === 0;
     }
 }
 
