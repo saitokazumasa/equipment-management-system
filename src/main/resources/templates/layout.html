@@ -41,7 +41,7 @@
 
         <div sec:authorize="isAuthenticated()">
             <a href="#" class="flex justify-center items-center" id="account-icon">
-                <span class="text-gray" th:text="${username}">アカウント名</span>
+                <span class="text-gray" th:text="${mail}">xxx@mail.com</span>
                 <div class="flex justify-center items-center ml-2 bg-secondary rounded-full w-9 h-9">
                     <img src="/images/account-icon.png" alt="アカウントアイコン" class="w-3/5 h-3/5">
                 </div>
