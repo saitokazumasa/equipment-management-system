@@ -1,7 +1,7 @@
 const menuElement = document.getElementById('menu');
 const hamburgerMenuElement = document.getElementById('hamburger-menu');
-const TopHamburgerLineElement = document.getElementById('top-hamburger-line');
-const MiddleHamburgerLineElement = document.getElementById('middle-hamburger-line');
+const topHamburgerLineElement = document.getElementById('top-hamburger-line');
+const middleHamburgerLineElement = document.getElementById('middle-hamburger-line');
 const bottomHamburgerLineElement = document.getElementById('bottom-hamburger-line');
 
 class HamburgerLine {
@@ -219,8 +219,8 @@ class HamburgerMenu {
     static generate(menu) {
         return new HamburgerMenu(
             [
-                new TopHamburgerLine(TopHamburgerLineElement, hamburgerMenuElement, -12),
-                new MiddleHamburgerLine(MiddleHamburgerLineElement, hamburgerMenuElement, 0),
+                new TopHamburgerLine(topHamburgerLineElement, hamburgerMenuElement, -12),
+                new MiddleHamburgerLine(middleHamburgerLineElement, hamburgerMenuElement, 0),
                 new BottomHamburgerLine(bottomHamburgerLineElement, hamburgerMenuElement, 12)
             ],
             menu
