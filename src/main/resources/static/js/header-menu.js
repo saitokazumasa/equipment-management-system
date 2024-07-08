@@ -248,6 +248,7 @@ function onResize() {
 
     hamburgerMenu.close(100);
     clearTimeout(timeoutID);
+    // timeout: 100 は適当
     timeoutID = setTimeout(() => {
         hamburgerMenu = HamburgerMenu.generate(menu);
     }, 100);
