@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class LoginUserDetailsService implements UserDetailsService {
-
     private final IAccountsMapper accountsMapper;
 
     public LoginUserDetailsService(final IAccountsMapper accountsMapper) {
