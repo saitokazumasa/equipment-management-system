@@ -57,11 +57,11 @@ class TopHamburgerLine extends HamburgerLine {
         super(parentElement, element, topMargin);
     }
 
-    animeOpen() {
+    animeOpen(duration) {
         this.element.animate({
                 top: this.endRect.top + 'px'
             }, {
-                duration: 100,
+                duration: duration,
                 easing: 'linear',
                 fill: 'forwards'
             }
@@ -69,18 +69,18 @@ class TopHamburgerLine extends HamburgerLine {
         this.element.animate({
                 transform: 'rotate(45deg)'
             }, {
-                duration: 100,
+                duration: duration,
                 easing: 'linear',
                 fill: 'forwards'
             }
         );
     }
 
-    animeClose() {
+    animeClose(duration) {
         this.element.animate({
                 top: this.startRect.top + 'px'
             }, {
-                duration: 100,
+                duration: duration,
                 easing: 'linear',
                 fill: 'forwards'
             }
@@ -88,7 +88,7 @@ class TopHamburgerLine extends HamburgerLine {
         this.element.animate({
                 transform: 'rotate(0)'
             }, {
-                duration: 100,
+                duration: duration,
                 easing: 'linear',
                 fill: 'forwards'
             }
@@ -101,22 +101,22 @@ class MiddleHamburgerLine extends HamburgerLine {
         super(parentElement, element, topMargin);
     }
 
-    animeOpen() {
+    animeOpen(duration) {
         this.element.animate({
                 opacity: 0
             }, {
-                duration: 100,
+                duration: duration,
                 easing: 'ease-out',
                 fill: 'forwards'
             }
         );
     }
 
-    animeClose() {
+    animeClose(duration) {
         this.element.animate({
                 opacity: 1
             }, {
-                duration: 100,
+                duration: duration,
                 easing: 'ease-in',
                 fill: 'forwards'
             }
@@ -129,11 +129,11 @@ class BottomHamburgerLine extends HamburgerLine {
         super(parentElement, element, topMargin);
     }
 
-    animeOpen() {
+    animeOpen(duration) {
         this.element.animate({
                 top: this.endRect.top + 'px'
             }, {
-                duration: 100,
+                duration: duration,
                 easing: 'linear',
                 fill: 'forwards'
             }
@@ -141,18 +141,18 @@ class BottomHamburgerLine extends HamburgerLine {
         this.element.animate({
                 transform: 'rotate(-45deg)'
             }, {
-                duration: 100,
+                duration: duration,
                 easing: 'linear',
                 fill: 'forwards'
             }
         );
     }
 
-    animeClose() {
+    animeClose(duration) {
         this.element.animate({
                 top: this.startRect.top + 'px'
             }, {
-                duration: 100,
+                duration: duration,
                 easing: 'linear',
                 fill: 'forwards'
             }
@@ -160,7 +160,7 @@ class BottomHamburgerLine extends HamburgerLine {
         this.element.animate({
                 transform: 'rotate(0)'
             }, {
-                duration: 100,
+                duration: duration,
                 easing: 'linear',
                 fill: 'forwards'
             }
@@ -177,12 +177,12 @@ class Menu {
         this.element.hidden = true;
     }
 
-    animeOpen() {
+    animeOpen(duration) {
         this.element.hidden = false;
         this.element.animate({
                 opacity: 1
             }, {
-                duration: 100,
+                duration: duration,
                 easing: 'linear',
                 fill: 'forwards'
             }
@@ -190,11 +190,11 @@ class Menu {
 
     }
 
-    animeClose() {
+    animeClose(duration) {
         this.element.animate({
                 opacity: 0
             }, {
-                duration: 100,
+                duration: duration,
                 easing: 'linear',
                 fill: 'forwards'
             }
@@ -227,26 +227,26 @@ class HamburgerMenu {
         );
     }
 
-    open() {
-        this.hamburgerLines.forEach(a => a.animeOpen());
-        this.menu.animeOpen();
+    open(duration) {
+        this.hamburgerLines.forEach(a => a.animeOpen(duration));
+        this.menu.animeOpen(duration);
     }
 
-    close() {
-        this.hamburgerLines.forEach(a => a.animeClose());
-        this.menu.animeClose();
+    close(duration) {
+        this.hamburgerLines.forEach(a => a.animeClose(duration));
+        this.menu.animeClose(duration);
     }
 }
 
 function onClick() {
-    if (menu.isClose()) hamburgerMenu.open();
-    else hamburgerMenu.close();
+    if (menu.isClose()) hamburgerMenu.open(100);
+    else hamburgerMenu.close(100);
 }
 
 function onResize() {
     if (hamburgerMenuElement === null) return;
 
-    hamburgerMenu.close();
+    hamburgerMenu.close(100);
     clearTimeout(timeoutID);
     timeoutID = setTimeout(() => {
         hamburgerMenu = HamburgerMenu.generate(menu);
