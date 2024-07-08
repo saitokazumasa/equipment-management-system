@@ -22,7 +22,7 @@ public class WebSecurityConfiguration {
                         .requestMatchers("/css/**").permitAll()
                         .requestMatchers("/js/**").permitAll()
                         .requestMatchers("/checkout/**").authenticated()
-                        .anyRequest().authenticated()
+                        .anyRequest().denyAll()
                 ).formLogin(a -> a
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
