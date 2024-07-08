@@ -8,6 +8,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,8 +40,21 @@ public class ReturnApplicationController {
     }
 
     @PostMapping()
-    public String post(@RequestParam List<String> returnEquipmentList) {
-        System.out.println(returnEquipmentList);
+    public String post(final @Validated CheckoutApplicationForm returnApplicationForm,
+                       final BindingResult bindingResult,
+                       final Model model,
+                       final @AuthenticationPrincipal UserDetails userDetails) {
+        if (bindingResult.hasErrors()) {
+            final String mail= userDetails.getUsername();
+            final List<Equipment> equipments = equipmentsService.fetchLending(mail);
+            model.addAttribute("equipmentList", equipments);
+            return "return/application/application";
+        }
+
+        // TODO: 返却申請処理を実装する（DB）
+
+        System.out.println(returnApplicationForm);
+
         return "redirect:/return/application";
     }
 }
