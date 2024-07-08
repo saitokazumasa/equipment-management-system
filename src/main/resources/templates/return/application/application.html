@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>返却申請</title>
+</head>
+<body>
+<h1>返却申請</h1>
+
+<form action="#">
+    <input type="number" id="idInput" aria-label="idInput">
+    <button type="submit" id="addButton">+</button>
+</form>
+
+<div id="errorMessage">Error Message</div>
+<div id="emptyMessage">Empty Message</div>
+
+<div id="equipment-list">
+    <!-- 追加ボタンが押されると、ここに備品情報が追加される。 -->
+</div>
+
+<form th:action="@{/return/application}" method="post" th:object="${returnApplicationForm}">
+    <input type="hidden" th:field="*{json}" id="form-equipment-list">
+    <input type="hidden" th:field="*{mail}">
+    <button type="submit">申請</button>
+</form>
+
+</body>
+</html>
+<script th:inline="javascript">
+    const equipmentList = /*[[${equipmentList}]]*/"equipmentList";
+</script>
+<script src="/js/return/return-application.js"></script>
