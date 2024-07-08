@@ -14,24 +14,24 @@ public class EnumTypeHandler<T extends Enum<T>> extends BaseTypeHandler<T> {
     }
 
     @Override
-    public void setNonNullParameter(PreparedStatement ps, int i, T parameter, JdbcType jdbcType) throws SQLException {
+    public void setNonNullParameter(final PreparedStatement ps, final int i, final T parameter, final JdbcType jdbcType) throws SQLException {
         ps.setObject(i, parameter.toString(), Types.OTHER);
     }
 
     @Override
-    public T getNullableResult(ResultSet rs, String columnName) throws SQLException {
+    public T getNullableResult(final ResultSet rs, final String columnName) throws SQLException {
         final String enumName = rs.getString(columnName);
         return toEnum(enumName);
     }
 
     @Override
-    public T getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
+    public T getNullableResult(final ResultSet rs, final int columnIndex) throws SQLException {
         final String enumName = rs.getString(columnIndex);
         return toEnum(enumName);
     }
 
     @Override
-    public T getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
+    public T getNullableResult(final CallableStatement cs, final int columnIndex) throws SQLException {
         final String enumName = cs.getString(columnIndex);
         return toEnum(enumName);
     }
