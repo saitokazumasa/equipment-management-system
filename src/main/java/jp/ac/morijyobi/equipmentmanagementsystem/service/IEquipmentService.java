@@ -10,4 +10,6 @@ public interface IEquipmentService {
     Equipment fetchById(final int id);
 
     List<Equipment> fetchAll();
+
+    List<Equipment> fetchLending(final String mail);
 }
