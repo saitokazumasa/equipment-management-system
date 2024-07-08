@@ -30,14 +30,12 @@
 </th:block>
 
 <th:block th:fragment="header">
-    <header sec:authorize="isAnonymous()" class="flex justify-center items-center w-full h-12">
-        <div class="w-10/12 h-9 flex items-center">
+    <header class="flex justify-center items-center w-full h-12">
+        <div sec:authorize="isAnonymous()" class="w-10/12 h-9 flex items-center">
             <a href="#" class="text-primary underline">返却はこちら</a>
         </div>
-    </header>
 
-    <header sec:authorize="isAuthenticated()" class="flex justify-center items-center w-full h-12">
-        <div class="flex justify-between w-10/12 h-9 z-50">
+        <div sec:authorize="isAuthenticated()" class="flex justify-between w-10/12 h-9 z-50">
             <ul class="w-9 h-9" id="hamburger-menu">
                 <li class="absolute w-9 h-2 rounded-full bg-secondary" id="top-hamburger-line"></li>
                 <li class="absolute w-9 h-2 rounded-full bg-secondary" id="middle-hamburger-line"></li>
@@ -54,7 +52,7 @@
             </div>
         </div>
 
-        <nav class="absolute top-0 left-0 w-screen h-screen bg-white z-0" style="width: 50vw; min-width: 500px"
+        <nav sec:authorize="isAuthenticated()" class="absolute top-0 left-0 w-screen h-screen bg-white z-0" style="width: 50vw; min-width: 500px"
              id="menu" hidden>
             <ul class="w-10/12 mt-14 mx-auto">
                 <li class="w-full">
@@ -63,17 +61,16 @@
                 <li class="w-full">
                     <a class="block mt-3 py-4 text-center text-primary text-4xl font-bold border-2 border-primary">返す</a>
                 </li>
-
                 <li class="w-full">
                     <a class="block mt-10 py-4 text-center text-primary text-3xl font-bold border-2 border-primary">備品一覧</a>
                 </li>
-                <li class="w-full">
+                <li sec:authorize="hasAnyRole('EQUIPMENT_MANAGER', 'SYSTEM_MANAGER')" class="w-full">
                     <a class="block mt-3 py-4 text-center text-primary text-3xl font-bold border-2 border-primary">備品登録</a>
                 </li>
-                <li class="w-full">
+                <li sec:authorize="hasRole('SYSTEM_MANAGER')" class="w-full">
                     <a class="block mt-3 py-4 text-center text-primary text-3xl font-bold border-2 border-primary">アカウント一覧</a>
                 </li>
-                <li class="w-full">
+                <li sec:authorize="hasRole('SYSTEM_MANAGER')" class="w-full">
                     <a class="block mt-3 py-4 text-center text-primary text-3xl font-bold border-2 border-primary">アカウント登録</a>
                 </li>
                 <li class="w-full">
