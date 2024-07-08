@@ -228,29 +228,14 @@ class HamburgerMenu {
     }
 
     open() {
-        hamburgerLines.forEach(a => a.animeOpen());
-        menu.animeOpen();
+        this.hamburgerLines.forEach(a => a.animeOpen());
+        this.menu.animeOpen();
     }
 
     close() {
-        hamburgerLines.forEach(a => a.animeClose());
-        menu.animeClose();
+        this.hamburgerLines.forEach(a => a.animeClose());
+        this.menu.animeClose();
     }
-}
-
-const menu = new Menu(menuElement);
-let hamburgerMenu = generateInitHamburgerMenu;
-let timeoutID = 0;
-
-function generateInitHamburgerMenu() {
-    return new HamburgerMenu(
-        [
-            new TopHamburgerLine(TopHamburgerLineElement, hamburgerMenuElement, -12),
-            new MiddleHamburgerLine(MiddleHamburgerLineElement, hamburgerMenuElement, 0),
-            new BottomHamburgerLine(bottomHamburgerLineElement, hamburgerMenuElement, 12)
-        ],
-        menu
-    );
 }
 
 function onClick() {
@@ -261,12 +246,16 @@ function onClick() {
 function onResize() {
     if (hamburgerMenuElement === null) return;
 
-    closeMenu();
+    hamburgerMenu.close();
     clearTimeout(timeoutID);
     timeoutID = setTimeout(() => {
-        hamburgerLines = getInitHamburgerLines();
+        hamburgerMenu = HamburgerMenu.generate(menu);
     }, 100);
 }
+
+const menu = new Menu(menuElement);
+let hamburgerMenu = HamburgerMenu.generate(menu);
+let timeoutID = 0;
 
 window.onresize = () => onResize();
 hamburgerMenuElement?.addEventListener('click', onClick);
