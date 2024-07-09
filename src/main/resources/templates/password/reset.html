@@ -10,10 +10,13 @@
 
 <th:block th:replace="layout :: head(パスワードリセット)"/>
 <body>
-
 <th:block th:if="${message}" th:object="${message}">
     <th:block th:replace="layout :: message(*{category()}, *{content()})" />
 </th:block>
+<!-- 画面確認用<header> -->
+<header class="w-10/12 h-9 flex justify-between items-center mx-auto mt-3 mb-5">
+</header>
+
 <th:block th:replace="layout :: header"/>
 
 <main class="w-2/5 min-w-96 mx-auto">
