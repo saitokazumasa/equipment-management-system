@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.w3.org/1999/html">
+<th:block th:replace="layout :: head(ログイン)"/>
+<body>
+
+<th:block th:if="${message}" th:object="${message}">
+    <th:block th:replace="layout :: message(*{category()}, *{content()})" />
+</th:block>
+<th:block th:replace="layout :: header"/>
+
+<main class="w-2/5 min-w-96 mx-auto">
+
+</main>
+</body>
+</html>
