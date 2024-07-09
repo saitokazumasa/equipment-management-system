@@ -1,4 +1,4 @@
-package jp.ac.morijyobi.equipmentmanagementsystem.service.impl;
+package jp.ac.morijyobi.equipmentmanagementsystem.service.implement;
 
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Equipment;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IEquipmentsMapper;

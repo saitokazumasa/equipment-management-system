@@ -6,7 +6,6 @@ import org.apache.ibatis.type.JdbcType;
 import java.sql.*;
 
 public class EnumTypeHandler<T extends Enum<T>> extends BaseTypeHandler<T> {
-
     private final Class<T> enumType;
 
     public EnumTypeHandler(final Class<T> enumType) {
