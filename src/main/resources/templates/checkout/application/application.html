@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.w3.org/1999/html">
-<th:block th:replace="layout :: head(貸出申請)"/>
+<th:block th:replace="layout :: head('貸出申請')"/>
 <body>
 
-<th:block th:if="${message}" th:object="${message}">
-    <th:block th:replace="layout :: message(*{category()}, *{content()})"/>
-</th:block>
 <th:block th:replace="layout :: header"/>
 
 <main class="w-2/5 mx-auto">
@@ -53,6 +50,7 @@
         </div>
     </form>
 </main>
+
 </body>
 </html>
 <th:block th:replace="layout :: scripts"/>
