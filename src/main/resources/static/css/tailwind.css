@@ -815,6 +815,11 @@ video {
   border-color: rgb(50 50 50 / var(--tw-border-opacity));
 }
 
+.bg-warning {
+  --tw-bg-opacity: 1;
+  background-color: rgb(200 180 0 / var(--tw-bg-opacity));
+}
+
 .bg-error {
   --tw-bg-opacity: 1;
   background-color: rgb(200 36 0 / var(--tw-bg-opacity));
@@ -928,6 +933,11 @@ video {
 .text-primary {
   --tw-text-opacity: 1;
   color: rgb(0 120 200 / var(--tw-text-opacity));
+}
+
+.text-content-text {
+  --tw-text-opacity: 1;
+  color: rgb(5 5 5 / var(--tw-text-opacity));
 }
 
 .underline {
