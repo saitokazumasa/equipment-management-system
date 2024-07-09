@@ -10,7 +10,7 @@ public class IndexController {
 
     @GetMapping()
     public String get() {
-        //TODO: 後ほど返却画面に返る
+        //TODO: 後ほど返却画面に変える
         return "redirect:/login";
     }
 }
