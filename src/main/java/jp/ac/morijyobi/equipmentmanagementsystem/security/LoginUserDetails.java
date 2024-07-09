@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 
 public class LoginUserDetails implements UserDetails {
-
     private final Account account;
 
     public LoginUserDetails(final Account account) {

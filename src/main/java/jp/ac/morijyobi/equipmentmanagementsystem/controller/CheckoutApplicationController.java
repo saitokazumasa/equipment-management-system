@@ -1,5 +1,6 @@
 package jp.ac.morijyobi.equipmentmanagementsystem.controller;
 
+import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Equipment;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.form.CheckoutApplicationForm;
 import jp.ac.morijyobi.equipmentmanagementsystem.service.ICheckoutApplicationService;
 import jp.ac.morijyobi.equipmentmanagementsystem.service.IEquipmentService;
@@ -10,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/checkout/application")
@@ -31,10 +34,13 @@ public class CheckoutApplicationController {
             final Model model
     ) {
         final String mail = userDetails.getUsername();
+        final CheckoutApplicationForm checkoutApplicationForm = CheckoutApplicationForm.generate(mail);
+        final List<Equipment> equipmentList = equipmentsService.fetchAll();
 
-        model.addAttribute("checkoutApplicationForm", CheckoutApplicationForm.generate(mail));
-        model.addAttribute("mail", mail);
-        model.addAttribute("equipmentList", equipmentsService.fetchAll());
+        model.addAttribute(mail);
+        model.addAttribute(checkoutApplicationForm);
+        model.addAttribute(equipmentList);
+
         return "checkout/application/application";
     }
 
@@ -45,7 +51,8 @@ public class CheckoutApplicationController {
             final Model model
     ) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("equipmentList", equipmentsService.fetchAll());
+            final List<Equipment> equipmentList = equipmentsService.fetchAll();
+            model.addAttribute(equipmentList);
             return "checkout/application/application";
         }
 

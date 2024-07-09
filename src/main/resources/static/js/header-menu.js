@@ -216,17 +216,6 @@ class HamburgerMenu {
         this.menu = menu;
     }
 
-    static generate(menu) {
-        return new HamburgerMenu(
-            [
-                new TopHamburgerLine(topHamburgerLineElement, hamburgerMenuElement, -12),
-                new MiddleHamburgerLine(middleHamburgerLineElement, hamburgerMenuElement, 0),
-                new BottomHamburgerLine(bottomHamburgerLineElement, hamburgerMenuElement, 12)
-            ],
-            menu
-        );
-    }
-
     open(duration) {
         this.hamburgerLines.forEach(a => a.animeOpen(duration));
         this.menu.animeOpen(duration);
@@ -238,24 +227,56 @@ class HamburgerMenu {
     }
 }
 
+class Container {
+    menu;
+    hamburgerMenu;
+
+    // NOTE:
+    // グローバル変数に依存するのは良くないが、
+    // Constructor の引数を多くするとコンテナのメリットが減るため、ここでは許容する
+    constructor() {
+        this.menu = new Menu(menuElement);
+
+        const topHamburgerLine = new TopHamburgerLine(
+            topHamburgerLineElement,
+            hamburgerMenuElement,
+            /*Margin: */ -12
+        );
+
+        const middleHamburgerLine = new MiddleHamburgerLine(
+            middleHamburgerLineElement,
+            hamburgerMenuElement,
+            /*Margin: */ 0
+        );
+
+        const bottomHamburgerLine = new BottomHamburgerLine(
+            bottomHamburgerLineElement,
+            hamburgerMenuElement,
+            /*Margin: */ 12
+        );
+
+        this.hamburgerMenu = new HamburgerMenu([topHamburgerLine, middleHamburgerLine, bottomHamburgerLine], this.menu);
+    }
+}
+
 function onClick() {
-    if (menu.isClose()) hamburgerMenu.open(100);
-    else hamburgerMenu.close(100);
+    if (container.menu.isClose()) container.hamburgerMenu.open(100);
+    else container.hamburgerMenu.close(100);
 }
 
 function onResize() {
     if (hamburgerMenuElement === null) return;
 
-    hamburgerMenu.close(100);
+    container.hamburgerMenu.close(100);
     clearTimeout(timeoutID);
+    // timeout: 100 は適当
     timeoutID = setTimeout(() => {
-        hamburgerMenu = HamburgerMenu.generate(menu);
+        container = new Container(menuElement);
     }, 100);
 }
 
-const menu = new Menu(menuElement);
-let hamburgerMenu = HamburgerMenu.generate(menu);
+let container = new Container(menuElement);
 let timeoutID = 0;
 
-window.onresize = () => onResize();
+window.onresize = onResize;
 hamburgerMenuElement?.addEventListener('click', onClick);
