@@ -110,7 +110,7 @@ function onAddButtonClick(event) {
     const output = `
         <div id="${equipment.id}" class="parent mb-5 p-3 bg-white">
             <div class="flex justify-between">
-                <div class="text-sm text-gray">${equipment.id}</div>
+                <p class="text-sm text-gray">${equipment.id}</p>
                 <button type="submit"
                         class="delete-button flex justify-center items-center w-4 h-4">
                     <div>
@@ -119,12 +119,12 @@ function onAddButtonClick(event) {
                     </div>
                 </button>
             </div>
-            <div class="text-xl">${equipment.name}</div>
-            <div class="pt-2 text-sm text-gray">返却期日</div>
-            <div>
+            <p class="text-xl">${equipment.name}</p>
+            <p class="pt-2 text-sm text-gray">返却期日</p>
+            <p>
                 <span class="text-xl">${returnDate.get()}</span>
                 <span class="text-sm text-gray">まで（${equipment.lendingPeriod}日）</span>
-            </div>
+            </p>
         </div>
     `;
     equipmentListElement.innerHTML += output;
