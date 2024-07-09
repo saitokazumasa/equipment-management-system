@@ -10,7 +10,6 @@ import java.util.List;
 
 @Mapper
 public interface IEquipmentsMapper {
-
     @Insert("INSERT INTO equipments (name, category_id, storage_location_id, state, lending_period, notification_date, remark) " +
             "VALUES (#{name}, #{categoryId}, #{storageLocationId}, #{state}, #{lendingPeriod}, #{notificationDate}, #{remark})")
     @Options(useGeneratedKeys = true, keyProperty = "id")

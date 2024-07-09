@@ -13,7 +13,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfiguration {
-
     @Bean
     public SecurityFilterChain securityFilterChain(final HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
@@ -22,7 +21,7 @@ public class WebSecurityConfiguration {
                         .requestMatchers("/css/**").permitAll()
                         .requestMatchers("/js/**").permitAll()
                         .requestMatchers("/checkout/**").authenticated()
-                        .anyRequest().authenticated()
+                        .anyRequest().denyAll()
                 ).formLogin(a -> a
                         .loginPage("/login")
                         .loginProcessingUrl("/login")

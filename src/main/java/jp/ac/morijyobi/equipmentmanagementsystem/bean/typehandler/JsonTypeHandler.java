@@ -9,7 +9,6 @@ import org.apache.ibatis.type.JdbcType;
 import java.sql.*;
 
 public class JsonTypeHandler<T> extends BaseTypeHandler<T> {
-
     private final ObjectMapper objectMapper;
     private final Class<T> javaType;
 
