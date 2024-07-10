@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class CheckoutApplicationService implements ICheckoutApplicationService {
@@ -45,5 +46,11 @@ public class CheckoutApplicationService implements ICheckoutApplicationService {
         }
 
         return 1;
+    }
+
+    @Override
+    public CheckoutApplication fetchNotReturned(String mail, int equipmentId) {
+        final Account account = accountsMapper.selectByMail(mail);
+        return checkoutApplicationsMapper.selectNotReturned(account.getId(), equipmentId);
     }
 }
