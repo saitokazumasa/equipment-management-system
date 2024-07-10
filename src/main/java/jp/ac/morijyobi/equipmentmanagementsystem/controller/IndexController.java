@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class IndexController {
     @GetMapping()
     public String get() {
-        return "index";
+        //TODO: 後ほど返却画面に変える
+        return "redirect:/login";
     }
 }
