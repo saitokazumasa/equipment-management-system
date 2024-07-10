@@ -608,6 +608,14 @@ video {
   top: 0px;
 }
 
+.top-2 {
+  top: 0.5rem;
+}
+
+.top-3 {
+  top: 0.75rem;
+}
+
 .z-0 {
   z-index: 0;
 }
@@ -738,10 +746,6 @@ video {
 
 .w-screen {
   width: 100vw;
-}
-
-.min-w-96 {
-  min-width: 24rem;
 }
 
 .rotate-45 {
