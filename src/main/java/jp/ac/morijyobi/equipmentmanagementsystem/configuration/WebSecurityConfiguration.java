@@ -20,6 +20,7 @@ public class WebSecurityConfiguration {
                         .requestMatchers("/images/**").permitAll()
                         .requestMatchers("/css/**").permitAll()
                         .requestMatchers("/js/**").permitAll()
+                        .requestMatchers("/password_reset").permitAll()
                         .requestMatchers("/checkout/**").authenticated()
                         .anyRequest().denyAll()
                 ).formLogin(a -> a
