@@ -152,7 +152,7 @@ function onDeleteButtonClick(event) {
     emptyMessageElement.innerText = checkoutEquipmentList.isEmpty() ? LIST_EMPTY_MESSAGE : "";
 }
 
-// equipmentList は Java Spring の Model から送られてくる DB の備品リストの値
+// NOTE: equipmentList は Java Spring の Model から送られてくる DB の備品リストの値
 const checkoutEquipmentList = new CheckoutEquipmentList(equipmentList);
 emptyMessageElement.innerText = LIST_EMPTY_MESSAGE;
 errorMessageElement.innerText = "";

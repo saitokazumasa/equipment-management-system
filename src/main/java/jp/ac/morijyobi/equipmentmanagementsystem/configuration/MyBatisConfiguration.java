@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class MyBatisConfiguration {
-
     @Bean
     public ConfigurationCustomizer mybatisConfigurationCustomizer() {
         return config -> {
