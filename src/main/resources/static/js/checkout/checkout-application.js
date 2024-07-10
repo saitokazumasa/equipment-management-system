@@ -107,13 +107,24 @@ function onAddButtonClick(event) {
     const equipment = callback.value();
     const returnDate = new ReturnDate(equipment.lendingPeriod);
 
-    // TODO: レイアウトを整える
     const output = `
-        <div id="${equipment.id}">
-            ID:${equipment.id}
-            備品名:${equipment.name}
-            返却期日:${returnDate.get()}まで（${equipment.lendingPeriod}日）
-            <button class="delete-button">✕</button>
+        <div id="${equipment.id}" class="parent mb-5 p-3 bg-white">
+            <div class="flex justify-between">
+                <p class="text-sm text-gray">${equipment.id}</p>
+                <button type="submit"
+                        class="delete-button flex justify-center items-center w-4 h-4">
+                    <div>
+                        <div class="delete-button relative w-4 h-1 rounded-full bg-error rotate-45" style="top: 0.125rem;"></div>
+                        <div class="delete-button relative w-4 h-1 rounded-full bg-error" style="top: -0.125rem; rotate: -45deg"></div>
+                    </div>
+                </button>
+            </div>
+            <p class="text-xl">${equipment.name}</p>
+            <p class="pt-2 text-sm text-gray">返却期日</p>
+            <p>
+                <span class="text-xl">${returnDate.get()}</span>
+                <span class="text-sm text-gray">まで（${equipment.lendingPeriod}日）</span>
+            </p>
         </div>
     `;
     equipmentListElement.innerHTML += output;
@@ -122,11 +133,10 @@ function onAddButtonClick(event) {
 function onDeleteButtonClick(event) {
     event.preventDefault();
 
-    if (event.target.className !== 'delete-button') return;
+    if (!event.target.classList.contains('delete-button')) return;
 
-    // 親要素に備品IDがある
-    const id = event.target.parentElement.id;
-    const callback = checkoutEquipmentList.delete(id);
+    const parent = event.target.closest('.parent');
+    const callback = checkoutEquipmentList.delete(parent.id);
 
     // メッセージを更新
     errorMessageElement.innerText = callback.message();
@@ -136,7 +146,7 @@ function onDeleteButtonClick(event) {
     // フォームの value を更新
     formEquipmentListElement.value = checkoutEquipmentList.toJson()
 
-    event.target.parentElement.remove();
+    parent.remove();
 
     // 備品が一つも選択されていない時は、その旨を表示
     emptyMessageElement.innerText = checkoutEquipmentList.isEmpty() ? LIST_EMPTY_MESSAGE : "";
