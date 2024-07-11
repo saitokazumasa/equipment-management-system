@@ -4,6 +4,34 @@
     <meta charset="UTF-8">
     <title>返却申請</title>
 </head>
+
+<style>
+    .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    .popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+    }
+    .popup-content {
+        text-align: center;
+    }
+</style>
+
 <body>
 <h1>返却申請</h1>
 
@@ -17,6 +45,25 @@
 
 <div id="equipment-list">
     <!-- 追加ボタンが押されると、ここに備品情報が追加される。 -->
+</div>
+
+<!--
+ポップアップ用のフォーム　
+TODO:HTMlの修正
+-->
+<div id="overlay" class="overlay"></div>
+<div id="popup" class="popup">
+    <div id="popup-content" class="popup-content">
+        <div id="equipment-name-input">備品名</div>
+        <label>
+            <input type="checkbox" value="1">破損
+        </label>
+        <label>
+            <input type="checkbox" value="2">汚損
+        </label>
+        <textarea id="damage-reason-input"></textarea>
+        <button id="edit-complete">完了</button>
+    </div>
 </div>
 
 <form th:action="@{/return/application}" method="post" th:object="${returnApplicationForm}">

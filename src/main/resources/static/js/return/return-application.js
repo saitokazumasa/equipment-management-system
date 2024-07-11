@@ -32,6 +32,10 @@ class ReturnEquipmentList {
         return this._values;
     }
 
+    getById(id) {
+        return this._values.find(a => a.id === parseInt(id));
+    }
+
     toJson() {
         return JSON.stringify(this._values);
     }
@@ -71,8 +75,21 @@ const addButtonElement = document.getElementById('addButton');
 const equipmentListElement = document.getElementById('equipment-list');
 const formEquipmentListElement = document.getElementById('form-equipment-list');
 
+const damageList = [];
+const formDamageListElement = document.getElementById("form-damage-list");
+
 const emptyMessageElement = document.getElementById('emptyMessage');
 const errorMessageElement = document.getElementById('errorMessage');
+
+
+// 編集フォームの要素
+const formEquipmentName = document.getElementById('equipment-name-input');
+const editCompleteButton = document.getElementById('edit-complete');
+const popup = document.getElementById('popup');
+const overlay = document.getElementById('overlay');
+
+
+
 
 emptyMessageElement.innerText = LIST_EMPTY_MESSAGE;
 errorMessageElement.innerText = "";
@@ -89,11 +106,6 @@ function onAddButtonClick(event) {
 
     if (callback.isFailed()) return;
 
-    equipmentList[0]["damage"] = "";
-    equipmentList[0]["damageReason"] = "";
-    console.log(equipmentList);
-
-
     // フォームの value を更新
     formEquipmentListElement.value = returnEquipmentList.toJson();
 
@@ -103,10 +115,10 @@ function onAddButtonClick(event) {
     // TODO: レイアウトを整える
     const output = `
         <div id="${equipment.id}">
-            ID:${equipment.id}
-            備品名:${equipment.name}
-            <div class="damage">${equipment.damage}</div>
-            <div class="damage-reason">${equipment.damageReason}</div>
+            <div>ID:${equipment.id}</div>
+            <div class="equipment-name">備品名:${equipment.name}</div>
+            <div class="damage-category"></div>
+            <div class="damage-reason"></div>
             <button class="edit-button">編集</button>
             <button class="delete-button">✕</button>
         </div>
@@ -142,44 +154,57 @@ function onEditButtonClick(event) {
 
     if (event.target.className !== 'edit-button') return;
 
-    // 親要素に備品IDがある
-    const id = event.target.parentElement.id;
 
-    const damageElement = event.target.parentElement.getElementsByClassName('damage')[0];
+    // 親要素に備品IDがある
+    const id = parseInt(event.target.parentElement.id);
+
+    // 編集フォームを表示する
+    popup.style.display = 'block';
+    overlay.style.display = 'block';
+
+    // TODO:入力フォームの備品名をセット
+    const toEditEquipment = returnEquipmentList.getById(id);
+    formEquipmentName.innerText = toEditEquipment.name;
+
+
+
+    const damageCategoryElement = event.target.parentElement.getElementsByClassName('damage-category')[0];
     const damageReasonElement = event.target.parentElement.getElementsByClassName('damage-reason')[0];
 
-    if (equipmentList[0]["damage"] === "" && equipmentList[0]["damageReason"] === "") {
-        equipmentList[0]["damage"] = "破損/汚損あり";
-        equipmentList[0]["damageReason"] = "コーヒーをこぼした。";
+    const index = damageList.findIndex(a => a.id === id);
 
-        damageElement.innerText = equipmentList[0]["damage"];
-        damageReasonElement.innerText = equipmentList[0]["damageReason"];
+    if (index === -1) {
+        damageList.push({
+            id: id,
+            category: 1,
+            reason: "コーヒーをこぼした。"
+        });
+
+        damageCategoryElement.innerText = "汚損";
+        damageReasonElement.innerText = "コーヒーをこぼした。";
     } else {
-        equipmentList[0]["damage"] = "";
-        equipmentList[0]["damageReason"] = "";
+        damageList.splice(index, 1);
 
-        damageElement.innerText = equipmentList[0]["damage"];
-        damageReasonElement.innerText = equipmentList[0]["damageReason"];
+        damageCategoryElement.innerText = "";
+        damageReasonElement.innerText = "";
     }
 
-
-
-    // const callback = returnEquipmentList.delete(id);
-    //
-    // // メッセージを更新
-    // errorMessageElement.innerText = callback.message();
-    //
-    // if (callback.isFailed()) return;
-    //
-    // // フォームの value を更新
-    // formEquipmentListElement.value = returnEquipmentList.toJson()
-    //
-    // event.target.parentElement.remove();
-    //
-    // // 備品が一つも選択されていない時は、その旨を表示
-    // emptyMessageElement.innerText = returnEquipmentList.isEmpty() ? LIST_EMPTY_MESSAGE : "";
+    formDamageListElement.value = JSON.stringify(damageList);
 }
 
 addButtonElement.addEventListener('click', onAddButtonClick);
 equipmentListElement.addEventListener('click', onDeleteButtonClick);
 equipmentListElement.addEventListener('click', onEditButtonClick);
+
+
+function testFunction() {
+    popup.style.display = 'none';
+    overlay.style.display = 'none';
+}
+
+editCompleteButton.addEventListener('click', testFunction);
+overlay.addEventListener('click', testFunction);
+
+
+
+
