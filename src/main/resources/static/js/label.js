@@ -64,4 +64,4 @@ function onLoad() {
     }
 }
 
-window.onload = onLoad;
+onLoad();

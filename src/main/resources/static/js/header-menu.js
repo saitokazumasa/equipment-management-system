@@ -283,6 +283,6 @@ function onResize() {
 let container;
 let timeoutID = 0;
 
-window.onload = onLoad;
 window.onresize = onResize;
 hamburgerMenuElement?.addEventListener('click', onClick);
+onLoad();
