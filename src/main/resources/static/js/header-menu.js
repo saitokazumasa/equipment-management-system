@@ -264,6 +264,12 @@ function onClick() {
     else container.hamburgerMenu.close(100);
 }
 
+function onLoad() {
+    if (menuElement === null) return;
+
+    container = new Container(menuElement);
+}
+
 function onResize() {
     if (hamburgerMenuElement === null) return;
 
@@ -275,8 +281,9 @@ function onResize() {
     }, 100);
 }
 
-let container = new Container(menuElement);
+let container;
 let timeoutID = 0;
 
+window.onload = onLoad;
 window.onresize = onResize;
 hamburgerMenuElement?.addEventListener('click', onClick);
