@@ -187,7 +187,6 @@ class Menu {
                 fill: 'forwards'
             }
         );
-
     }
 
     animeClose(duration) {
