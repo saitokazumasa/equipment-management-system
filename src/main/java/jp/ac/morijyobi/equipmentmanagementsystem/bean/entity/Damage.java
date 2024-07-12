@@ -13,5 +13,4 @@ import java.time.LocalDateTime;
 public class Damage {
     private int id;
     private String reason;
-    private DamagedCategory category;
 }
