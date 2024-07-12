@@ -35,6 +35,8 @@ public class ReturnApplicationController {
     public String get(final Model model,
                       final @AuthenticationPrincipal UserDetails userDetails) {
         final String mail= userDetails.getUsername();
+
+        // 借りている備品を取得（返却申請中の備品は取得しない）
         final List<Equipment> equipments = equipmentsService.fetchLending(mail);
 
         model.addAttribute("returnApplicationForm", ReturnApplicationForm.generate(mail));
