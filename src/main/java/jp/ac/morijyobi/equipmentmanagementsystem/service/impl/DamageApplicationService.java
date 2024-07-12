@@ -27,9 +27,7 @@ public class DamageApplicationService implements IDamageApplicationService {
     @Override
     @Transactional
     public void execute(ReturnApplicationForm returnApplicationForm) {
-        if (returnApplicationForm.damageList().isEmpty()) {
-            return;
-        } else {
+        if (!returnApplicationForm.damageList().isEmpty()) {
             final Account account = accountsMapper.selectByMail(returnApplicationForm.mail());
 
             System.out.println("DamageApplicationService.execute");
