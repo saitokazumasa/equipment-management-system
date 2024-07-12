@@ -83,11 +83,14 @@ const errorMessageElement = document.getElementById('errorMessage');
 
 
 // 編集フォームの要素
+const selectedEquipmentId = document.getElementById('selected-equipment-id');
 const formEquipmentName = document.getElementById('equipment-name-input');
 const editCompleteButton = document.getElementById('edit-complete');
+const isDamageElement = document.getElementById('is-damage');
+const damageReasonInputElement = document.getElementById('damage-reason-input');
+const hiddenInputElement = document.getElementById('hidden-input');
 const popup = document.getElementById('popup');
 const overlay = document.getElementById('overlay');
-
 
 
 
@@ -109,15 +112,14 @@ function onAddButtonClick(event) {
     // フォームの value を更新
     formEquipmentListElement.value = returnEquipmentList.toJson();
 
-    // 表示
     const equipment = callback.value();
 
     // TODO: レイアウトを整える
     const output = `
         <div id="${equipment.id}">
             <div>ID:${equipment.id}</div>
-            <div class="equipment-name">備品名:${equipment.name}</div>
-            <div class="damage-category"></div>
+            <div>備品名:${equipment.name}</div>
+            <div class="damage-state"></div>
             <div class="damage-reason"></div>
             <button class="edit-button">編集</button>
             <button class="delete-button">✕</button>
@@ -162,49 +164,70 @@ function onEditButtonClick(event) {
     popup.style.display = 'block';
     overlay.style.display = 'block';
 
-    // TODO:入力フォームの備品名をセット
-    const toEditEquipment = returnEquipmentList.getById(id);
-    formEquipmentName.innerText = toEditEquipment.name;
+    // 編集フォームに値をセットする
+    // ID備品名、異常の有無、異常の理由
+    selectedEquipmentId.innerText = "ID:" + event.target.parentElement.id
+    hiddenInputElement.value = id;
+    formEquipmentName.innerText = returnEquipmentList.getById(id).name;
+    if(event.target.parentElement.getElementsByClassName('damage-reason')[0].innerText !== "") {
+        isDamageElement.checked = true;
+    }
+    damageReasonInputElement.value = event.target.parentElement.getElementsByClassName('damage-reason')[0].innerText;
+}
 
+function closePopupForm() {
+    selectedEquipmentId.innerText = "";
+    hiddenInputElement.value = "";
+    popup.style.display = 'none';
+    overlay.style.display = 'none';
+}
 
+function onEditCompleteButtonClick(event) {
+    event.preventDefault();
 
-    const damageCategoryElement = event.target.parentElement.getElementsByClassName('damage-category')[0];
-    const damageReasonElement = event.target.parentElement.getElementsByClassName('damage-reason')[0];
+    const id = hiddenInputElement.value;
 
-    const index = damageList.findIndex(a => a.id === id);
+    // 対象の備品IDを持つdiv要素の中にある子要素を取得する
+    const damageCategoryElement = document.getElementById(id).getElementsByClassName('damage-state')[0];
+    const damageReasonElement = document.getElementById(id).getElementsByClassName('damage-reason')[0];
 
-    if (index === -1) {
+    // 編集フォームの値を取得
+    const isDamage = isDamageElement.checked;
+    const damageReason = damageReasonInputElement.value;
+
+    // damageListに対象の備品IDに関する異常の情報が含まれているかを確認する
+    const index = damageList.findIndex(a => a.id === parseInt(id));
+
+    damageList.splice(index, 1);
+
+    console.log("isChecked: " + isDamage);
+    console.log("value: " + damageReason);
+
+    if (index === -1　&& isDamage && damageReason) {
         damageList.push({
             id: id,
-            category: 1,
-            reason: "コーヒーをこぼした。"
+            reason: damageReason
         });
-
-        damageCategoryElement.innerText = "汚損";
-        damageReasonElement.innerText = "コーヒーをこぼした。";
-    } else {
-        damageList.splice(index, 1);
-
+        damageCategoryElement.innerText = "汚損/破損あり";
+        damageReasonElement.innerText = damageReason;
+    } else if(!isDamage && !damageReason) {
         damageCategoryElement.innerText = "";
         damageReasonElement.innerText = "";
     }
 
+    console.log(damageList);
+
+    // 編集フォームを空にする
+    isDamageElement.checked = false;
+    damageReasonInputElement.value = "";
+
     formDamageListElement.value = JSON.stringify(damageList);
+
+    closePopupForm();
 }
 
 addButtonElement.addEventListener('click', onAddButtonClick);
 equipmentListElement.addEventListener('click', onDeleteButtonClick);
 equipmentListElement.addEventListener('click', onEditButtonClick);
-
-
-function testFunction() {
-    popup.style.display = 'none';
-    overlay.style.display = 'none';
-}
-
-editCompleteButton.addEventListener('click', testFunction);
-overlay.addEventListener('click', testFunction);
-
-
-
-
+editCompleteButton.addEventListener('click', onEditCompleteButtonClick);
+overlay.addEventListener('click', closePopupForm);
