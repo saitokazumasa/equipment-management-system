@@ -64,4 +64,4 @@ function onLoad() {
     }
 }
 
-onLoad();
+window.addEventListener('load', onLoad);
