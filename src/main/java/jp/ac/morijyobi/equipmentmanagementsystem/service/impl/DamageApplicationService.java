@@ -2,6 +2,7 @@ package jp.ac.morijyobi.equipmentmanagementsystem.service.impl;
 
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.*;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.form.ReturnApplicationForm;
+import jp.ac.morijyobi.equipmentmanagementsystem.constant.DamagedCategory;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IAccountsMapper;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.ICheckoutApplicationsMapper;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IDamagedApplicationsMapper;
@@ -40,13 +41,11 @@ public class DamageApplicationService implements IDamageApplicationService {
                         -1,
                         checkoutApplication.getId(),
                         damage.getReason(),
-                        damage.getCategory(),
+                        DamagedCategory.DAMAGED,
                         LocalDateTime.now()
                 );
-
                 damagedApplicationMapper.insert(damagedApplication);
             }
         }
-
     }
 }
