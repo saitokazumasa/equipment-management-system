@@ -42,7 +42,6 @@
 
     <form th:action="@{/checkout/application}" method="post" th:object="${checkoutApplicationForm}">
         <input type="hidden" th:field="*{json}" id="form-equipment-list">
-        <input type="hidden" th:field="*{mail}">
         <div class="flex justify-center my-10">
             <button type="submit"
                     class="px-20 py-2 text-primary font-semibold rounded-full bg-secondary whitespace-nowrap">申請
