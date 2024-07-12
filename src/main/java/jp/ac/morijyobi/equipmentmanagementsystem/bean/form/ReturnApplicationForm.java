@@ -22,7 +22,7 @@ public class ReturnApplicationForm {
 
     private final ObjectMapper objectMapper;
 
-    public ReturnApplicationForm(final String json, String damageList, final String mail) {
+    public ReturnApplicationForm(final String json, final String damageList, final String mail) {
         this.json = json;
         this.damageList = damageList;
         this.mail = mail;
