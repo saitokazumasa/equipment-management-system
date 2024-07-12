@@ -39,31 +39,32 @@
     <!-- 追加ボタンが押されると、ここに備品情報が追加される。 -->
 </div>
 
-<!--
-ポップアップ用のフォーム　
-TODO:HTMlの修正
--->
-<div id="overlay" class="overlay"></div>
-<div id="popup" class="popup">
-    <div id="popup-content" class="popup-content">
-        <div id="equipment-name-input">備品名</div>
-        <label>
-            <input type="checkbox" value="1">破損
-        </label>
-        <label>
-            <input type="checkbox" value="2">汚損
-        </label>
-        <textarea id="damage-reason-input"></textarea>
-        <button id="edit-complete">完了</button>
-    </div>
-</div>
-
 <form th:action="@{/return/application}" method="post" th:object="${returnApplicationForm}">
     <input type="hidden" th:field="*{json}" id="form-equipment-list">
     <input type="hidden" th:field="*{damageList}" id="form-damage-list">
     <input type="hidden" th:field="*{mail}">
     <button type="submit">申請</button>
 </form>
+
+<!--
+ポップアップ用の入力欄
+TODO:HTMlの修正
+-->
+<div id="overlay" class="overlay"></div>
+<div id="popup" class="popup">
+    <div id="popup-content" class="popup-content">
+        <div id="selected-equipment-id"></div>
+        <div id="equipment-name-input">備品名</div>
+        <form action="#">
+            <input type="hidden" id="hidden-input">
+            <label>
+                <input type="checkbox" value="1" id="is-damage">破損/汚損あり
+            </label>
+            <textarea id="damage-reason-input"></textarea>
+            <button id="edit-complete">完了</button>
+        </form>
+    </div>
+</div>
 
 </body>
 </html>
