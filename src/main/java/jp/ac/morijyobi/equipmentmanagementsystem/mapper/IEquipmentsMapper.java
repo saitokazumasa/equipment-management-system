@@ -29,7 +29,7 @@ public interface IEquipmentsMapper {
             "WHERE ca.account_id = #{accountId} " +
             "AND e.state = 'ON_LOAN'" +
             "AND ra.checkout_log_id IS NULL " +
-            "OR ra2.return_application_id IS NULL " +
+            "AND ra2.return_application_id IS NULL " +
             "ORDER BY e.id ASC")
     public List<Equipment> selectLending(final int accountId);
 }
