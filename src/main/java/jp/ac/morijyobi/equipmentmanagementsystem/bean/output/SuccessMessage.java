@@ -1,10 +1,10 @@
 package jp.ac.morijyobi.equipmentmanagementsystem.bean.output;
 
 public class SuccessMessage implements IMessage{
-    private final String content;
+    private final String _content;
 
     public SuccessMessage(final String content) {
-        this.content = content;
+        this._content = content;
     }
 
     @Override
@@ -14,6 +14,6 @@ public class SuccessMessage implements IMessage{
 
     @Override
     public String content() {
-        return content;
+        return _content;
     }
 }

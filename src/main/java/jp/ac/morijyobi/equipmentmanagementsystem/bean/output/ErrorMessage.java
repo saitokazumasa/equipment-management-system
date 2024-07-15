@@ -1,10 +1,10 @@
 package jp.ac.morijyobi.equipmentmanagementsystem.bean.output;
 
 public class ErrorMessage implements IMessage {
-    private final String content;
+    private final String _content;
 
     public ErrorMessage(final String content) {
-        this.content = content;
+        this._content = content;
     }
 
     @Override
@@ -14,6 +14,6 @@ public class ErrorMessage implements IMessage {
 
     @Override
     public String content() {
-        return content;
+        return _content;
     }
 }

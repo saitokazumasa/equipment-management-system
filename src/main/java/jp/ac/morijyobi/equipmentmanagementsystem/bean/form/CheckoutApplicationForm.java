@@ -10,13 +10,13 @@ public class CheckoutApplicationForm {
     @Getter
     @NotBlank
     @Size(min = 1)
-    private final String json;
+    private final String _json;
 
-    private final JsonUtil<Equipment[]> jsonUtil;
+    private final JsonUtil<Equipment[]> _jsonUtil;
 
     public CheckoutApplicationForm(final String json) {
-        this.json = json;
-        this.jsonUtil = new JsonUtil<>(Equipment[].class);
+        this._json = json;
+        this._jsonUtil = new JsonUtil<>(Equipment[].class);
     }
 
     public static CheckoutApplicationForm empty() {
@@ -24,7 +24,7 @@ public class CheckoutApplicationForm {
     }
 
     public Equipment[] equipments() {
-        final Equipment[] equipments = jsonUtil.tryToObject(json);
+        final Equipment[] equipments = _jsonUtil.tryToObject(_json);
 
         if (equipments.length == 0) throw new ArrayIndexOutOfBoundsException();
 
