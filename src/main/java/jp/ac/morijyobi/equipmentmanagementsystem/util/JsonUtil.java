@@ -5,21 +5,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 public class JsonUtil<T> {
-    private final ObjectMapper _objectMapper;
-    private final Class<T> _javaType;
+    private final ObjectMapper objectMapper;
+    private final Class<T> javaType;
 
     public JsonUtil(final Class<T> javaType) {
-        this._javaType = javaType;
+        this.javaType = javaType;
 
-        _objectMapper = new ObjectMapper();
-        _objectMapper.registerModule(new JavaTimeModule());
+        this.objectMapper = new ObjectMapper();
+        this.objectMapper.registerModule(new JavaTimeModule());
     }
 
     public T tryToObject(final Object json) {
         if (json == null) return null;
 
         try {
-            return _objectMapper.readValue(json.toString(), _javaType);
+            return this.objectMapper.readValue(json.toString(), javaType);
         } catch (final JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -27,7 +27,7 @@ public class JsonUtil<T> {
 
     public String tryToString(final T object) {
         try {
-            return _objectMapper.writeValueAsString(object);
+            return this.objectMapper.writeValueAsString(object);
         } catch (final JsonProcessingException e) {
             throw new RuntimeException(e);
         }
