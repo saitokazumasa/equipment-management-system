@@ -3,6 +3,7 @@ package jp.ac.morijyobi.equipmentmanagementsystem.bean.form;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.TemporaryAccount;
+import jp.ac.morijyobi.equipmentmanagementsystem.util.JsonUtil;
 import lombok.Getter;
 
 public class CreateTemporaryAccountForm {
