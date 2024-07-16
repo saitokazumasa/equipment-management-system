@@ -22,8 +22,8 @@ public interface ICheckoutApplicationsMapper {
             "WHERE ca.account_id = #{accountId} " +
             "AND ca.equipment_id = #{equipmentId} " +
             "AND ca2.checkout_application_id = ca.id " +
-            "AND ra.checkout_log_id IS NULL " +
             "OR ra2.return_application_id IS NULL " +
-            "ORDER BY ca.id ASC")
+            "ORDER BY ca.created_at DESC " +
+            "LIMIT 1")
     public CheckoutApplication selectNotReturned(final int accountId, final int equipmentId);
 }
