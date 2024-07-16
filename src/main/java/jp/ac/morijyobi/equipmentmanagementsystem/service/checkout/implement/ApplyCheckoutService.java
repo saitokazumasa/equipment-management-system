@@ -1,4 +1,4 @@
-package jp.ac.morijyobi.equipmentmanagementsystem.service.implement;
+package jp.ac.morijyobi.equipmentmanagementsystem.service.checkout.implement;
 
 
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Account;
@@ -7,18 +7,18 @@ import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Equipment;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.form.CheckoutApplicationForm;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IAccountsMapper;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.ICheckoutApplicationsMapper;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.ICheckoutApplicationService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.checkout.IApplyCheckoutService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
 @Service
-public class CheckoutApplicationService implements ICheckoutApplicationService {
+public class ApplyCheckoutService implements IApplyCheckoutService {
     private final ICheckoutApplicationsMapper checkoutApplicationsMapper;
     private final IAccountsMapper accountsMapper;
 
-    public CheckoutApplicationService(
+    public ApplyCheckoutService(
             final ICheckoutApplicationsMapper checkoutApplicationsMapper,
             final IAccountsMapper accountsMapper
     ) {
@@ -28,8 +28,8 @@ public class CheckoutApplicationService implements ICheckoutApplicationService {
 
     @Override
     @Transactional
-    public int execute(final CheckoutApplicationForm checkoutApplicationForm) {
-        final Account account = accountsMapper.selectByMail(checkoutApplicationForm.mail());
+    public int execute(final String mail, final CheckoutApplicationForm checkoutApplicationForm) {
+        final Account account = this.accountsMapper.selectByMail(mail);
 
         for (final Equipment equipment : checkoutApplicationForm.equipments()) {
             final var checkoutApplication = new CheckoutApplication(
@@ -39,11 +39,13 @@ public class CheckoutApplicationService implements ICheckoutApplicationService {
                     LocalDateTime.now()
             );
 
-            final int result = checkoutApplicationsMapper.insert(checkoutApplication);
+            final int result = this.checkoutApplicationsMapper.insert(checkoutApplication);
 
+            // 1 以外はエラー
             if (result != 1) return result;
         }
 
+        // 1 は成功
         return 1;
     }
 }
