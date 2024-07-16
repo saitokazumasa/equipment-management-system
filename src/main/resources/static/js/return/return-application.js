@@ -200,8 +200,6 @@ function onEditCompleteButtonClick(event) {
         damageReasonElement.innerText = "";
     }
 
-    console.log(damageList);
-
     // 編集フォームを空にする
     isDamageElement.checked = false;
     damageReasonInputElement.value = "";

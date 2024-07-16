@@ -31,11 +31,6 @@ public class ReturnApplicationService implements IReturnApplicationService {
     public int execute(ReturnApplicationForm returnApplicationForm) {
         final Account account = accountsMapper.selectByMail(returnApplicationForm.mail());
 
-        System.out.println("ReturnApplicationService.execute");
-        System.out.println(returnApplicationForm.json());
-        System.out.println(returnApplicationForm.damageList());
-        System.out.println("id:"+account.getId());
-
         for (final Equipment equipment : returnApplicationForm.equipments()) {
             final CheckoutApplication checkoutApplication = checkoutApplicationsMapper.selectNotReturned(account.getId(), equipment.getId());
             final var returnApplication = new ReturnApplication(
