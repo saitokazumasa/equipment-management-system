@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PasswordChangeController {
     @GetMapping()
     public String get() {
-        return "/password/change/password_change";
+        return "password/change/password_change";
     }
 }
