@@ -28,7 +28,7 @@ public class ReturnApplicationService implements IReturnApplicationService {
 
     @Override
     @Transactional
-    public void execute(ReturnApplicationForm returnApplicationForm) {
+    public int execute(ReturnApplicationForm returnApplicationForm) {
         final Account account = accountsMapper.selectByMail(returnApplicationForm.mail());
 
         System.out.println("ReturnApplicationService.execute");
@@ -44,8 +44,11 @@ public class ReturnApplicationService implements IReturnApplicationService {
                     LocalDateTime.now()
             );
 
-            returnApplicationsMapper.insert(returnApplication);
+            final int result = returnApplicationsMapper.insert(returnApplication);
+
+            if (result != 1) return result;
         }
 
+        return 1;
     }
 }

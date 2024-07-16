@@ -26,15 +26,18 @@ public class DamageApplicationService implements IDamageApplicationService {
 
     @Override
     @Transactional
-    public void execute(ReturnApplicationForm returnApplicationForm) {
+    public int execute(ReturnApplicationForm returnApplicationForm) {
         if (!returnApplicationForm.damageList().isEmpty()) {
             final Account account = accountsMapper.selectByMail(returnApplicationForm.mail());
 
             System.out.println("DamageApplicationService.execute");
+            System.out.println(returnApplicationForm.json());
             System.out.println(returnApplicationForm.damageList());
+            System.out.println("id:"+account.getId());
 
             for (final Damage damage : returnApplicationForm.damages()) {
                 final CheckoutApplication checkoutApplication = checkoutApplicationsMapper.selectNotReturned(account.getId(), damage.getId());
+                System.out.println("checkoutApplication: " + checkoutApplication);
                 final var damagedApplication = new DamagedApplication(
                         -1,
                         checkoutApplication.getId(),
@@ -42,8 +45,11 @@ public class DamageApplicationService implements IDamageApplicationService {
                         DamagedCategory.DAMAGED,
                         LocalDateTime.now()
                 );
-                damagedApplicationMapper.insert(damagedApplication);
+                final int result = damagedApplicationMapper.insert(damagedApplication);
+
+                if (result != 1) return result;
             }
         }
+        return 1;
     }
 }
