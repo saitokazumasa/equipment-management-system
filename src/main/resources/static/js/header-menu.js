@@ -187,7 +187,6 @@ class Menu {
                 fill: 'forwards'
             }
         );
-
     }
 
     animeClose(duration) {
@@ -268,11 +267,11 @@ function onLoad() {
     if (menuElement === null) return;
 
     container = new Container(menuElement);
+    hamburgerMenuElement.addEventListener('click', onClick);
+    window.addEventListener('resize', onResize);
 }
 
 function onResize() {
-    if (hamburgerMenuElement === null) return;
-
     container.hamburgerMenu.close(100);
     clearTimeout(timeoutID);
     // timeout: 100 は適当
@@ -284,6 +283,4 @@ function onResize() {
 let container;
 let timeoutID = 0;
 
-window.onload = onLoad;
-window.onresize = onResize;
-hamburgerMenuElement?.addEventListener('click', onClick);
+window.addEventListener('load', onLoad);
