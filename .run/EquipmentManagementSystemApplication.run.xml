@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="EquipmentManagementSystemApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+    <envs>
+      <env name="DATABASE_PASSWORD" value="password" />
+      <env name="DATABASE_URL" value="jdbc:postgresql://localhost:5432/equipment_management_system" />
+      <env name="DATABASE_USER" value="postgres" />
+      <env name="PORT_NUMBER" value="8080" />
+    </envs>
+    <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+    <module name="equipment-management-system" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="jp.ac.morijyobi.equipmentmanagementsystem.EquipmentManagementSystemApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
