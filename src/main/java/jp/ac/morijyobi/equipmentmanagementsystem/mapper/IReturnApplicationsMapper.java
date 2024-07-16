@@ -10,5 +10,5 @@ public interface IReturnApplicationsMapper {
     @Insert("INSERT INTO return_applications (checkout_log_id) " +
             "VALUES (#{checkoutApplicationId})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    public void insert(final ReturnApplication returnApplication);
+    public int insert(final ReturnApplication returnApplication);
 }

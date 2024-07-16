@@ -11,5 +11,5 @@ public interface IDamagedApplicationsMapper {
     @Insert("INSERT INTO damaged_applications (checkout_application_id, reason, category) " +
             "VALUES (#{checkoutApplicationId}, #{reason}, #{category})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    public void insert(final DamagedApplication damagedApplication);
+    public int insert(final DamagedApplication damagedApplication);
 }
