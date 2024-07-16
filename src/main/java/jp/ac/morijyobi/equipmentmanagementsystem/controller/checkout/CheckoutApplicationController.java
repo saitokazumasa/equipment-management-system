@@ -17,15 +17,15 @@ import java.util.List;
 @Controller
 @RequestMapping("/checkout/application")
 public class CheckoutApplicationController {
-    private final IListEquipmentService _listEquipmentService;
-    private final IApplyCheckoutService _checkoutApplicationsService;
+    private final IListEquipmentService listEquipmentService;
+    private final IApplyCheckoutService checkoutApplicationsService;
 
     public CheckoutApplicationController(
             final IListEquipmentService listEquipmentService,
             final IApplyCheckoutService checkoutApplicationsService
     ) {
-        this._listEquipmentService = listEquipmentService;
-        this._checkoutApplicationsService = checkoutApplicationsService;
+        this.listEquipmentService = listEquipmentService;
+        this.checkoutApplicationsService = checkoutApplicationsService;
     }
 
     @GetMapping()
@@ -33,7 +33,7 @@ public class CheckoutApplicationController {
             final @AuthenticationPrincipal UserDetails userDetails,
             final Model model
     ) throws Exception {
-        final String mail = getMail(userDetails);
+        final String mail = userDetails.getUsername();
         final CheckoutApplicationForm checkoutApplicationForm = CheckoutApplicationForm.empty();
         final List<Equipment> equipmentList = listEquipment();
 
@@ -51,7 +51,7 @@ public class CheckoutApplicationController {
             final BindingResult bindingResult,
             final Model model
     ) throws Exception {
-        final String mail = getMail(userDetails);
+        final String mail = userDetails.getUsername();
 
         if (bindingResult.hasErrors()) {
             final List<Equipment> equipmentList = listEquipment();
@@ -62,23 +62,15 @@ public class CheckoutApplicationController {
             return "checkout/application/application";
         }
 
-        final int result = _checkoutApplicationsService.execute(mail, checkoutApplicationForm);
+        final int result = this.checkoutApplicationsService.execute(mail, checkoutApplicationForm);
 
         if (result == 1) return "redirect:/checkout/application/success";
 
         return "redirect:/checkout/application/failed";
     }
 
-    public String getMail(final UserDetails userDetails) throws Exception {
-        final String mail = userDetails.getUsername();
-
-        if (mail.isEmpty()) throw new Exception("mail is empty");
-
-        return mail;
-    }
-
     public List<Equipment> listEquipment() throws Exception {
-        final List<Equipment> list = _listEquipmentService.execute();
+        final List<Equipment> list = this.listEquipmentService.execute();
 
         if (list == null) throw new Exception("equipmentList is null");
         if (list.isEmpty()) throw new Exception("equipmentList is empty");

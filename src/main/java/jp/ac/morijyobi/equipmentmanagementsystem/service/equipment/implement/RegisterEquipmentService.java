@@ -15,6 +15,6 @@ public class RegisterEquipmentService implements IRegisterEquipmentService {
 
     @Override
     public int execute(final Equipment equipment) {
-        return equipmentsMapper.insert(equipment);
+        return this.equipmentsMapper.insert(equipment);
     }
 }

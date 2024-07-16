@@ -14,8 +14,8 @@ public class CheckoutApplicationResultController {
     public String success(
             final @AuthenticationPrincipal UserDetails userDetails,
             final Model model
-    ) throws Exception {
-        final String mail = getMail(userDetails);
+    ) {
+        final String mail = userDetails.getUsername();
 
         model.addAttribute(mail);
 
@@ -26,19 +26,11 @@ public class CheckoutApplicationResultController {
     public String failed(
             final @AuthenticationPrincipal UserDetails userDetails,
             final Model model
-    ) throws Exception {
-        final String mail = getMail(userDetails);
+    ) {
+        final String mail = userDetails.getUsername();
 
         model.addAttribute(mail);
 
         return "checkout/application/failed";
-    }
-
-    public String getMail(final UserDetails userDetails) throws Exception {
-        final String mail = userDetails.getUsername();
-
-        if (mail.isEmpty()) throw new Exception("mail is empty");
-
-        return mail;
     }
 }

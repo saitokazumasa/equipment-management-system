@@ -17,6 +17,6 @@ public class ListEquipmentService implements IListEquipmentService {
 
     @Override
     public List<Equipment> execute() {
-        return equipmentsMapper.selectAll();
+        return this.equipmentsMapper.selectAll();
     }
 }

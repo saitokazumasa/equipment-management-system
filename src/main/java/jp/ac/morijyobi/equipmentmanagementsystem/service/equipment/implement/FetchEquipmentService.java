@@ -15,6 +15,6 @@ public class FetchEquipmentService implements IFetchEquipmentService {
 
     @Override
     public Equipment executeById(final int id) {
-        return equipmentsMapper.selectById(id);
+        return this.equipmentsMapper.selectById(id);
     }
 }

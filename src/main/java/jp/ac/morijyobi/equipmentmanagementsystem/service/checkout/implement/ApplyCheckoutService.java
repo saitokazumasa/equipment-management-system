@@ -29,7 +29,7 @@ public class ApplyCheckoutService implements IApplyCheckoutService {
     @Override
     @Transactional
     public int execute(final String mail, final CheckoutApplicationForm checkoutApplicationForm) {
-        final Account account = accountsMapper.selectByMail(mail);
+        final Account account = this.accountsMapper.selectByMail(mail);
 
         for (final Equipment equipment : checkoutApplicationForm.equipments()) {
             final var checkoutApplication = new CheckoutApplication(
@@ -39,11 +39,13 @@ public class ApplyCheckoutService implements IApplyCheckoutService {
                     LocalDateTime.now()
             );
 
-            final int result = checkoutApplicationsMapper.insert(checkoutApplication);
+            final int result = this.checkoutApplicationsMapper.insert(checkoutApplication);
 
+            // 1 以外はエラー
             if (result != 1) return result;
         }
 
+        // 1 は成功
         return 1;
     }
 }
