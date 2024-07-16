@@ -1,7 +1,6 @@
 package jp.ac.morijyobi.equipmentmanagementsystem.controller;
 
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Equipment;
-import jp.ac.morijyobi.equipmentmanagementsystem.bean.form.CheckoutApplicationForm;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.form.ReturnApplicationForm;
 import jp.ac.morijyobi.equipmentmanagementsystem.service.IEquipmentService;
 import jp.ac.morijyobi.equipmentmanagementsystem.service.IReturnApplicationService;
@@ -36,7 +35,7 @@ public class ReturnApplicationController {
                       final @AuthenticationPrincipal UserDetails userDetails) {
         final String mail= userDetails.getUsername();
 
-        // 借りている備品を取得（返却申請中の備品は取得しない）
+        // 借りている備品を取得（返却承認されていないもののみ）
         final List<Equipment> equipments = equipmentsService.fetchLending(mail);
 
         model.addAttribute("returnApplicationForm", ReturnApplicationForm.generate(mail));
@@ -58,11 +57,21 @@ public class ReturnApplicationController {
             return "return/application/application";
         }
 
-        // TODO: 返却申請処理を実装する（DB）
-        System.out.println("damage:" + returnApplicationForm.damageList());
+        final int returnApplicationResult = returnApplicationService.execute(returnApplicationForm);
+        final int damageApplicationResult = damageApplicationService.execute(returnApplicationForm);
 
-        returnApplicationService.execute(returnApplicationForm);
-        damageApplicationService.execute(returnApplicationForm);
-        return "redirect:/return/application";
+        if (returnApplicationResult == 1 && damageApplicationResult == 1) return "redirect:/return/application/success";
+
+        return "redirect:/return/application/failed";
+    }
+
+    @GetMapping("/success")
+    public String success() {
+        return "return/application/success";
+    }
+
+    @GetMapping("/failed")
+    public String failed() {
+        return "return/application/failed";
     }
 }
