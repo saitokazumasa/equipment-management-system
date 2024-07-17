@@ -69,7 +69,7 @@ public class CheckoutApplicationController {
         return "redirect:/checkout/application/failed";
     }
 
-    public List<Equipment> listEquipment() throws Exception {
+    private List<Equipment> listEquipment() throws Exception {
         final List<Equipment> list = this.listEquipmentService.execute();
 
         if (list == null) throw new Exception("equipmentList is null");
