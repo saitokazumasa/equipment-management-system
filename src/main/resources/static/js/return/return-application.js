@@ -2,6 +2,9 @@ const ALREADY_VALUE_ERROR_MESSAGE = "既に追加されています";
 const NOT_EXIST_ID_ERROR_MESSAGE = "存在しないIDが指定されました";
 const LIST_EMPTY_MESSAGE = "備品IDを入力してください";
 
+const UNCHECKED_ERROR_MESSAGE = "チェックされていません";
+const NOT_EXIST_REASON_MESSAGE = "破損/汚損の理由を入力してください";
+
 class Callback {
     constructor(message, value, isFailed) {
         this._message = message;
@@ -66,8 +69,6 @@ class ReturnEquipmentList {
     }
 }
 
-
-// TODO:作成中
 class DamageList {
     constructor() {
         this._values = [];
@@ -81,22 +82,18 @@ class DamageList {
         const isExist = this._values.includes(id);
 
         if (!isExist) {
-            this._values.push({id:id, reason:reason});
-            return true;
-        } else {
-            return false;
+            this._values.push({id: id, reason: reason});
         }
     }
 
     delete(id) {
         const index = this._values.findIndex(a => a.id === parseInt(id));
+        this._values.splice(index, 1);
+    }
 
-        if (index !== -1) {
-            this._values.splice(index, 1);
-            return true;
-        } else {
-            return false;
-        }
+    isNotExist(id) {
+        const index = this._values.findIndex(a => a.id === parseInt(id));
+        return index === -1;
     }
 
     toJson() {
@@ -116,22 +113,27 @@ const formEquipmentListElement = document.getElementById('form-equipment-list');
 const damageList = new DamageList();
 const formDamageListElement = document.getElementById("form-damage-list");
 
-const emptyMessageElement = document.getElementById('emptyMessage');
-const errorMessageElement = document.getElementById('errorMessage');
+const emptyMessageElement = document.getElementById('empty-message');
+const errorMessageElement = document.getElementById('error-message');
 
 // 編集フォームの要素
+const popup = document.getElementById('popup');
+const overlay = document.getElementById('overlay');
 const selectedEquipmentId = document.getElementById('selected-equipment-id');
 const formEquipmentName = document.getElementById('equipment-name-input');
 const editCompleteButton = document.getElementById('edit-complete');
 const isDamageElement = document.getElementById('is-damage');
 const damageReasonInputElement = document.getElementById('damage-reason-input');
 const hiddenInputElement = document.getElementById('hidden-input');
-const popup = document.getElementById('popup');
-const overlay = document.getElementById('overlay');
+const checkErrorElement = document.getElementById('checkbox-error-message');
+const inputErrorElement = document.getElementById('input-error-message');
 
 
 emptyMessageElement.innerText = LIST_EMPTY_MESSAGE;
 errorMessageElement.innerText = "";
+
+checkErrorElement.innerText = "";
+inputErrorElement.innerText = "";
 
 function onAddButtonClick(event) {
     event.preventDefault();
@@ -199,7 +201,7 @@ function onEditButtonClick(event) {
     selectedEquipmentId.innerText = "ID:" + event.target.parentElement.id
     hiddenInputElement.value = id;
     formEquipmentName.innerText = returnEquipmentList.getById(id).name;
-    if(event.target.parentElement.getElementsByClassName('damage-reason')[0].innerText !== "") {
+    if(event.target.parentElement.getElementsByClassName('damage-reason')[0].innerText === "汚損/破損あり") {
         isDamageElement.checked = true;
     }
     damageReasonInputElement.value = event.target.parentElement.getElementsByClassName('damage-reason')[0].innerText;
@@ -220,22 +222,34 @@ function onEditCompleteButtonClick(event) {
     const isDamage = isDamageElement.checked;
     const damageReason = damageReasonInputElement.value;
 
-    if (!damageList.delete(id) && isDamage && damageReason.match(/\S/g)) {
-        damageList.add(id, damageReason);
-        damageCategoryElement.innerText = "汚損/破損あり";
-        damageReasonElement.innerText = damageReason;
+    // damageReasonが空白や改行のみかチェック
+    const damageReasonCheck = damageReason.match(/\S/g);
+
+    if (!isDamage) {
+        checkErrorElement.innerText = UNCHECKED_ERROR_MESSAGE;
     } else {
-        damageCategoryElement.innerText = "";
-        damageReasonElement.innerText = "";
+        checkErrorElement.innerText = "";
     }
 
-    // 編集フォームを空にする
-    isDamageElement.checked = false;
-    damageReasonInputElement.value = "";
+    if (damageReasonCheck === null) {
+        inputErrorElement.innerText = NOT_EXIST_REASON_MESSAGE;
+    } else {
+        inputErrorElement.innerText = "";
+    }
 
-    formDamageListElement.value = damageList.toJson();
+    if (damageList.isNotExist(id) && isDamage && damageReasonCheck) {
+        damageList.delete(id);
 
-    closePopupForm();
+        damageList.add(id, damageReason);
+
+        damageCategoryElement.innerText = "汚損/破損あり";
+        damageReasonElement.innerText = damageReason;
+        formDamageListElement.value = damageList.toJson();
+
+        closePopupForm();
+    }
+
+    console.log(damageList.get());
 }
 
 function openPopupForm() {
@@ -244,8 +258,6 @@ function openPopupForm() {
 }
 
 function closePopupForm() {
-    selectedEquipmentId.innerText = "";
-    hiddenInputElement.value = "";
     popup.style.display = 'none';
     overlay.style.display = 'none';
 }

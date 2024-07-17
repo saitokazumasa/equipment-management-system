@@ -13,8 +13,8 @@
     <button type="submit" id="addButton">+</button>
 </form>
 
-<div id="errorMessage">Error Message</div>
-<div id="emptyMessage">Empty Message</div>
+<div id="error-message">Error Message</div>
+<div id="empty-message">Empty Message</div>
 
 <div id="equipment-list">
     <!-- 追加ボタンが押されると、ここに備品情報が追加される。 -->
@@ -28,7 +28,7 @@
 </form>
 
 <!--
-ポップアップ用の入力欄
+編集用の入力欄
 TODO:HTMlの修正
 -->
 <div id="overlay" class="overlay"></div>
@@ -38,10 +38,10 @@ TODO:HTMlの修正
         <div id="equipment-name-input">備品名</div>
         <form action="#">
             <input type="hidden" id="hidden-input">
-            <label>
-                <input type="checkbox" value="1" id="is-damage">破損/汚損あり
-            </label>
-            <textarea id="damage-reason-input"></textarea>
+            <input type="checkbox" value="1" id="is-damage"><label for="is-damage">破損/汚損あり</label><br>
+            <div id="checkbox-error-message">check error</div>
+            <textarea id="damage-reason-input" placeholder="汚損/破損事由を入力"></textarea><br>
+            <div id="input-error-message">input error</div><br>
             <button id="edit-complete">完了</button>
         </form>
     </div>
