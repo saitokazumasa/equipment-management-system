@@ -66,6 +66,44 @@ class ReturnEquipmentList {
     }
 }
 
+
+// TODO:作成中
+class DamageList {
+    constructor() {
+        this._values = [];
+    }
+
+    get() {
+        return this._values;
+    }
+
+    add(id, reason) {
+        const isExist = this._values.includes(id);
+
+        if (!isExist) {
+            this._values.push({id:id, reason:reason});
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    delete(id) {
+        const index = this._values.findIndex(a => a.id === parseInt(id));
+
+        if (index !== -1) {
+            this._values.splice(index, 1);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    toJson() {
+        return JSON.stringify(this._values);
+    }
+}
+
 // equipmentList は Java Spring の Model から送られてくる DB の備品リストの値
 const returnEquipmentList = new ReturnEquipmentList(equipmentList);
 
@@ -75,7 +113,7 @@ const addButtonElement = document.getElementById('addButton');
 const equipmentListElement = document.getElementById('equipment-list');
 const formEquipmentListElement = document.getElementById('form-equipment-list');
 
-const damageList = [];
+const damageList = new DamageList();
 const formDamageListElement = document.getElementById("form-damage-list");
 
 const emptyMessageElement = document.getElementById('emptyMessage');
@@ -157,10 +195,6 @@ function onEditButtonClick(event) {
     // 親要素に備品IDがある
     const id = parseInt(event.target.parentElement.id);
 
-    // 編集フォームを表示する
-    popup.style.display = 'block';
-    overlay.style.display = 'block';
-
     // 編集フォームに値をセットする
     selectedEquipmentId.innerText = "ID:" + event.target.parentElement.id
     hiddenInputElement.value = id;
@@ -169,6 +203,9 @@ function onEditButtonClick(event) {
         isDamageElement.checked = true;
     }
     damageReasonInputElement.value = event.target.parentElement.getElementsByClassName('damage-reason')[0].innerText;
+
+    // 編集フォームを表示する
+    openPopupForm();
 }
 
 function onEditCompleteButtonClick(event) {
@@ -183,16 +220,8 @@ function onEditCompleteButtonClick(event) {
     const isDamage = isDamageElement.checked;
     const damageReason = damageReasonInputElement.value;
 
-    // damageListに対象の備品IDに関する異常の情報が含まれているかを確認する
-    const index = damageList.findIndex(a => a.id === parseInt(id));
-
-    damageList.splice(index, 1);
-
-    if (index === -1　&& isDamage && damageReason.match(/\S/g)) {
-        damageList.push({
-            id: id,
-            reason: damageReason
-        });
+    if (!damageList.delete(id) && isDamage && damageReason.match(/\S/g)) {
+        damageList.add(id, damageReason);
         damageCategoryElement.innerText = "汚損/破損あり";
         damageReasonElement.innerText = damageReason;
     } else {
@@ -204,9 +233,14 @@ function onEditCompleteButtonClick(event) {
     isDamageElement.checked = false;
     damageReasonInputElement.value = "";
 
-    formDamageListElement.value = JSON.stringify(damageList);
+    formDamageListElement.value = damageList.toJson();
 
     closePopupForm();
+}
+
+function openPopupForm() {
+    popup.style.display = 'block';
+    overlay.style.display = 'block';
 }
 
 function closePopupForm() {
@@ -215,7 +249,6 @@ function closePopupForm() {
     popup.style.display = 'none';
     overlay.style.display = 'none';
 }
-
 
 addButtonElement.addEventListener('click', onAddButtonClick);
 equipmentListElement.addEventListener('click', onDeleteButtonClick);
