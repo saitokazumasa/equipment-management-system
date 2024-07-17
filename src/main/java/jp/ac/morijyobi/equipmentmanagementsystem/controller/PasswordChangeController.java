@@ -15,7 +15,7 @@ public class PasswordChangeController {
 
     @PostMapping()
     public String post() {
-        final boolean result = false;
+        final boolean result = true;
 
         if (result) {
             return "password/change/success";
