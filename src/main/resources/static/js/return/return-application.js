@@ -125,15 +125,16 @@ const editCompleteButton = document.getElementById('edit-complete');
 const isDamageElement = document.getElementById('is-damage');
 const damageReasonInputElement = document.getElementById('damage-reason-input');
 const hiddenInputElement = document.getElementById('hidden-input');
-const checkErrorElement = document.getElementById('checkbox-error-message');
-const inputErrorElement = document.getElementById('input-error-message');
+const checkErrorMessageElement = document.getElementById('checkbox-error-message');
+const inputErrorMessageElement = document.getElementById('input-error-message');
 
-
+// 備品を追加するフォームのメッセージ
 emptyMessageElement.innerText = LIST_EMPTY_MESSAGE;
 errorMessageElement.innerText = "";
 
-checkErrorElement.innerText = "";
-inputErrorElement.innerText = "";
+// 編集フォームのメッセージ
+checkErrorMessageElement.innerText = "";
+inputErrorMessageElement.innerText = "";
 
 function onAddButtonClick(event) {
     event.preventDefault();
@@ -180,7 +181,6 @@ function onDeleteButtonClick(event) {
 
     if (callback.isFailed()) return;
 
-    // フォームの value を更新
     formEquipmentListElement.value = returnEquipmentList.toJson()
 
     event.target.parentElement.remove();
@@ -204,7 +204,6 @@ function onEditButtonClick(event) {
     isDamageElement.checked = event.target.parentElement.getElementsByClassName('damage-reason')[0].innerText !== "";
     damageReasonInputElement.value = event.target.parentElement.getElementsByClassName('damage-reason')[0].innerText;
 
-    // 編集フォームを表示する
     openPopupForm();
 }
 
@@ -213,43 +212,38 @@ function onEditCompleteButtonClick(event) {
 
     const id = hiddenInputElement.value;
 
-    // 対象の備品IDを持つdiv要素の中にある子要素を取得する
-    const damageCategoryElement = document.getElementById(id).getElementsByClassName('damage-state')[0];
-    const damageReasonElement = document.getElementById(id).getElementsByClassName('damage-reason')[0];
+    // 対象の備品IDを持つdiv要素から子要素を取得する
+    const damageCategoryElement = document.getElementById(id.toString()).getElementsByClassName('damage-state')[0];
+    const damageReasonElement = document.getElementById(id.toString()).getElementsByClassName('damage-reason')[0];
 
+    // 編集フォームの値を取得
     const isDamage = isDamageElement.checked;
     const damageReason = damageReasonInputElement.value;
 
     // damageReasonに文字列が含まれているかチェック（空白や改行のみの場合はnull）
     const damageReasonCheck = damageReason.match(/\S/g);
 
+    checkErrorMessageElement.innerText = "";
+    inputErrorMessageElement.innerText = "";
 
-    // TODO: if文の条件を整理する
-    if (!isDamage) {
-        checkErrorElement.innerText = UNCHECKED_ERROR_MESSAGE;
-    } else {
-        checkErrorElement.innerText = "";
-    }
-
-    if (damageReasonCheck === null) {
-        inputErrorElement.innerText = NOT_EXIST_REASON_MESSAGE;
-    } else {
-        inputErrorElement.innerText = "";
-    }
+    if (!isDamage) checkErrorMessageElement.innerText = UNCHECKED_ERROR_MESSAGE;
+    if (damageReasonCheck === null) inputErrorMessageElement.innerText = NOT_EXIST_REASON_MESSAGE;
 
     if (!isDamage && damageReasonCheck === null) {
         damageCategoryElement.innerText = "";
         damageReasonElement.innerText = "";
         closePopupForm();
-    } else if (damageList.isNotExist(id) && isDamage && damageReasonCheck) {
+        return;
+    }
+
+    if (damageList.isNotExist(id) && isDamage && damageReasonCheck) {
         damageList.delete(id);
 
         damageList.add(id, damageReason);
+        formDamageListElement.value = damageList.toJson();
 
         damageCategoryElement.innerText = "汚損/破損あり";
         damageReasonElement.innerText = damageReason;
-        formDamageListElement.value = damageList.toJson();
-
         closePopupForm();
     }
 }
@@ -260,8 +254,8 @@ function openPopupForm() {
 }
 
 function closePopupForm() {
-    inputErrorElement.innerText = "";
-    checkErrorElement.innerText = "";
+    checkErrorMessageElement.innerText = "";
+    inputErrorMessageElement.innerText = "";
     popup.style.display = 'none';
     overlay.style.display = 'none';
 }
