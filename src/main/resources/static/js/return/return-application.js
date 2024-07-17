@@ -3,7 +3,7 @@ const NOT_EXIST_ID_ERROR_MESSAGE = "存在しないIDが指定されました";
 const LIST_EMPTY_MESSAGE = "備品IDを入力してください";
 
 const UNCHECKED_ERROR_MESSAGE = "チェックされていません";
-const NOT_EXIST_REASON_MESSAGE = "破損/汚損の理由を入力してください";
+const NOT_EXIST_REASON_MESSAGE = "汚損/破損の理由を入力してください";
 
 class Callback {
     constructor(message, value, isFailed) {
@@ -201,9 +201,7 @@ function onEditButtonClick(event) {
     selectedEquipmentId.innerText = "ID:" + event.target.parentElement.id
     hiddenInputElement.value = id;
     formEquipmentName.innerText = returnEquipmentList.getById(id).name;
-    if(event.target.parentElement.getElementsByClassName('damage-reason')[0].innerText === "汚損/破損あり") {
-        isDamageElement.checked = true;
-    }
+    isDamageElement.checked = event.target.parentElement.getElementsByClassName('damage-reason')[0].innerText !== "";
     damageReasonInputElement.value = event.target.parentElement.getElementsByClassName('damage-reason')[0].innerText;
 
     // 編集フォームを表示する
@@ -222,9 +220,11 @@ function onEditCompleteButtonClick(event) {
     const isDamage = isDamageElement.checked;
     const damageReason = damageReasonInputElement.value;
 
-    // damageReasonが空白や改行のみかチェック
+    // damageReasonに文字列が含まれているかチェック（空白や改行のみの場合はnull）
     const damageReasonCheck = damageReason.match(/\S/g);
 
+
+    // TODO: if文の条件を整理する
     if (!isDamage) {
         checkErrorElement.innerText = UNCHECKED_ERROR_MESSAGE;
     } else {
@@ -237,7 +237,11 @@ function onEditCompleteButtonClick(event) {
         inputErrorElement.innerText = "";
     }
 
-    if (damageList.isNotExist(id) && isDamage && damageReasonCheck) {
+    if (!isDamage && damageReasonCheck === null) {
+        damageCategoryElement.innerText = "";
+        damageReasonElement.innerText = "";
+        closePopupForm();
+    } else if (damageList.isNotExist(id) && isDamage && damageReasonCheck) {
         damageList.delete(id);
 
         damageList.add(id, damageReason);
@@ -248,8 +252,6 @@ function onEditCompleteButtonClick(event) {
 
         closePopupForm();
     }
-
-    console.log(damageList.get());
 }
 
 function openPopupForm() {
@@ -258,6 +260,8 @@ function openPopupForm() {
 }
 
 function closePopupForm() {
+    inputErrorElement.innerText = "";
+    checkErrorElement.innerText = "";
     popup.style.display = 'none';
     overlay.style.display = 'none';
 }
