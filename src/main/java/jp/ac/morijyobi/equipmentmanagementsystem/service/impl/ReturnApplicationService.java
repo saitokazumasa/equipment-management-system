@@ -20,9 +20,12 @@ public class ReturnApplicationService implements IReturnApplicationService {
     private final IAccountsMapper accountsMapper;
     private final ICheckoutApplicationsMapper checkoutApplicationsMapper;
 
-    public ReturnApplicationService(final IReturnApplicationsMapper returnApplicationsMapper, final IAccountsMapper accountsMapper, IAccountsMapper accountsMapper1, ICheckoutApplicationsMapper checkoutApplicationsMapper) {
+    public ReturnApplicationService(
+            final IReturnApplicationsMapper returnApplicationsMapper,
+            final IAccountsMapper accountsMapper,
+            final ICheckoutApplicationsMapper checkoutApplicationsMapper) {
         this.returnApplicationsMapper = returnApplicationsMapper;
-        this.accountsMapper = accountsMapper1;
+        this.accountsMapper = accountsMapper;
         this.checkoutApplicationsMapper = checkoutApplicationsMapper;
     }
 

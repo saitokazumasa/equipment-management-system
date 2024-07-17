@@ -14,7 +14,7 @@ public class EquipmentService implements IEquipmentService {
     private final IEquipmentsMapper equipmentsMapper;
     private final IAccountsMapper accountsMapper;
 
-    public EquipmentService(final IEquipmentsMapper equipmentsMapper, IAccountsMapper accountsMapper) {
+    public EquipmentService(final IEquipmentsMapper equipmentsMapper, final IAccountsMapper accountsMapper) {
         this.equipmentsMapper = equipmentsMapper;
         this.accountsMapper = accountsMapper;
     }
