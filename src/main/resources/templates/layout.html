@@ -71,7 +71,7 @@
                     <a class="block mt-3 py-4 text-center text-primary text-3xl font-bold border-2 border-primary">アカウント一覧</a>
                 </li>
                 <li sec:authorize="hasRole('SYSTEM_MANAGER')" class="w-full">
-                    <a class="block mt-3 py-4 text-center text-primary text-3xl font-bold border-2 border-primary">アカウント登録</a>
+                    <a th:href="@{/account/registration}" class="block mt-3 py-4 text-center text-primary text-3xl font-bold border-2 border-primary">アカウント登録</a>
                 </li>
                 <li class="w-full">
                     <div class="h-1 mt-10 border-b-2 border-primary"></div>
