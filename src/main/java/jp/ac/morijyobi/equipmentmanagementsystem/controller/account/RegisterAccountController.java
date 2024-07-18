@@ -1,6 +1,7 @@
 package jp.ac.morijyobi.equipmentmanagementsystem.controller.account;
 
-import jp.ac.morijyobi.equipmentmanagementsystem.bean.form.TemporaryAccountRegistrationForm;
+import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.TemporaryAccount;
+import jp.ac.morijyobi.equipmentmanagementsystem.bean.form.RegisterTemporaryAccountForm;
 import jp.ac.morijyobi.equipmentmanagementsystem.constant.AccountCategory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,19 +19,19 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/account/registration")
-public class AccountRegistrationController {
+public class RegisterAccountController {
     @GetMapping()
     public String get(
             final @AuthenticationPrincipal UserDetails userDetails,
             final Model model
     ) {
         final String mail = userDetails.getUsername();
-        final TemporaryAccountRegistrationForm temporaryAccountRegistrationForm = TemporaryAccountRegistrationForm.empty();
         final List<AccountCategory> accountCategoryList = listAccountCategory();
+        final RegisterTemporaryAccountForm registerTemporaryAccountForm = RegisterTemporaryAccountForm.empty();
 
         model.addAttribute(mail);
-        model.addAttribute(temporaryAccountRegistrationForm);
         model.addAttribute(accountCategoryList);
+        model.addAttribute(registerTemporaryAccountForm);
 
         return "account/registration/registration";
     }
@@ -38,29 +39,30 @@ public class AccountRegistrationController {
     @PostMapping()
     public String post(
             final @AuthenticationPrincipal UserDetails userDetails,
-            final @Validated TemporaryAccountRegistrationForm temporaryAccountRegistrationForm,
+            final @Validated RegisterTemporaryAccountForm registerTemporaryAccountForm,
             final BindingResult bindingResult,
             final Model model
     ) {
-        if (bindingResult.hasErrors()) {
-            final String mail = userDetails.getUsername();
-            final List<AccountCategory> accountCategoryList = listAccountCategory();
+        final String mail = userDetails.getUsername();
+        final List<AccountCategory> accountCategoryList = listAccountCategory();
 
-            model.addAttribute(mail);
-            model.addAttribute(accountCategoryList);
+        model.addAttribute(mail);
+        model.addAttribute(accountCategoryList);
 
-            return "account/registration/registration";
-        }
+        if (bindingResult.hasErrors()) return "account/registration/registration";
 
-        // TODO: 確認画面に飛ばす
-        return "account/registration/registration";
+        final TemporaryAccount[] temporaryAccounts = registerTemporaryAccountForm.temporaryAccounts();
+        final List<TemporaryAccount> temporaryAccountList = Arrays.asList(temporaryAccounts);
+        model.addAttribute(temporaryAccountList);
+
+        return "account/registration/confirm";
     }
 
     private List<AccountCategory> listAccountCategory() {
         final AccountCategory[] categories = AccountCategory.values();
         // asList() から返ってくる List は要素数が不変のため new ArrayList() する
         final var categoryList = Arrays.asList(categories);
-        final var newCategoryList = new ArrayList<AccountCategory>(categoryList);
+        final var newCategoryList = new ArrayList<>(categoryList);
 
         // ここでは学生を取り扱わないため削除しておく
         newCategoryList.remove(AccountCategory.STUDENT);

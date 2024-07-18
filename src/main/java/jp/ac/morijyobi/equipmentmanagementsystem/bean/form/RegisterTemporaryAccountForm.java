@@ -6,7 +6,7 @@ import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.TemporaryAccount;
 import jp.ac.morijyobi.equipmentmanagementsystem.util.JsonUtil;
 import lombok.Getter;
 
-public class TemporaryAccountRegistrationForm {
+public class RegisterTemporaryAccountForm {
     @Getter
     @NotBlank
     @Size(min = 1)
@@ -14,13 +14,13 @@ public class TemporaryAccountRegistrationForm {
 
     private final JsonUtil<TemporaryAccount[]> jsonUtil;
 
-    public TemporaryAccountRegistrationForm(final String json) {
+    public RegisterTemporaryAccountForm(final String json) {
         this.json = json;
         this.jsonUtil = new JsonUtil<>(TemporaryAccount[].class);
     }
 
-    public static TemporaryAccountRegistrationForm empty() {
-        return new TemporaryAccountRegistrationForm("");
+    public static RegisterTemporaryAccountForm empty() {
+        return new RegisterTemporaryAccountForm("");
     }
 
     public TemporaryAccount[] temporaryAccounts() {

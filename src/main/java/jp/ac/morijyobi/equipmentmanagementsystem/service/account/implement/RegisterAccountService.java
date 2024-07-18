@@ -2,7 +2,7 @@ package jp.ac.morijyobi.equipmentmanagementsystem.service.account.implement;
 
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Account;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.TemporaryAccount;
-import jp.ac.morijyobi.equipmentmanagementsystem.bean.form.TemporaryAccountRegistrationForm;
+import jp.ac.morijyobi.equipmentmanagementsystem.bean.form.RegisterTemporaryAccountForm;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IAccountsMapper;
 import jp.ac.morijyobi.equipmentmanagementsystem.service.account.IRegisterAccountService;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,8 +16,8 @@ public class RegisterAccountService implements IRegisterAccountService {
 
     @Override
     @Transactional
-    public int execute(final TemporaryAccountRegistrationForm temporaryAccountRegistrationForm) {
-        for (final TemporaryAccount temporaryAccount : temporaryAccountRegistrationForm.temporaryAccounts()) {
+    public int execute(final RegisterTemporaryAccountForm registerTemporaryAccountForm) {
+        for (final TemporaryAccount temporaryAccount : registerTemporaryAccountForm.temporaryAccounts()) {
             final Account account = temporaryAccount.toAccount();
             final int result = this.accountsMapper.insert(account);
 
