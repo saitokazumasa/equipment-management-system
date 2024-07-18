@@ -8,7 +8,7 @@
 </th:block>
 <th:block th:replace="layout :: header"/>
 
-<main class="w-2/5 min-w-96 mx-auto">
+<main class="w-2/5 mx-auto">
     <div class="w-full flex justify-center my-10 ">
         <h1 class="w-11/12 py-1.5 text-center text-4xl font-bold border-b-2 border-primary">ログイン</h1>
     </div>
@@ -39,16 +39,17 @@
                    class="w-full py-2 text-center border-4 border-primary outline-0 rounded-md bg-white">
         </div>
 
-        <div class="flex justify-center my-10">
+        <div class="flex justify-center mt-10 mb-5">
             <button type="submit"
                     class="px-20 py-2 text-primary font-semibold rounded-full bg-secondary whitespace-nowrap">ログイン
             </button>
         </div>
 
-        <div class="flex justify-center my-5">
-            <a href="#" class="text-primary underline">パスワードを忘れた方はこちら</a>
+        <div class="flex justify-center">
+            <a th:href="@{/password_reset}" class="text-primary underline">パスワードを忘れた方はこちら</a>
         </div>
     </form>
 </main>
 </body>
 </html>
+<th:block th:replace="layout :: scripts" />

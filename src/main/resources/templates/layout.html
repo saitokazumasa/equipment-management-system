@@ -11,19 +11,18 @@
 <body>
 
 <th:block th:fragment="message(category, content)">
-    <div class="absolute left-1/2 flex justify-center items-center pl-4 pr-6 py-3 font-semibold rounded-xl bg-white shadow-lg"
+    <div class="absolute top-2 left-1/2 flex justify-center items-center pl-4 pr-6 py-3 font-semibold rounded-xl bg-white shadow-lg"
          style="transform: translate(-50%, 0);">
 
-        <!-- TODO: アイコンを置き換える -->
         <th:block th:if="${category} == 'SUCCESS'">
             <div class="flex justify-center items-center bg-success rounded-full w-9 h-9">
-                <img src="/images/CameraIcon.png" alt="チェックアイコン" class="w-3/5 h-3/5">
+                <img src="/images/check-icon.png" alt="チェックアイコン" class="w-3/5 h-3/5">
             </div>
         </th:block>
         <!-- TODO: アイコンを置き換える -->
         <th:block th:if="${category} == 'ERROR'">
             <div class="flex justify-center items-center bg-error rounded-full w-9 h-9">
-                <img src="/images/CameraIcon.png" alt="バツアイコン" class="w-3/5 h-3/5">
+                <img src="/images/check-icon.png" alt="バツアイコン" class="w-3/5 h-3/5">
             </div>
         </th:block>
         <span class="ml-2" th:text="${content}">メッセージ</span>
@@ -31,24 +30,67 @@
 </th:block>
 
 <th:block th:fragment="header">
-    <header class="w-10/12 h-9 flex justify-between items-center mx-auto mt-3 mb-5">
-        <a href="#" sec:authorize="isAnonymous()" class="text-primary underline">返却はこちら</a>
-
-        <a href="#" sec:authorize="isAuthenticated()" class="w-fit h-fit">
-            <div class="w-9 h-2 rounded-full bg-secondary"></div>
-            <div class="w-9 h-2 mt-1 rounded-full bg-secondary"></div>
-            <div class="w-9 h-2 mt-1 rounded-full bg-secondary"></div>
-        </a>
-
-        <div sec:authorize="isAuthenticated()">
-            <a href="#" class="flex justify-center items-center">
-                <span class="text-gray">アカウント名</span>
-                <div class="flex justify-center items-center ml-2 bg-secondary rounded-full w-9 h-9">
-                    <img src="/images/account-icon.png" alt="アカウントアイコン" class="w-3/5 h-3/5">
-                </div>
-            </a>
+    <header class="flex justify-center items-center w-full h-12">
+        <div sec:authorize="isAnonymous()" class="w-10/12 h-9 flex items-center">
+            <a href="#" class="text-primary underline">返却はこちら</a>
         </div>
+
+        <div sec:authorize="isAuthenticated()" class="flex justify-between w-10/12 h-9 z-50">
+            <ul class="w-9 h-9" id="hamburger-menu">
+                <li class="absolute w-9 h-2 rounded-full bg-secondary" id="top-hamburger-line"></li>
+                <li class="absolute w-9 h-2 rounded-full bg-secondary" id="middle-hamburger-line"></li>
+                <li class="absolute w-9 h-2 rounded-full bg-secondary" id="bottom-hamburger-line"></li>
+            </ul>
+
+            <div>
+                <a class="flex justify-center items-center">
+                    <span class="text-gray" th:text="${mail}">xxx@mail.com</span>
+                    <div class="flex justify-center items-center ml-2 bg-secondary rounded-full w-9 h-9">
+                        <img src="/images/account-icon.png" alt="アカウントアイコン" class="w-3/5 h-3/5">
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <nav sec:authorize="isAuthenticated()" class="absolute top-0 left-0 w-screen h-screen bg-white z-0" style="width: 50vw; min-width: 500px"
+             id="menu" hidden>
+            <ul class="w-10/12 mt-14 mx-auto">
+                <li class="w-full">
+                    <a th:href="@{/checkout/application}" class="block py-4 text-center text-primary text-4xl font-bold border-2 border-primary">借りる</a>
+                </li>
+                <li class="w-full">
+                    <a class="block mt-3 py-4 text-center text-primary text-4xl font-bold border-2 border-primary">返す</a>
+                </li>
+                <li class="w-full">
+                    <a class="block mt-10 py-4 text-center text-primary text-3xl font-bold border-2 border-primary">備品一覧</a>
+                </li>
+                <li sec:authorize="hasAnyRole('EQUIPMENT_MANAGER', 'SYSTEM_MANAGER')" class="w-full">
+                    <a class="block mt-3 py-4 text-center text-primary text-3xl font-bold border-2 border-primary">備品登録</a>
+                </li>
+                <li sec:authorize="hasRole('SYSTEM_MANAGER')" class="w-full">
+                    <a class="block mt-3 py-4 text-center text-primary text-3xl font-bold border-2 border-primary">アカウント一覧</a>
+                </li>
+                <li sec:authorize="hasRole('SYSTEM_MANAGER')" class="w-full">
+                    <a class="block mt-3 py-4 text-center text-primary text-3xl font-bold border-2 border-primary">アカウント登録</a>
+                </li>
+                <li class="w-full">
+                    <div class="h-1 mt-10 border-b-2 border-primary"></div>
+                </li>
+                <li class="w-full">
+                    <form th:action="@{/logout}" method="post">
+                        <button type="submit"
+                                class="block w-full mt-10 py-4 text-center text-error text-3xl font-bold border-2 border-error">
+                            ログアウト
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </nav>
     </header>
 </th:block>
 </body>
 </html>
+<th:block th:fragment="scripts">
+    <script src="/js/header-menu.js"></script>
+    <script src="/js/label.js"></script>
+</th:block>

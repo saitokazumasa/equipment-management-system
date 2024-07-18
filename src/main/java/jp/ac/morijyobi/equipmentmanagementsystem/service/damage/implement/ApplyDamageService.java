@@ -1,4 +1,4 @@
-package jp.ac.morijyobi.equipmentmanagementsystem.service.impl;
+package jp.ac.morijyobi.equipmentmanagementsystem.service.damage.implement;
 
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.*;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.form.ReturnApplicationForm;
@@ -6,19 +6,19 @@ import jp.ac.morijyobi.equipmentmanagementsystem.constant.DamagedCategory;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IAccountsMapper;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.ICheckoutApplicationsMapper;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IDamagedApplicationsMapper;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.IDamageApplicationService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.damage.IApplyDamageService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
 @Service
-public class DamageApplicationService implements IDamageApplicationService {
+public class ApplyDamageService implements IApplyDamageService {
     private final IDamagedApplicationsMapper damagedApplicationMapper;
     private final IAccountsMapper accountsMapper;
     private final ICheckoutApplicationsMapper checkoutApplicationsMapper;
 
-    public DamageApplicationService(IDamagedApplicationsMapper damagedApplicationMapper, IAccountsMapper accountsMapper, ICheckoutApplicationsMapper checkoutApplicationsMapper) {
+    public ApplyDamageService(IDamagedApplicationsMapper damagedApplicationMapper, IAccountsMapper accountsMapper, ICheckoutApplicationsMapper checkoutApplicationsMapper) {
         this.damagedApplicationMapper = damagedApplicationMapper;
         this.accountsMapper = accountsMapper;
         this.checkoutApplicationsMapper = checkoutApplicationsMapper;

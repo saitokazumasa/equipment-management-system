@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Options;
 
 @Mapper
 public interface IEditLogsMapper {
-
     @Insert("INSERT INTO edit_logs (equipment_id, account_id, reason, before_equipment_data, after_equipment_data) " +
             "VALUES (#{equipmentId}, #{accountId}, #{reason}, #{beforeEquipmentData}, #{afterEquipmentData})")
     @Options(useGeneratedKeys = true, keyProperty = "id")

@@ -1,0 +1,10 @@
+package jp.ac.morijyobi.equipmentmanagementsystem.service.checkout;
+
+import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.CheckoutApplication;
+import jp.ac.morijyobi.equipmentmanagementsystem.bean.form.CheckoutApplicationForm;
+
+public interface IApplyCheckoutService {
+    public int execute(final String mail, final CheckoutApplicationForm checkoutApplicationForm);
+
+    CheckoutApplication executeNotReturned(final String mail, final int equipmentId);
+}

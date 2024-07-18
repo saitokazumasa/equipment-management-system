@@ -1,10 +1,11 @@
-package jp.ac.morijyobi.equipmentmanagementsystem.controller;
+package jp.ac.morijyobi.equipmentmanagementsystem.controller.toReturn;
 
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Equipment;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.form.ReturnApplicationForm;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.IEquipmentService;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.IReturnApplicationService;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.impl.DamageApplicationService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.damage.IApplyDamageService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.equipment.IFetchEquipmentService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.toReturn.IApplyReturnService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.damage.implement.ApplyDamageService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -20,11 +21,11 @@ import java.util.List;
 @Controller
 @RequestMapping("/return/application")
 public class ReturnApplicationController {
-    private final IEquipmentService equipmentsService;
-    private final IReturnApplicationService returnApplicationService;
-    private final DamageApplicationService damageApplicationService;
+    private final IFetchEquipmentService equipmentsService;
+    private final IApplyReturnService returnApplicationService;
+    private final IApplyDamageService damageApplicationService;
 
-    public ReturnApplicationController(IEquipmentService equipmentsService, IReturnApplicationService returnApplicationService, DamageApplicationService damageApplicationService) {
+    public ReturnApplicationController(IFetchEquipmentService equipmentsService, IApplyReturnService returnApplicationService, ApplyDamageService damageApplicationService) {
         this.equipmentsService = equipmentsService;
         this.returnApplicationService = returnApplicationService;
         this.damageApplicationService = damageApplicationService;
@@ -36,7 +37,7 @@ public class ReturnApplicationController {
         final String mail= userDetails.getUsername();
 
         // 借りている備品を取得（返却承認されていないもののみ）
-        final List<Equipment> equipments = equipmentsService.fetchLending(mail);
+        final List<Equipment> equipments = equipmentsService.executeLending(mail);
 
         model.addAttribute("returnApplicationForm", ReturnApplicationForm.generate(mail));
         model.addAttribute("mail", mail);
@@ -52,7 +53,7 @@ public class ReturnApplicationController {
                        final @AuthenticationPrincipal UserDetails userDetails) {
         if (bindingResult.hasErrors()) {
             final String mail= userDetails.getUsername();
-            final List<Equipment> equipments = equipmentsService.fetchLending(mail);
+            final List<Equipment> equipments = equipmentsService.executeLending(mail);
             model.addAttribute("equipmentList", equipments);
             return "return/application/application";
         }

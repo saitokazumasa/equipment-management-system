@@ -1,3 +1,10 @@
+const idInputElement = document.getElementById('idInput');
+const addButtonElement = document.getElementById('addButton');
+const equipmentListElement = document.getElementById('equipment-list');
+const formEquipmentListElement = document.getElementById('form-equipment-list');
+const emptyMessageElement = document.getElementById('emptyMessage');
+const errorMessageElement = document.getElementById('errorMessage');
+
 const ALREADY_VALUE_ERROR_MESSAGE = "既に追加されています";
 const NOT_EXIST_ID_ERROR_MESSAGE = "存在しないIDが指定されました";
 const LIST_EMPTY_MESSAGE = "備品IDを入力してください";
@@ -22,14 +29,10 @@ class Callback {
     }
 }
 
-class UseEquipmentList {
+class CheckoutEquipmentList {
     constructor(equipments) {
         this._equipments = equipments;
         this._values = new Array(0);
-    }
-
-    get() {
-        return this._values;
     }
 
     toJson() {
@@ -85,25 +88,10 @@ class ReturnDate {
     }
 }
 
-// equipmentList は Java Spring の Model から送られてくる DB の備品リストの値
-const useEquipmentList = new UseEquipmentList(equipmentList);
-
-const idInputElement = document.getElementById('idInput');
-const addButtonElement = document.getElementById('addButton');
-
-const equipmentListElement = document.getElementById('equipment-list');
-const formEquipmentListElement = document.getElementById('form-equipment-list');
-
-const emptyMessageElement = document.getElementById('emptyMessage');
-const errorMessageElement = document.getElementById('errorMessage');
-
-emptyMessageElement.innerText = LIST_EMPTY_MESSAGE;
-errorMessageElement.innerText = "";
-
 function onAddButtonClick(event) {
     event.preventDefault();
 
-    const callback = useEquipmentList.add(idInputElement.value);
+    const callback = checkoutEquipmentList.add(idInputElement.value);
 
     // メッセージを更新
     errorMessageElement.innerText = callback.message();
@@ -113,19 +101,30 @@ function onAddButtonClick(event) {
     if (callback.isFailed()) return;
 
     // フォームの value を更新
-    formEquipmentListElement.value = useEquipmentList.toJson();
+    formEquipmentListElement.value = checkoutEquipmentList.toJson();
 
     // 表示
     const equipment = callback.value();
     const returnDate = new ReturnDate(equipment.lendingPeriod);
 
-    // TODO: レイアウトを整える
     const output = `
-        <div id="${equipment.id}">
-            ID:${equipment.id}
-            備品名:${equipment.name}
-            返却期日:${returnDate.get()}まで（${equipment.lendingPeriod}日）
-            <button class="delete-button">✕</button>
+        <div id="${equipment.id}" class="parent mb-5 p-3 bg-white">
+            <div class="flex justify-between">
+                <p class="text-sm text-gray">${equipment.id}</p>
+                <button type="submit"
+                        class="delete-button flex justify-center items-center w-4 h-4">
+                    <div>
+                        <div class="delete-button relative w-4 h-1 rounded-full bg-error rotate-45" style="top: 0.125rem;"></div>
+                        <div class="delete-button relative w-4 h-1 rounded-full bg-error" style="top: -0.125rem; rotate: -45deg"></div>
+                    </div>
+                </button>
+            </div>
+            <p class="text-xl">${equipment.name}</p>
+            <p class="pt-2 text-sm text-gray">返却期日</p>
+            <p>
+                <span class="text-xl">${returnDate.get()}</span>
+                <span class="text-sm text-gray">まで（${equipment.lendingPeriod}日）</span>
+            </p>
         </div>
     `;
     equipmentListElement.innerHTML += output;
@@ -134,11 +133,10 @@ function onAddButtonClick(event) {
 function onDeleteButtonClick(event) {
     event.preventDefault();
 
-    if (event.target.className !== 'delete-button') return;
+    if (!event.target.classList.contains('delete-button')) return;
 
-    // 親要素に備品IDがある
-    const id = event.target.parentElement.id;
-    const callback = useEquipmentList.delete(id);
+    const parent = event.target.closest('.parent');
+    const callback = checkoutEquipmentList.delete(parent.id);
 
     // メッセージを更新
     errorMessageElement.innerText = callback.message();
@@ -146,13 +144,18 @@ function onDeleteButtonClick(event) {
     if (callback.isFailed()) return;
 
     // フォームの value を更新
-    formEquipmentListElement.value = useEquipmentList.toJson()
+    formEquipmentListElement.value = checkoutEquipmentList.toJson()
 
-    event.target.parentElement.remove();
+    parent.remove();
 
     // 備品が一つも選択されていない時は、その旨を表示
-    emptyMessageElement.innerText = useEquipmentList.isEmpty() ? LIST_EMPTY_MESSAGE : "";
+    emptyMessageElement.innerText = checkoutEquipmentList.isEmpty() ? LIST_EMPTY_MESSAGE : "";
 }
+
+// NOTE: equipmentList は Java Spring の Model から送られてくる DB の備品リストの値
+const checkoutEquipmentList = new CheckoutEquipmentList(equipmentList);
+emptyMessageElement.innerText = LIST_EMPTY_MESSAGE;
+errorMessageElement.innerText = "";
 
 addButtonElement.addEventListener('click', onAddButtonClick);
 equipmentListElement.addEventListener('click', onDeleteButtonClick);

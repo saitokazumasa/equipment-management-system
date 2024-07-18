@@ -1,4 +1,4 @@
-package jp.ac.morijyobi.equipmentmanagementsystem.service.impl;
+package jp.ac.morijyobi.equipmentmanagementsystem.service.toReturn.implement;
 
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Account;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.CheckoutApplication;
@@ -8,19 +8,19 @@ import jp.ac.morijyobi.equipmentmanagementsystem.bean.form.ReturnApplicationForm
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IAccountsMapper;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.ICheckoutApplicationsMapper;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IReturnApplicationsMapper;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.IReturnApplicationService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.toReturn.IApplyReturnService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
 @Service
-public class ReturnApplicationService implements IReturnApplicationService {
+public class ApplyReturnService implements IApplyReturnService {
     private final IReturnApplicationsMapper returnApplicationsMapper;
     private final IAccountsMapper accountsMapper;
     private final ICheckoutApplicationsMapper checkoutApplicationsMapper;
 
-    public ReturnApplicationService(
+    public ApplyReturnService(
             final IReturnApplicationsMapper returnApplicationsMapper,
             final IAccountsMapper accountsMapper,
             final ICheckoutApplicationsMapper checkoutApplicationsMapper) {

@@ -1,41 +1,36 @@
-package jp.ac.morijyobi.equipmentmanagementsystem.service.impl;
+package jp.ac.morijyobi.equipmentmanagementsystem.service.equipment.implement;
 
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Account;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Equipment;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IAccountsMapper;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IEquipmentsMapper;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.IEquipmentService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.equipment.IFetchEquipmentService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class EquipmentService implements IEquipmentService {
+public class FetchEquipmentService implements IFetchEquipmentService {
     private final IEquipmentsMapper equipmentsMapper;
     private final IAccountsMapper accountsMapper;
 
-    public EquipmentService(final IEquipmentsMapper equipmentsMapper, final IAccountsMapper accountsMapper) {
+    public FetchEquipmentService(final IEquipmentsMapper equipmentsMapper, IAccountsMapper accountsMapper) {
         this.equipmentsMapper = equipmentsMapper;
         this.accountsMapper = accountsMapper;
     }
 
     @Override
-    public void register(final Equipment equipment) {
-        equipmentsMapper.insert(equipment);
+    public Equipment executeById(final int id) {
+        return this.equipmentsMapper.selectById(id);
     }
 
     @Override
-    public Equipment fetchById(final int id) {
-        return equipmentsMapper.selectById(id);
-    }
-
-    @Override
-    public List<Equipment> fetchAll() {
+    public List<Equipment> executeAll() {
         return equipmentsMapper.selectAll();
     }
 
     @Override
-    public List<Equipment> fetchLending(final String mail) {
+    public List<Equipment> executeLending(String mail) {
         final Account account = accountsMapper.selectByMail(mail);
 
         return equipmentsMapper.selectLending(account.getId());
