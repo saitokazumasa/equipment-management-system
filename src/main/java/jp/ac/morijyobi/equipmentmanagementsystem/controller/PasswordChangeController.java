@@ -22,12 +22,12 @@ public class PasswordChangeController {
 
         if (result) {
             final var message = new SuccessMessage("送信しました。");
-            redirectAttributes.addFlashAttribute("message", message);
-        } else {
-            final var message = new ErrorMessage("送信時にエラーが発生しました。");
-            redirectAttributes.addFlashAttribute("message", message);
+            redirectAttributes.addFlashAttribute(message);
+            return "redirect:/アカウント詳細画面"; // アカウント詳細画面に遷移する
         }
 
-        return "redirect:/password_change";
+        final var message = new ErrorMessage("送信時にエラーが発生しました。");
+        redirectAttributes.addFlashAttribute(message);
+        return "redirect:/アカウント詳細画面"; // アカウント詳細画面に遷移する
     }
 }
