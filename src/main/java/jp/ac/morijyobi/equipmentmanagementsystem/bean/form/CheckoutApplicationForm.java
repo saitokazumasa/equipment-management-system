@@ -4,27 +4,16 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Equipment;
 import jp.ac.morijyobi.equipmentmanagementsystem.util.JsonUtil;
-import lombok.Getter;
 
-public class CheckoutApplicationForm {
-    @Getter
-    @NotBlank
-    @Size(min = 1)
-    private final String json;
-
-    private final JsonUtil<Equipment[]> jsonUtil;
-
-    public CheckoutApplicationForm(final String json) {
-        this.json = json;
-        this.jsonUtil = new JsonUtil<>(Equipment[].class);
-    }
-
+public record CheckoutApplicationForm(
+        @NotBlank @Size(min = 1) String json
+) {
     public static CheckoutApplicationForm empty() {
         return new CheckoutApplicationForm("");
     }
 
     public Equipment[] equipments() {
-        final Equipment[] equipments = this.jsonUtil.tryToObject(json);
+        final Equipment[] equipments = JsonUtil.tryToObject(json, Equipment[].class);
 
         if (equipments.length == 0) throw new ArrayIndexOutOfBoundsException();
 
