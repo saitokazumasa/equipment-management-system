@@ -1,4 +1,4 @@
-const LIST_EMPTY_MESSAGE = "アカウントを追加してください";
+const LIST_EMPTY_MESSAGE = 'アカウントを追加してください';
 
 function onAddButtonClick(event) {
     event.preventDefault();
@@ -25,7 +25,7 @@ function onAddButtonClick(event) {
 function onDeleteButtonClick(event) {
     event.preventDefault();
 
-    if (!accountListView.isNotDeleteButton(event)) return;
+    if (!event.target.classList.contains('delete-button')) return;
 
     const parent = event.target.closest('.parent');
     const id = parent.id;
@@ -39,7 +39,7 @@ function onDeleteButtonClick(event) {
 
     errorMessage.clear();
     jsonForm.update(accountList.toJson());
-    accountListView.remove(event);
+    parent.remove();
 
     // リストが空の時はその旨を表示
     if (!accountList.isEmpty()) return;
@@ -49,4 +49,4 @@ function onDeleteButtonClick(event) {
 
 addForm.subscribeToSubmit(e => onAddButtonClick(e));
 accountListView.subscribeToClick(e => onDeleteButtonClick(e));
-errorMessage.update("");
+errorMessage.update(LIST_EMPTY_MESSAGE);

@@ -8,8 +8,8 @@ import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface IAccountsMapper {
-    @Insert("INSERT INTO accounts (name, mail, password, category, state) " +
-            "VALUES (#{name}, #{mail}, #{password}, #{category}, #{state})")
+    @Insert("INSERT INTO accounts (name, mail, password, category, is_enable) " +
+            "VALUES (#{name}, #{mail}, #{password}, #{category}, #{isEnable})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     public int insert(final Account account);
 

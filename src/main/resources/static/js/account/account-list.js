@@ -1,6 +1,6 @@
-const NULL_ERROR_MESSAGE = "nullが指定されました";
-const EXIST_ERROR_MESSAGE = "既に追加されています";
-const NOT_FOUND_ERROR_MESSAGE = "存在しないアカウントが指定されました"
+const NULL_ERROR_MESSAGE = 'nullが指定されました';
+const EXIST_ERROR_MESSAGE = '既に追加されています';
+const NOT_FOUND_ERROR_MESSAGE = '存在しないアカウントが指定されました';
 
 class AccountList {
     #values;

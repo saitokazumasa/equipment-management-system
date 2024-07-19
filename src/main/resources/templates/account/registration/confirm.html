@@ -13,20 +13,23 @@
     <p class="flex justify-center pb-12 text-xl font-bold">以下の内容で登録します</p>
 
     <div>
-        <div th:each="temporaryAccount : ${temporaryAccountList}" class="parent mb-5 p-3 bg-white">
-            <p th:text="名前: ${temporaryAccount.name}">名前</p>
-            <p th:text="メールアドレス: ${temporaryAccount.mail}">メールアドレス</p>
-            <p th:text="ロール: ${temporaryAccount.category.getString()}">ロール</p>
+        <div th:each="account : ${accountList}" class="parent mb-5 p-3 bg-white">
+            <p th:text="${'名前: ' + account.name}">名前</p>
+            <p th:text="${'メールアドレス: ' + account.mail}">メールアドレス</p>
+            <p th:text="${'ロール: ' + account.category.getString()}">ロール</p>
         </div>
     </div>
 
-    <form th:action="@{/account/registration/submit}" method="post" th:object="${registerTemporaryAccountForm}">
+    <form th:action="@{/account/registration/submit}" method="post" th:object="${registerAccountForm}">
         <input type="hidden" th:field="*{json}">
         <div class="flex justify-center my-10">
             <button type="submit"
                     class="px-20 py-2 text-primary font-semibold rounded-full bg-secondary whitespace-nowrap">登録
             </button>
         </div>
+        <button type="submit" name="cancel">
+            戻る
+        </button>
     </form>
 </main>
 

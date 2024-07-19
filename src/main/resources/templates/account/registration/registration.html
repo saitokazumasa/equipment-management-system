@@ -26,7 +26,7 @@
         <!-- 追加ボタンが押されると、ここにアカウント情報が追加される。 -->
     </div>
 
-    <form th:action="@{/temporary_account/registration}" method="post" th:object="${registerTemporaryAccountForm}">
+    <form th:action="@{/account/registration/confirm}" method="post" th:object="${registerAccountForm}">
         <input type="hidden" th:field="*{json}" id="json">
         <div class="flex justify-center my-10">
             <button type="submit"

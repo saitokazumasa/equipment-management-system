@@ -1,4 +1,4 @@
-const EMPTY_FORM_ERROR_MESSAGE = "未入力の項目があります";
+const EMPTY_FORM_ERROR_MESSAGE = '未入力の項目があります';
 
 class AddForm {
     #mailElement;
@@ -14,8 +14,8 @@ class AddForm {
     }
 
     clear() {
-        this.#mailElement.value = "";
-        this.#nameElement.value = "";
+        this.#mailElement.value = '';
+        this.#nameElement.value = '';
     }
 
     readValues() {

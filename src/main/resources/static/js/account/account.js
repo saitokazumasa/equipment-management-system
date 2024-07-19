@@ -4,9 +4,9 @@ class Account {
     #category;
 
     constructor(mail, name, category) {
-        if (mail === null) throw new Error("mail is null");
-        if (name === null) throw new Error("name is null");
-        if (category === null) throw new Error("category is null");
+        if (mail === null) throw new Error('mail is null');
+        if (name === null) throw new Error('name is null');
+        if (category === null) throw new Error('category is null');
 
         this.#mail = mail;
         this.#name = name;
@@ -14,7 +14,7 @@ class Account {
     }
 
     static empty() {
-        return new Account("none", "none", "none");
+        return new Account('none', 'none', 'none');
     }
 
     mail() {
@@ -31,9 +31,13 @@ class Account {
 
     toJSON() {
         return {
+            id: -1,
             mail: this.#mail,
             name: this.#name,
-            category: this.#category
+            // NOTE: 仮パスワード
+            password: 'morijyobi',
+            category: this.#category,
+            isEnable: true
         };
     }
 }
