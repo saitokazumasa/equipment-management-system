@@ -5,6 +5,4 @@ import jp.ac.morijyobi.equipmentmanagementsystem.bean.form.CheckoutApplicationFo
 
 public interface IApplyCheckoutService {
     public int execute(final String mail, final CheckoutApplicationForm checkoutApplicationForm);
-
-    CheckoutApplication executeNotReturned(final String mail, final int equipmentId);
 }

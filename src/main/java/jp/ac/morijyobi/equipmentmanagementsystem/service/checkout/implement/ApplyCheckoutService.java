@@ -49,10 +49,4 @@ public class ApplyCheckoutService implements IApplyCheckoutService {
         // 1 は成功
         return 1;
     }
-
-    @Override
-    public CheckoutApplication fetchNotReturned(String mail, int equipmentId) {
-        final Account account = accountsMapper.selectByMail(mail);
-        return checkoutApplicationsMapper.selectNotReturned(account.getId(), equipmentId);
-    }
 }
