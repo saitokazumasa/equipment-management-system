@@ -28,6 +28,6 @@ public class PasswordChangeController {
 
         final var message = new ErrorMessage("送信時にエラーが発生しました。");
         redirectAttributes.addFlashAttribute(message);
-        return "redirect:/マイアカウント詳細画面"; // マイアカウント詳細画面に遷移する
+        return "redirect:/change/password/password_change";
     }
 }
