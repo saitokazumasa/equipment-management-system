@@ -16,6 +16,7 @@ public interface ICheckoutApplicationsMapper {
     public int insert(final CheckoutApplication checkoutApplication);
 
     @Select("SELECT ca.* from checkout_applications c_apply " +
+    @Select("SELECT c_apply.* from checkout_applications c_apply " +
             "LEFT OUTER JOIN checkout_approvals c_approve on c_approve.checkout_application_id = c_apply.id " +
             "LEFT OUTER JOIN return_applications r_apply on r_apply.checkout_log_id = c_apply.id " +
             "LEFT OUTER JOIN return_approvals r_approve on r_approve.return_application_id = r_apply.id " +
