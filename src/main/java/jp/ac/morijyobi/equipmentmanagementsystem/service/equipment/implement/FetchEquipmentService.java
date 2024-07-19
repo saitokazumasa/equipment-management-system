@@ -25,11 +25,6 @@ public class FetchEquipmentService implements IFetchEquipmentService {
     }
 
     @Override
-    public List<Equipment> executeAll() {
-        return equipmentsMapper.selectAll();
-    }
-
-    @Override
     public List<Equipment> executeLending(String mail) {
         final Account account = accountsMapper.selectByMail(mail);
 
