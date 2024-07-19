@@ -51,7 +51,7 @@ public class ApplyCheckoutService implements IApplyCheckoutService {
     }
 
     @Override
-    public CheckoutApplication executeNotReturned(String mail, int equipmentId) {
+    public CheckoutApplication fetchNotReturned(String mail, int equipmentId) {
         final Account account = accountsMapper.selectByMail(mail);
         return checkoutApplicationsMapper.selectNotReturned(account.getId(), equipmentId);
     }
