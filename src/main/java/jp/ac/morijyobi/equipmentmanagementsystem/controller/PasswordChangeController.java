@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/password_change")
+@RequestMapping("/change/password/**")
 public class PasswordChangeController {
     @GetMapping()
     public String get() {
-        return "password_change";
+        return "/change/password/password_change";
     }
 
     @PostMapping()
@@ -23,7 +23,7 @@ public class PasswordChangeController {
         if (result) {
             final var message = new SuccessMessage("送信しました。");
             redirectAttributes.addFlashAttribute(message);
-            return "redirect:/マイアカウント詳細画面"; // マイアカウント詳細画面に遷移する
+            return "redirect:/change/password/password_change"; // マイアカウント詳細画面に遷移する
         }
 
         final var message = new ErrorMessage("送信時にエラーが発生しました。");
