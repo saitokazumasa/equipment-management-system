@@ -25,23 +25,23 @@ public class ReturnApplicationController {
     private final IApplyReturnService returnApplicationService;
     private final IApplyDamageService damageApplicationService;
 
-    public ReturnApplicationController(IFetchEquipmentService equipmentsService, IApplyReturnService returnApplicationService, ApplyDamageService damageApplicationService) {
+    public ReturnApplicationController(
+            IFetchEquipmentService equipmentsService,
+            IApplyReturnService returnApplicationService,
+            ApplyDamageService damageApplicationService) {
         this.equipmentsService = equipmentsService;
         this.returnApplicationService = returnApplicationService;
         this.damageApplicationService = damageApplicationService;
     }
 
     @GetMapping()
-    public String get(final Model model,
-                      final @AuthenticationPrincipal UserDetails userDetails) {
-        final String mail= userDetails.getUsername();
+    public String get(final Model model) {
+        final List<Equipment> lendingEquipmentList = equipmentsService.executeLending();
 
-        // 借りている備品を取得（返却承認されていないもののみ）
-        final List<Equipment> equipments = equipmentsService.executeLending(mail);
+        final ReturnApplicationForm returnApplicationForm = ReturnApplicationForm.generate();
 
-        model.addAttribute("returnApplicationForm", ReturnApplicationForm.generate(mail));
-        model.addAttribute("mail", mail);
-        model.addAttribute("equipmentList", equipments);
+        model.addAttribute(returnApplicationForm);
+        model.addAttribute(lendingEquipmentList);
 
         return "return/application/application";
     }
