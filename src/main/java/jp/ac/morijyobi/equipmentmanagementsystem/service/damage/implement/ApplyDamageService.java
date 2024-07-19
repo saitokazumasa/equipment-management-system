@@ -18,7 +18,10 @@ public class ApplyDamageService implements IApplyDamageService {
     private final IAccountsMapper accountsMapper;
     private final ICheckoutApplicationsMapper checkoutApplicationsMapper;
 
-    public ApplyDamageService(IDamagedApplicationsMapper damagedApplicationMapper, IAccountsMapper accountsMapper, ICheckoutApplicationsMapper checkoutApplicationsMapper) {
+    public ApplyDamageService(
+            IDamagedApplicationsMapper damagedApplicationMapper,
+            IAccountsMapper accountsMapper,
+            ICheckoutApplicationsMapper checkoutApplicationsMapper) {
         this.damagedApplicationMapper = damagedApplicationMapper;
         this.accountsMapper = accountsMapper;
         this.checkoutApplicationsMapper = checkoutApplicationsMapper;
