@@ -14,12 +14,12 @@ import java.util.List;
 public class ReturnApplicationForm {
     @NotBlank
     @Size(min = 1)
-    private final String json;
+    private final String jsonEquipment;
 
     private final String damageList;
 
-    public ReturnApplicationForm(final String json, final String damageList) {
-        this.json = json;
+    public ReturnApplicationForm(final String jsonEquipment, final String damageList) {
+        this.jsonEquipment = jsonEquipment;
         this.damageList = damageList;
     }
 
@@ -28,13 +28,13 @@ public class ReturnApplicationForm {
     }
 
     public String json() {
-        return json;
+        return jsonEquipment;
     }
 
     public String damageList() { return damageList; }
 
     public Equipment[] equipments() {
-        final var equipments = JsonUtil.tryToObject(json, Equipment[].class);
+        final var equipments = JsonUtil.tryToObject(jsonEquipment, Equipment[].class);
 
         if (equipments.length == 0) throw new ArrayIndexOutOfBoundsException();
 
