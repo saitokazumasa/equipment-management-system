@@ -18,17 +18,13 @@ public class ReturnApplicationForm {
 
     private final String damageList;
 
-    @NotBlank
-    private final String mail;
-
-    public ReturnApplicationForm(final String json, final String damageList, final String mail) {
+    public ReturnApplicationForm(final String json, final String damageList) {
         this.json = json;
         this.damageList = damageList;
-        this.mail = mail;
     }
 
-    public static ReturnApplicationForm generate(final String mail) {
-        return new ReturnApplicationForm("", "", mail);
+    public static ReturnApplicationForm generate() {
+        return new ReturnApplicationForm("", "");
     }
 
     public String json() {
@@ -36,10 +32,6 @@ public class ReturnApplicationForm {
     }
 
     public String damageList() { return damageList; }
-
-    public String mail() {
-        return mail;
-    }
 
     public Equipment[] equipments() {
         final var equipments = JsonUtil.tryToObject(json, Equipment[].class);
