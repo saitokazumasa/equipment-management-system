@@ -26,7 +26,7 @@ public class WebSecurityConfiguration {
                         ).permitAll()
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/password_reset").permitAll()
-                        .requestMatchers("/password_change").permitAll()
+                        .requestMatchers("/change/**").authenticated()
                         .requestMatchers("/checkout/**").authenticated()
                         .anyRequest().denyAll()
                 ).formLogin(a -> a
