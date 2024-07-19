@@ -15,15 +15,15 @@ public interface ICheckoutApplicationsMapper {
     @Options(useGeneratedKeys = true, keyProperty = "id")
     public int insert(final CheckoutApplication checkoutApplication);
 
-    @Select("SELECT ca.* from checkout_applications ca " +
-            "LEFT OUTER JOIN checkout_approvals ca2 on ca2.checkout_application_id = ca.id " +
-            "LEFT OUTER JOIN return_applications ra on ra.checkout_log_id = ca.id " +
-            "LEFT OUTER JOIN return_approvals ra2 on ra2.return_application_id = ra.id " +
-            "WHERE ca.account_id = #{accountId} " +
-            "AND ca.equipment_id = #{equipmentId} " +
-            "AND ca2.checkout_application_id = ca.id " +
-            "OR ra2.return_application_id IS NULL " +
-            "ORDER BY ca.created_at DESC " +
+    @Select("SELECT ca.* from checkout_applications c_apply " +
+            "LEFT OUTER JOIN checkout_approvals c_approve on c_approve.checkout_application_id = c_apply.id " +
+            "LEFT OUTER JOIN return_applications r_apply on r_apply.checkout_log_id = c_apply.id " +
+            "LEFT OUTER JOIN return_approvals r_approve on r_approve.return_application_id = r_apply.id " +
+            "WHERE c_apply.account_id = #{accountId} " +
+            "AND c_apply.equipment_id = #{equipmentId} " +
+            "AND c_approve.checkout_application_id = c_apply.id " +
+            "OR r_approve.return_application_id IS NULL " +
+            "ORDER BY c_apply.created_at DESC " +
             "LIMIT 1")
     public CheckoutApplication selectNotReturned(final int accountId, final int equipmentId);
 }

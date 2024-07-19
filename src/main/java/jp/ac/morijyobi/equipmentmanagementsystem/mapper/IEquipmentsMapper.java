@@ -22,13 +22,12 @@ public interface IEquipmentsMapper {
     public List<Equipment> selectAll();
 
     @Select("SELECT DISTINCT ON (e.id) e.* FROM equipments e " +
-            "LEFT OUTER JOIN checkout_applications ca ON ca.equipment_id = e.id " +
-            "LEFT OUTER JOIN checkout_approvals ca2 ON ca2.checkout_application_id = ca.id " +
-            "LEFT OUTER JOIN return_applications ra ON ra.checkout_log_id = ca.id " +
-            "LEFT OUTER JOIN return_approvals ra2 ON ra2.return_application_id = ra.id " +
-            "WHERE ca.account_id = #{accountId} " +
-            "AND e.state = 'ON_LOAN'" +
-            "AND ra2.return_application_id IS NULL " +
-            "ORDER BY e.id, ca2.created_at DESC" )
-    public List<Equipment> selectLending(final int accountId);
+            "LEFT OUTER JOIN checkout_applications c_apply ON c_apply.equipment_id = e.id " +
+            "LEFT OUTER JOIN checkout_approvals c_approve ON c_approve.checkout_application_id = c_apply.id " +
+            "LEFT OUTER JOIN return_applications r_apply ON r_apply.checkout_log_id = c_apply.id " +
+            "LEFT OUTER JOIN return_approvals r_approve ON r_approve.return_application_id = c_apply.id " +
+            "WHERE e.state = 'ON_LOAN' " +
+            "AND r_approve.return_application_id IS NULL " +
+            "ORDER BY e.id, c_approve.created_at DESC" )
+    public List<Equipment> selectLending();
 }
