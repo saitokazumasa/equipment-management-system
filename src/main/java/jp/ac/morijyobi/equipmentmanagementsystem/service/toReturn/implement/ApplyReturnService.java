@@ -9,6 +9,7 @@ import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IAccountsMapper;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.ICheckoutApplicationsMapper;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IReturnApplicationsMapper;
 import jp.ac.morijyobi.equipmentmanagementsystem.service.toReturn.IApplyReturnService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,7 +33,10 @@ public class ApplyReturnService implements IApplyReturnService {
     @Override
     @Transactional
     public int execute(ReturnApplicationForm returnApplicationForm) {
-        final Account account = accountsMapper.selectByMail(returnApplicationForm.mail());
+        System.out.println("ログイン中：" + SecurityContextHolder.getContext().getAuthentication().getName());
+
+        // TODO
+        final Account account = accountsMapper.selectByMail("kawaguchi@gmail.com");
 
         for (final Equipment equipment : returnApplicationForm.equipments()) {
             final CheckoutApplication checkoutApplication = checkoutApplicationsMapper.selectNotReturned(account.getId(), equipment.getId());

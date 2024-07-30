@@ -12,11 +12,9 @@ import java.util.List;
 @Service
 public class FetchEquipmentService implements IFetchEquipmentService {
     private final IEquipmentsMapper equipmentsMapper;
-    private final IAccountsMapper accountsMapper;
 
     public FetchEquipmentService(final IEquipmentsMapper equipmentsMapper, IAccountsMapper accountsMapper) {
         this.equipmentsMapper = equipmentsMapper;
-        this.accountsMapper = accountsMapper;
     }
 
     @Override
@@ -25,9 +23,7 @@ public class FetchEquipmentService implements IFetchEquipmentService {
     }
 
     @Override
-    public List<Equipment> executeLending(String mail) {
-        final Account account = accountsMapper.selectByMail(mail);
-
-        return equipmentsMapper.selectLending(account.getId());
+    public List<Equipment> executeLending() {
+        return equipmentsMapper.selectLending();
     }
 }

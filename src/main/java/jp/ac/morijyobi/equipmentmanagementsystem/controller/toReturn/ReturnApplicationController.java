@@ -53,7 +53,7 @@ public class ReturnApplicationController {
                        final @AuthenticationPrincipal UserDetails userDetails) {
         if (bindingResult.hasErrors()) {
             final String mail= userDetails.getUsername();
-            final List<Equipment> equipments = equipmentsService.executeLending(mail);
+            final List<Equipment> equipments = equipmentsService.executeLending();
             model.addAttribute("equipmentList", equipments);
             return "return/application/application";
         }

@@ -23,7 +23,6 @@
 <form th:action="@{/return/application}" method="post" th:object="${returnApplicationForm}">
     <input type="hidden" th:field="*{json}" id="form-equipment-list">
     <input type="hidden" th:field="*{damageList}" id="form-damage-list">
-    <input type="hidden" th:field="*{mail}">
     <button type="submit">申請</button>
 </form>
 
