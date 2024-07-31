@@ -47,10 +47,7 @@ const isSetLendingPeriod = document.getElementById('isSetLendingPeriod');
 const lendingPeriod = document.getElementById('lendingPeriod');
 const notificationDate = document.getElementById('notificationDate');
 
-lendingPeriod.disabled = true;
-notificationDate.disabled = true;
-
-isSetLendingPeriod.addEventListener('change', () => {
+function setAvailability() {
     if (isSetLendingPeriod.checked) {
         lendingPeriod.disabled = false;
         notificationDate.disabled = false;
@@ -58,5 +55,12 @@ isSetLendingPeriod.addEventListener('change', () => {
         lendingPeriod.disabled = true;
         notificationDate.disabled = true;
     }
+}
+
+setAvailability();
+
+
+isSetLendingPeriod.addEventListener('change', () => {
+    setAvailability();
 });
 </script>

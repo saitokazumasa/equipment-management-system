@@ -31,8 +31,36 @@
     <textarea id="remark" name="remark" th:field="*{remark}"></textarea>
     <div th:errors="*{remark}">errorMessage</div>
 
-    <button type="submit" name="complete">確定</button>
-    <button type="submit" name="edit">変更</button>
+    <button type="submit" id="completeButton" name="complete">確定</button>
+    <button type="submit" id="editButton" name="edit">変更</button>
 </form>
 </body>
 </html>
+<script>
+    // // 入力要素を取得
+    const name = document.getElementById('equipmentName');
+    const category = document.getElementById('category');
+    const isSetLendingPeriod = document.getElementById('isSetLendingPeriod');
+    const lendingPeriod = document.getElementById('lendingPeriod');
+    const notificationDate = document.getElementById('notificationDate');
+    const remark = document.getElementById('remark');
+    const editButton = document.getElementById('editButton');
+
+    // 入力要素を無効化
+    name.disabled = true;
+    category.disabled = true;
+    isSetLendingPeriod.disabled = true;
+    lendingPeriod.disabled = true;
+    notificationDate.disabled = true;
+    remark.disabled = true;
+
+    // 変更ボタンをクリックしたとき
+    editButton.addEventListener('click', () => {
+        name.disabled = false;
+        category.disabled = false;
+        isSetLendingPeriod.disabled = false;
+        lendingPeriod.disabled = false;
+        notificationDate.disabled = false;
+        remark.disabled = false;
+    });
+</script>
