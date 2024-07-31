@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>備品登録確認</title>
+</head>
+<body>
+<form th:action="@{/equipment/register}" th:object="${equipmentRegisterForm}" method="post">
+    <label for="equipmentName">備品名</label>
+    <input type="text" id="equipmentName" name="equipmentName" th:field="*{equipmentName}" required maxlength="256">
+    <div th:errors="*{equipmentName}">error message</div>
+
+    <label for="category">種類</label>
+    <select id="category" name="category" th:field="*{category}">
+        <option value="">選択してください</option>
+        <option th:each="category : ${equipmentCategoryList}" th:value="${category.id}" th:text="${category.name}">category</option>
+    </select>
+
+    <input type="checkbox" id="isSetLendingPeriod" th:field="*{isPeriod}">
+    <label for="isSetLendingPeriod">貸出期間と通知日を設定する</label>
+
+    <label for="lendingPeriod">貸出期間</label>
+    <input type="number" id="lendingPeriod" name="lendingPeriod" th:field="*{lendingPeriod}" min="1">日
+    <div th:errors="*{lendingPeriod}">errorMessage</div>
+
+    <label for="notificationDate">通知日</label>
+    返却期限の<input type="number" id="notificationDate" name="notificationDate" th:field="*{notificationDate}" min="1">日前
+    <div th:errors="*{notificationDate}">errorMessage</div>
+
+    <label for="remark">備考</label>
+    <textarea id="remark" name="remark" th:field="*{remark}"></textarea>
+    <div th:errors="*{remark}">errorMessage</div>
+
+    <button type="submit" name="complete">確定</button>
+    <button type="submit" name="edit">変更</button>
+</form>
+</body>
+</html>
