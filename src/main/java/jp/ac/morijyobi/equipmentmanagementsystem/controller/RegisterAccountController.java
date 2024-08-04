@@ -22,15 +22,21 @@ public class RegisterAccountController {
     @PostMapping()
     public String post(
             final @Validated RegisterAccountList registerAccountList,
-            final BindingResult bindingResult,
-            final Model model
+            final BindingResult bindingResult
     ) {
         if (bindingResult.hasErrors()) return "account/registration/registration";
 
-        for (final var registerAccount : registerAccountList.getValues()) {
-            System.out.println(registerAccount);
-        }
+        return "account/registration/confirm";
+    }
 
-        return "account/registration/registration";
+    @PostMapping(params = "submit")
+    public String submit(
+            final @Validated RegisterAccountList registerAccountList,
+            final BindingResult bindingResult
+    ) {
+        if (bindingResult.hasErrors()) return "account/registration/registration";
+
+        // TODO: 結果画面へ
+        return "account/registration/confirm";
     }
 }
