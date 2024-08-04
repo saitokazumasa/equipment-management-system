@@ -10,40 +10,16 @@
         <h1 class="w-11/12 py-1.5 text-center text-4xl font-bold border-b-2 border-primary">アカウント登録</h1>
     </div>
 
-    <form action="#">
-        <input type="email" placeholder="メールアドレス" id="mail" required aria-label="">
-        <input type="text" placeholder="名前" id="name" required aria-label="">
-        <select id="category" required aria-label="">
-            <option th:each="accountCategory : ${accountCategoryList}"
-                    th:value="${accountCategory.toString()}"
-                    th:text="${accountCategory.getString()}">USER</option>
-        </select>
-        <button type="submit" id="addButton">追加</button>
-        <p class="flex justify-center items-center text-error" id="errorMessage">Error Message</p>
-    </form>
-
-    <div id="account-list">
-        <!-- 追加ボタンが押されると、ここにアカウント情報が追加される。 -->
-    </div>
-
-    <form th:action="@{/account/registration/confirm}" method="post" th:object="${registerAccountForm}">
-        <input type="hidden" th:field="*{json}" id="json">
-        <div class="flex justify-center my-10">
-            <button type="submit"
-                    class="px-20 py-2 text-primary font-semibold rounded-full bg-secondary whitespace-nowrap">確認
-            </button>
+    <form th:action="@{/account/registration}" method="post" th:object="${registerAccountList}">
+        <div th:each="registerAccount, status: *{values}">
+            <input type="text" th:field="*{values[__${status.index}__].name}" aria-label="">
+            <input type="text" th:field="*{values[__${status.index}__].mail}" aria-label="">
+            <input type="text" th:field="*{values[__${status.index}__].category}" aria-label="">
         </div>
+        <button type="submit">送信</button>
     </form>
 </main>
 
 </body>
 </html>
 <th:block th:replace="layout :: scripts"/>
-<script src="/js/account/account.js"></script>
-<script src="/js/account/account-list.js"></script>
-<script src="/js/account/account-list-view.js"></script>
-<script src="/js/account/callback.js"></script>
-<script src="/js/account/add-form.js"></script>
-<script src="/js/account/json-form.js"></script>
-<script src="/js/account/error-message.js"></script>
-<script src="/js/account/main.js"></script>
