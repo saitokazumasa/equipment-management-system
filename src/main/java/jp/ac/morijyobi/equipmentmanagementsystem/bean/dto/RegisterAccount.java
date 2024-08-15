@@ -21,4 +21,8 @@ public class RegisterAccount implements Serializable{
 
     @NotBlank
     private String category;
+
+    public static RegisterAccount empty() {
+        return new RegisterAccount();
+    }
 }
