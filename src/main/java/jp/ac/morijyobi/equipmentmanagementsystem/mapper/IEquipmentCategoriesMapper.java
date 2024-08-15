@@ -17,4 +17,7 @@ public interface IEquipmentCategoriesMapper {
 
     @Select("SELECT * FROM equipment_categories")
     public List<EquipmentCategory> selectAll();
+
+    @Select("SELECT * FROM equipment_categories WHERE name = #{name}")
+    public EquipmentCategory selectByName(final String name);
 }
