@@ -11,10 +11,10 @@
     <div th:errors="*{equipmentName}">error message</div>
 
     <label for="category">種類</label>
-    <select id="category" name="category" th:field="*{category}">
-        <option value="">選択してください</option>
-        <option th:each="category : ${equipmentCategoryList}" th:value="${category.id}" th:text="${category.name}">category</option>
-    </select>
+    <input type="text" id="category" list="category-select" name="category" th:field="*{category}"/>
+    <datalist id="category-select" class="category-select">
+        <option th:each="category : ${equipmentCategoryList}" th:value="${category.name}" th:text="${category.name}">category</option>
+    </datalist>
 
     <input type="checkbox" id="isSetLendingPeriod" th:field="*{isPeriod}">
     <label for="isSetLendingPeriod">貸出期間と通知日を設定する</label>
@@ -33,34 +33,6 @@
 
     <button type="submit">登録</button>
 </form>
-
-
-<!--<form th:action="@{/equipment/register}" method="post">-->
-<!--    <button type="submit">test</button>-->
-<!--</form>-->
-
 </body>
 </html>
-
-<script>
-const isSetLendingPeriod = document.getElementById('isSetLendingPeriod');
-const lendingPeriod = document.getElementById('lendingPeriod');
-const notificationDate = document.getElementById('notificationDate');
-
-function setAvailability() {
-    if (isSetLendingPeriod.checked) {
-        lendingPeriod.disabled = false;
-        notificationDate.disabled = false;
-    } else {
-        lendingPeriod.disabled = true;
-        notificationDate.disabled = true;
-    }
-}
-
-setAvailability();
-
-
-isSetLendingPeriod.addEventListener('change', () => {
-    setAvailability();
-});
-</script>
+<script src="/js/equipment/register.js"></script>
