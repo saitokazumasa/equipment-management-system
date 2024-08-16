@@ -1,7 +1,8 @@
 package jp.ac.morijyobi.equipmentmanagementsystem.service.account.implement;
 
+import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.RegisterAccountList;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Account;
-import jp.ac.morijyobi.equipmentmanagementsystem.bean.form.RegisterAccountForm;
+import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.RegisterAccount;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IAccountsMapper;
 import jp.ac.morijyobi.equipmentmanagementsystem.service.account.IRegisterAccountService;
 import org.springframework.stereotype.Service;
@@ -17,13 +18,14 @@ public class RegisterAccountService implements IRegisterAccountService {
 
     @Override
     @Transactional
-    public int execute(final RegisterAccountForm registerAccountForm) {
-        for (final Account account : registerAccountForm.accounts()) {
-            final int result = this.accountsMapper.insert(account);
-            // 1 以外はエラー
-            if (result != 1) return result;
+    public boolean execute(final RegisterAccountList registerAccountList) {
+        for (final RegisterAccount registerAccount : registerAccountList.getValues()) {
+            final Account account = registerAccount.toAccount();
+            final Account newAccount = account.cryptPassword();
+            final int result = this.accountsMapper.insert(newAccount);
+
+            if (result != 1) return false;
         }
-        // 1 は成功
-        return 1;
+        return true;
     }
 }

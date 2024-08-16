@@ -3,6 +3,8 @@ package jp.ac.morijyobi.equipmentmanagementsystem.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.RegisterAccount;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.RegisterAccountList;
+import jp.ac.morijyobi.equipmentmanagementsystem.constant.AccountCategory;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.account.IRegisterAccountService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,21 +17,29 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/account/registration")
 public class RegisterAccountController {
+    final IRegisterAccountService registerAccountService;
+    final String accountCategoriesKey = "accountCategories";
+    final String registerAccountKey = "registerAccount";
+    final String registerAccountListKey = "registerAccountList";
+
+    public RegisterAccountController(final IRegisterAccountService registerAccountService) {
+        this.registerAccountService = registerAccountService;
+    }
+
     @GetMapping()
     public String get(final Model model) {
-        // リダイレクトしてきた場合は registerAccount のみ初期化
-        final boolean isRedirect = model.containsAttribute("registerAccountList");
-        if (isRedirect) {
-            final RegisterAccount registerAccount = RegisterAccount.empty();
-            model.addAttribute("registerAccount", registerAccount);
-            return "account/registration/registration";
-        }
+        final var accountCategories = AccountCategory.values();
+        final var registerAccount = RegisterAccount.empty();
 
-        final RegisterAccount registerAccount = RegisterAccount.empty();
-        final RegisterAccountList registerAccountList = RegisterAccountList.empty();
+        // リダイレクトの場合はリセットしない
+        final var isRedirected = model.containsAttribute(registerAccountListKey);
+        final var registerAccountList = isRedirected ?
+                (RegisterAccountList) model.getAttribute(registerAccountListKey) :
+                RegisterAccountList.empty();
 
-        model.addAttribute("registerAccount", registerAccount);
-        model.addAttribute("registerAccountList", registerAccountList);
+        model.addAttribute(accountCategoriesKey, accountCategories);
+        model.addAttribute(registerAccountKey, registerAccount);
+        model.addAttribute(registerAccountListKey, registerAccountList);
 
         return "account/registration/registration";
     }
@@ -49,7 +59,7 @@ public class RegisterAccountController {
                 RegisterAccountList.empty().add(registerAccount) :
                 registerAccountList.add(registerAccount);
 
-        redirectAttributes.addFlashAttribute("registerAccountList", newRegisterAccountList);
+        redirectAttributes.addFlashAttribute(registerAccountListKey, newRegisterAccountList);
 
         return "redirect:/account/registration";
     }
@@ -66,7 +76,7 @@ public class RegisterAccountController {
         final int index = Integer.parseInt(request.getParameter("remove"));
         final RegisterAccountList newRegisterAccountList = registerAccountList.remove(index);
 
-        redirectAttributes.addFlashAttribute("registerAccountList", newRegisterAccountList);
+        redirectAttributes.addFlashAttribute(registerAccountListKey, newRegisterAccountList);
 
         return "redirect:/account/registration";
     }
@@ -92,9 +102,7 @@ public class RegisterAccountController {
     ) {
         if (bindingResult.hasErrors()) return "account/registration/registration";
 
-        // TODO: 登録し、結果を取得する
-
-        final boolean result = true;
+        final boolean result = registerAccountService.execute(registerAccountList);
 
         if (result) return "redirect:/account/registration/success";
 

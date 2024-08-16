@@ -1,5 +1,10 @@
 package jp.ac.morijyobi.equipmentmanagementsystem.constant;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public enum AccountCategory {
     STUDENT("学生"),
     USER("利用者"),
@@ -7,12 +12,4 @@ public enum AccountCategory {
     SYSTEM_MANAGER("システム管理者");
 
     private final String text;
-
-    private AccountCategory(final String text) {
-        this.text = text;
-    }
-
-    public String getString() {
-        return this.text;
-    }
 }
