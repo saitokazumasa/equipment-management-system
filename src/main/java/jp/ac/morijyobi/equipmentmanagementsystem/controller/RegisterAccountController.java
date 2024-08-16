@@ -37,13 +37,13 @@ public class RegisterAccountController {
     @PostMapping(params = "add")
     public String add(
             final @Validated RegisterAccount registerAccount,
-            final BindingResult registerAccountBindingResult,
+            final BindingResult bindingResult,
             final @Validated RegisterAccountList registerAccountList,
             // NOTE: これがないと初期状態の空リストを通せない
             final BindingResult __,
             final RedirectAttributes redirectAttributes
     ) {
-        if (registerAccountBindingResult.hasErrors()) return "account/registration/registration";
+        if (bindingResult.hasErrors()) return "account/registration/registration";
 
         final RegisterAccountList newRegisterAccountList = registerAccountList.isEmpty() ?
                 RegisterAccountList.empty().add(registerAccount) :

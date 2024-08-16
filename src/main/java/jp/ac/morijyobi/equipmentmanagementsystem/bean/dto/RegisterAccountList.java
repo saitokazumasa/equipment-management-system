@@ -12,7 +12,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class RegisterAccountList implements Serializable{
+public class RegisterAccountList implements Serializable {
     @NotNull
     @NotEmpty
     @Valid
