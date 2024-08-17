@@ -21,10 +21,13 @@ import java.util.List;
 @Controller
 @RequestMapping("/account/registration")
 public class RegisterAccountController {
-    final IRegisterAccountService registerAccountService;
-    final String accountCategoriesKey = "accountCategories";
-    final String registerAccountKey = "registerAccount";
-    final String registerAccountListKey = "registerAccountList";
+    private final IRegisterAccountService registerAccountService;
+
+    private static class AttributeName {
+        public static final String ACCOUNT_CATEGORIES = "accountCategories";
+        public static final String REGISTER_ACCOUNT = "registerAccount";
+        public static final String REGISTER_ACCOUNT_LIST = "registerAccountList";
+    }
 
     public RegisterAccountController(final IRegisterAccountService registerAccountService) {
         this.registerAccountService = registerAccountService;
@@ -33,14 +36,14 @@ public class RegisterAccountController {
     @GetMapping()
     public String get(final Model model) {
         // リダイレクトの場合はリセットしない
-        final var isRedirected = model.containsAttribute(registerAccountListKey);
+        final var isRedirected = model.containsAttribute(AttributeName.REGISTER_ACCOUNT_LIST);
         final var registerAccountList = isRedirected ?
-                (RegisterAccountList) model.getAttribute(registerAccountListKey) :
+                (RegisterAccountList) model.getAttribute(AttributeName.REGISTER_ACCOUNT_LIST) :
                 RegisterAccountList.empty();
 
-        model.addAttribute(accountCategoriesKey, accountCategories());
-        model.addAttribute(registerAccountKey, RegisterAccount.empty());
-        model.addAttribute(registerAccountListKey, registerAccountList);
+        model.addAttribute(AttributeName.ACCOUNT_CATEGORIES, accountCategories());
+        model.addAttribute(AttributeName.REGISTER_ACCOUNT, RegisterAccount.empty());
+        model.addAttribute(AttributeName.REGISTER_ACCOUNT_LIST, registerAccountList);
 
         return "account/registration/registration";
     }
@@ -56,7 +59,7 @@ public class RegisterAccountController {
             final RedirectAttributes redirectAttributes
     ) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute(accountCategoriesKey, accountCategories());
+            model.addAttribute(AttributeName.ACCOUNT_CATEGORIES, accountCategories());
             return "account/registration/registration";
         }
 
@@ -65,7 +68,7 @@ public class RegisterAccountController {
                 RegisterAccountList.empty().add(registerAccount) :
                 registerAccountList.add(registerAccount);
 
-        redirectAttributes.addFlashAttribute(registerAccountListKey, newRegisterAccountList);
+        redirectAttributes.addFlashAttribute(AttributeName.REGISTER_ACCOUNT_LIST, newRegisterAccountList);
 
         return "redirect:/account/registration";
     }
@@ -82,7 +85,7 @@ public class RegisterAccountController {
         final int index = Integer.parseInt(request.getParameter("remove"));
         final RegisterAccountList newRegisterAccountList = registerAccountList.remove(index);
 
-        redirectAttributes.addFlashAttribute(registerAccountListKey, newRegisterAccountList);
+        redirectAttributes.addFlashAttribute(AttributeName.REGISTER_ACCOUNT_LIST, newRegisterAccountList);
 
         return "redirect:/account/registration";
     }
@@ -96,7 +99,7 @@ public class RegisterAccountController {
             final Model model
     ) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute(accountCategoriesKey, accountCategories());
+            model.addAttribute(AttributeName.ACCOUNT_CATEGORIES, accountCategories());
             return "account/registration/registration";
         }
 
@@ -112,7 +115,7 @@ public class RegisterAccountController {
             final Model model
     ) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute(accountCategoriesKey, accountCategories());
+            model.addAttribute(AttributeName.ACCOUNT_CATEGORIES, accountCategories());
             return "account/registration/registration";
         }
 
