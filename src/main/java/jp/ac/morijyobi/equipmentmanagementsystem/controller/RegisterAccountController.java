@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 @Controller
 @RequestMapping("/account/registration")
 public class RegisterAccountController {
@@ -28,17 +32,14 @@ public class RegisterAccountController {
 
     @GetMapping()
     public String get(final Model model) {
-        final var accountCategories = AccountCategory.values();
-        final var registerAccount = RegisterAccount.empty();
-
         // リダイレクトの場合はリセットしない
         final var isRedirected = model.containsAttribute(registerAccountListKey);
         final var registerAccountList = isRedirected ?
                 (RegisterAccountList) model.getAttribute(registerAccountListKey) :
                 RegisterAccountList.empty();
 
-        model.addAttribute(accountCategoriesKey, accountCategories);
-        model.addAttribute(registerAccountKey, registerAccount);
+        model.addAttribute(accountCategoriesKey, accountCategories());
+        model.addAttribute(registerAccountKey, RegisterAccount.empty());
         model.addAttribute(registerAccountListKey, registerAccountList);
 
         return "account/registration/registration";
@@ -49,13 +50,18 @@ public class RegisterAccountController {
             final @Validated RegisterAccount registerAccount,
             final BindingResult bindingResult,
             final @Validated RegisterAccountList registerAccountList,
-            // NOTE: これがないと初期状態の空リストを通せない
+            // これがないと初期状態の空リストを通せない
             final BindingResult __,
+            final Model model,
             final RedirectAttributes redirectAttributes
     ) {
-        if (bindingResult.hasErrors()) return "account/registration/registration";
+        if (bindingResult.hasErrors()) {
+            model.addAttribute(accountCategoriesKey, accountCategories());
+            return "account/registration/registration";
+        }
 
-        final RegisterAccountList newRegisterAccountList = registerAccountList.isEmpty() ?
+        // values が null の状態で入ってくることがあるため、その場合は初期化してから追加する
+        final RegisterAccountList newRegisterAccountList = registerAccountList.isNull() ?
                 RegisterAccountList.empty().add(registerAccount) :
                 registerAccountList.add(registerAccount);
 
@@ -86,9 +92,13 @@ public class RegisterAccountController {
             final @Validated RegisterAccount registerAccount,
             final BindingResult __,
             final @Validated RegisterAccountList registerAccountList,
-            final BindingResult bindingResult
+            final BindingResult bindingResult,
+            final Model model
     ) {
-        if (bindingResult.hasErrors()) return "account/registration/registration";
+        if (bindingResult.hasErrors()) {
+            model.addAttribute(accountCategoriesKey, accountCategories());
+            return "account/registration/registration";
+        }
 
         return "account/registration/confirmation";
     }
@@ -98,9 +108,13 @@ public class RegisterAccountController {
             final @Validated RegisterAccount registerAccount,
             final BindingResult __,
             final @Validated RegisterAccountList registerAccountList,
-            final BindingResult bindingResult
+            final BindingResult bindingResult,
+            final Model model
     ) {
-        if (bindingResult.hasErrors()) return "account/registration/registration";
+        if (bindingResult.hasErrors()) {
+            model.addAttribute(accountCategoriesKey, accountCategories());
+            return "account/registration/registration";
+        }
 
         final boolean result = registerAccountService.execute(registerAccountList);
 
@@ -117,5 +131,15 @@ public class RegisterAccountController {
     @GetMapping("failed")
     public String failed() {
         return "account/registration/failed";
+    }
+
+    private List<AccountCategory> accountCategories() {
+        final AccountCategory[] accountCategories = AccountCategory.values();
+
+        // ここでは学生アカウントを扱わないため除外する
+        final var accountCategoryList = new ArrayList<>(Arrays.asList(accountCategories));
+        accountCategoryList.remove(AccountCategory.STUDENT);
+
+        return accountCategoryList;
     }
 }

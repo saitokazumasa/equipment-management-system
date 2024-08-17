@@ -23,8 +23,8 @@ public class RegisterAccountList implements Serializable {
         return new RegisterAccountList(list);
     }
 
-    public boolean isEmpty() {
-        return this.values == null || this.values.isEmpty();
+    public boolean isNull() {
+        return this.values == null;
     }
 
     public RegisterAccountList add(final RegisterAccount value) {

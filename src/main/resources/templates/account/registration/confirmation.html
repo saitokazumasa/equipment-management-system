@@ -14,9 +14,12 @@
 
     <form th:action="@{/account/registration}" method="post">
         <div th:each="registerAccount, status: ${registerAccountList.values}" th:object="${registerAccountList}">
-            <input type="text" th:field="*{values[__${status.index}__].name}" aria-label="">
-            <input type="text" th:field="*{values[__${status.index}__].mail}" aria-label="">
-            <input type="text" th:field="*{values[__${status.index}__].category}" aria-label="">
+            <p th:text="*{values[__${status.index}__].name}"></p>
+            <p th:text="*{values[__${status.index}__].mail}"></p>
+            <p th:text="*{values[__${status.index}__].category.text}"></p>
+            <input type="text" th:field="*{values[__${status.index}__].name}" hidden aria-label="">
+            <input type="text" th:field="*{values[__${status.index}__].mail}" hidden aria-label="">
+            <input type="text" th:field="*{values[__${status.index}__].category}" hidden aria-label="">
         </div>
         <button type="submit" name="submit">登録</button>
     </form>
