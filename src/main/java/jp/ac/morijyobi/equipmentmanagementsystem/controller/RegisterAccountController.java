@@ -92,8 +92,6 @@ public class RegisterAccountController {
 
     @PostMapping(params = "confirm")
     public String confirm(
-            final @Validated RegisterAccount registerAccount,
-            final BindingResult __,
             final @Validated RegisterAccountList registerAccountList,
             final BindingResult bindingResult,
             final Model model
@@ -108,8 +106,6 @@ public class RegisterAccountController {
 
     @PostMapping(params = "submit")
     public String submit(
-            final @Validated RegisterAccount registerAccount,
-            final BindingResult __,
             final @Validated RegisterAccountList registerAccountList,
             final BindingResult bindingResult,
             final Model model
@@ -124,6 +120,17 @@ public class RegisterAccountController {
         if (result) return "redirect:/account/registration/success";
 
         return "redirect:/account/registration/failed";
+    }
+
+    @PostMapping(params = "cancel")
+    public String cancel(
+            final @Validated RegisterAccountList registerAccountList,
+            final BindingResult __,
+            final RedirectAttributes redirectAttributes
+    ) {
+        redirectAttributes.addFlashAttribute(AttributeName.REGISTER_ACCOUNT_LIST, registerAccountList);
+
+        return "redirect:/account/registration";
     }
 
     @GetMapping("success")
