@@ -28,13 +28,13 @@ public class RegisterAccountList implements Serializable {
     }
 
     public RegisterAccountList add(final RegisterAccount value) {
-        final var list = new ArrayList<>(values);
+        final var list = new ArrayList<>(this.values);
         list.add(value);
         return new RegisterAccountList(list);
     }
 
     public RegisterAccountList remove(final int index) {
-        final var list = new ArrayList<>(values);
+        final var list = new ArrayList<>(this.values);
         list.remove(index);
         return new RegisterAccountList(list);
     }
