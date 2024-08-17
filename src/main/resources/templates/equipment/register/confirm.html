@@ -5,7 +5,7 @@
     <title>備品登録確認</title>
 </head>
 <body>
-<form th:action="@{/equipment/register}" th:object="${equipmentRegisterForm}" method="post">
+<form th:action="@{/equipment/register}" th:object="${form}" method="post">
     <label for="equipmentName">備品名</label>
     <input type="text" id="equipmentName" name="equipmentName" th:field="*{equipmentName}" required maxlength="256">
     <div th:errors="*{equipmentName}">error message</div>
@@ -13,7 +13,7 @@
     <label for="category">種類</label>
     <input type="text" id="category" list="category-select" name="category" th:field="*{category}"/>
     <datalist id="category-select" class="category-select">
-        <option th:each="category : ${equipmentCategoryList}" th:value="${category.name}" th:text="${category.name}">category</option>
+        <option th:each="category : ${categories}" th:value="${category.name}" th:text="${category.name}">category</option>
     </datalist>
 
     <input type="checkbox" id="isSetLendingPeriod" th:field="*{isPeriod}">

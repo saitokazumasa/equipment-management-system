@@ -34,8 +34,8 @@ public class EquipmentRegisterController {
 
         final List<EquipmentCategory> equipmentCategories = listEquipmentCategoryService.execute();
 
-        model.addAttribute(equipmentRegisterForm);
-        model.addAttribute(equipmentCategories);
+        model.addAttribute("form", equipmentRegisterForm);
+        model.addAttribute("categories",equipmentCategories);
 
         return "equipment/register/register";
     }
@@ -45,7 +45,8 @@ public class EquipmentRegisterController {
                                BindingResult bindingResult,
                                Model model) {
         final List<EquipmentCategory> equipmentCategories = listEquipmentCategoryService.execute();
-        model.addAttribute(equipmentCategories);
+        model.addAttribute("form", equipmentRegisterForm);
+        model.addAttribute("categories", equipmentCategories);
 
         if (bindingResult.hasErrors()) {
             return "equipment/register/register";
@@ -74,7 +75,7 @@ public class EquipmentRegisterController {
     public String registerEdit(@Validated equipmentRegisterForm equipmentRegisterForm,
                                Model model) {
         final List<EquipmentCategory> equipmentCategories = listEquipmentCategoryService.execute();
-        model.addAttribute(equipmentCategories);
+        model.addAttribute("categories", equipmentCategories);
         return "equipment/register/register";
     }
 
