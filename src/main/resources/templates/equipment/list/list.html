@@ -1,11 +1,41 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>備品一覧</title>
+    <meta charset="UTF-8">
+    <title>備品一覧</title>
 </head>
 <body>
 <div th:if="${message}" th:text="${message}">message info</div>
 
+<form th:action="@{/equipment/list}" method="post" th:object="${form}">
+    備品名：<input type="text" th:field="*{name}" maxlength="255"><br>
+    カテゴリ
+    <div th:each="category: ${categories}">
+        <input type="checkbox" th:field="*{categoryIdList}" th:value="${category.id}" th:id="${category.name}"><label
+            th:text="${category.name}" th:for="${category.name}"></label>
+    </div>
+    状態
+    <div>
+        <input type="checkbox" th:field="*{stateList}" id="available" th:value="${states[0]}"><label for="available">貸出可能</label>
+        <input type="checkbox" th:field="*{stateList}" id="on-loan" th:value="${states[1]}"><label for="on-loan">貸出中</label>
+        <input type="checkbox" th:field="*{stateList}" id="not-available" th:value="${states[2]}"><label for="not-available">貸出不可</label><br>
+    </div>
+    <button type="submit">検索</button>
+</form>
+<br>
+
+<div th:each="equipment : ${equipments}">
+    ID: <span th:text="${equipment.id}">equipment id</span>
+    備品名：<a th:href="@{/equipment/detail(equipmentId=${equipment.id})}" th:text="${equipment.name}">equipment name</a>
+
+    <span th:if="${equipment.state == states[0]}">貸出可能</span>
+    <span th:if="${equipment.state == states[1]}">貸出中</span>
+    <span th:if="${equipment.state == states[2]}">貸出不可</span>
+
+
+    貸出期間：<span th:text="${equipment.lendingPeriod}">equipment lendingPeriod</span>日
+
+    <a th:href="@{/equipment/edit(equipmentId=${equipment.id})}">編集</a>
+</div>
 </body>
 </html>
