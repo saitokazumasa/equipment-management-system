@@ -24,19 +24,16 @@ public class RegisterAccountService implements IRegisterAccountService {
 
     @Override
     @Transactional
-    public boolean execute(final RegisterAccountList registerAccountList) {
+    public void execute(final RegisterAccountList registerAccountList) {
         for (final RegisterAccount registerAccount : registerAccountList.getValues()) {
             final Account account = registerAccount.toAccount();
             final Account newAccount = cryptPassword(account);
-            final int result = this.accountsMapper.insert(newAccount);
-
-            if (result != 1) return false;
+            this.accountsMapper.insert(newAccount);
         }
-        return true;
     }
 
     private Account cryptPassword(final Account account) {
-        final String password = passwordEncoder.encode(account.getPassword());
+        final String password = this.passwordEncoder.encode(account.getPassword());
 
         return new Account(
                 account.id,
