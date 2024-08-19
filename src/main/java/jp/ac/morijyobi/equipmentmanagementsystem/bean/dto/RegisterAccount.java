@@ -2,7 +2,6 @@ package jp.ac.morijyobi.equipmentmanagementsystem.bean.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Account;
 import jp.ac.morijyobi.equipmentmanagementsystem.constant.AccountCategory;
 import lombok.AllArgsConstructor;
