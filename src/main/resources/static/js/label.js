@@ -64,4 +64,5 @@ function onLoad() {
     }
 }
 
-window.addEventListener('load', onLoad);
+// TODO: 後でリファクタ
+// window.addEventListener('load', onLoad);
