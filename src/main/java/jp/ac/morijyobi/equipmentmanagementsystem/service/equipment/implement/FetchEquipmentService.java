@@ -28,24 +28,30 @@ public class FetchEquipmentService implements IFetchEquipmentService {
 
     @Override
     public List<Equipment> executeByUserInput(final String name, final List<Integer> categoryIdList, final List<EquipmentState> stateList) {
-        String a = name;
-        List<Integer> b = categoryIdList;
-        List<EquipmentState> c = stateList;
+        final boolean categoryIsEmpty = categoryIdList.isEmpty();
+        final boolean stateIsEmpty = stateList.isEmpty();
 
-        if(b.isEmpty()) {
+        if(categoryIsEmpty) {
             List<EquipmentCategory> categories = this.equipmentCategoriesMapper.selectAll();
-
             for (EquipmentCategory category : categories) {
-                b.add(category.getId());
+                categoryIdList.add(category.getId());
             }
         }
-
-        if (c.isEmpty()) {
-            c = List.of(EquipmentState.values());
+        if (stateIsEmpty) {
+            stateList.add(EquipmentState.AVAILABLE_FOR_LOAN);
+            stateList.add(EquipmentState.ON_LOAN);
+            stateList.add(EquipmentState.NOT_AVAILABLE_FOR_LOAN);
         }
 
-        List<Equipment> test = this.equipmentsMapper.selectByUserInput(a, b, c);
+        List<Equipment> result = this.equipmentsMapper.selectByUserInput(name, categoryIdList, stateList);
 
-        return test;
+        if (categoryIsEmpty) {
+            categoryIdList.clear();
+        }
+        if (stateIsEmpty) {
+            stateList.clear();
+        }
+
+        return result;
     }
 }
