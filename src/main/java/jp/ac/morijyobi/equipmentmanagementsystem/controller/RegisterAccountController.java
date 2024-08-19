@@ -98,6 +98,7 @@ public class RegisterAccountController {
     ) {
         if (bindingResult.hasErrors()) {
             model.addAttribute(AttributeName.ACCOUNT_CATEGORIES, accountCategories());
+            model.addAttribute(AttributeName.REGISTER_ACCOUNT, RegisterAccount.empty());
             return "account/registration/registration";
         }
 
@@ -112,6 +113,7 @@ public class RegisterAccountController {
     ) {
         if (bindingResult.hasErrors()) {
             model.addAttribute(AttributeName.ACCOUNT_CATEGORIES, accountCategories());
+            model.addAttribute(AttributeName.REGISTER_ACCOUNT, RegisterAccount.empty());
             return "account/registration/registration";
         }
 
