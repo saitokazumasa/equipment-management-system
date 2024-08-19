@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>備品一覧</title>
@@ -35,7 +35,7 @@
 
     貸出期間：<span th:text="${equipment.lendingPeriod}">equipment lendingPeriod</span>日
 
-    <a th:href="@{/equipment/edit(equipmentId=${equipment.id})}">編集</a>
+    <a th:href="@{/equipment/edit(equipmentId=${equipment.id})}" sec:authorize="hasAnyRole('USER', 'EQUIPMENT_MANAGER', 'SYSTEM_MANAGER')">編集</a>
 </div>
 </body>
 </html>
