@@ -4,14 +4,11 @@ import jp.ac.morijyobi.equipmentmanagementsystem.constant.AccountCategory;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -26,6 +23,7 @@ public class WebSecurityConfiguration {
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/password_reset").permitAll()
                         .requestMatchers("/checkout/**").authenticated()
+                        .requestMatchers("/account/**").hasRole(AccountCategory.SYSTEM_MANAGER.toString())
                         .anyRequest().denyAll()
                 ).formLogin(a -> a
                         .loginPage("/login")
