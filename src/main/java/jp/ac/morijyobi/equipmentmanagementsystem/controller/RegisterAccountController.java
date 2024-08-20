@@ -24,7 +24,7 @@ public class RegisterAccountController {
     private final IRegisterAccountService registerAccountService;
 
     private static class AttributeName {
-        public static final String ACCOUNT_CATEGORIES = "accountCategories";
+        public static final String ACCOUNT_CATEGORY_LIST = "accountCategoryList";
         public static final String REGISTER_ACCOUNT = "registerAccount";
         public static final String REGISTER_ACCOUNT_LIST = "registerAccountList";
     }
@@ -36,12 +36,12 @@ public class RegisterAccountController {
     @GetMapping()
     public String get(final Model model) {
         // リダイレクトの場合はリセットしない
-        final var isRedirected = model.containsAttribute(AttributeName.REGISTER_ACCOUNT_LIST);
-        final var registerAccountList = isRedirected ?
+        final boolean isRedirected = model.containsAttribute(AttributeName.REGISTER_ACCOUNT_LIST);
+        final RegisterAccountList registerAccountList = isRedirected ?
                 (RegisterAccountList) model.getAttribute(AttributeName.REGISTER_ACCOUNT_LIST) :
                 RegisterAccountList.empty();
 
-        model.addAttribute(AttributeName.ACCOUNT_CATEGORIES, accountCategories());
+        model.addAttribute(AttributeName.ACCOUNT_CATEGORY_LIST, accountCategories());
         model.addAttribute(AttributeName.REGISTER_ACCOUNT, RegisterAccount.empty());
         model.addAttribute(AttributeName.REGISTER_ACCOUNT_LIST, registerAccountList);
 
@@ -59,7 +59,7 @@ public class RegisterAccountController {
             final RedirectAttributes redirectAttributes
     ) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute(AttributeName.ACCOUNT_CATEGORIES, accountCategories());
+            model.addAttribute(AttributeName.ACCOUNT_CATEGORY_LIST, accountCategories());
             return "account/registration/registration";
         }
 
@@ -97,7 +97,7 @@ public class RegisterAccountController {
             final Model model
     ) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute(AttributeName.ACCOUNT_CATEGORIES, accountCategories());
+            model.addAttribute(AttributeName.ACCOUNT_CATEGORY_LIST, accountCategories());
             model.addAttribute(AttributeName.REGISTER_ACCOUNT, RegisterAccount.empty());
             return "account/registration/registration";
         }
@@ -112,7 +112,7 @@ public class RegisterAccountController {
             final Model model
     ) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute(AttributeName.ACCOUNT_CATEGORIES, accountCategories());
+            model.addAttribute(AttributeName.ACCOUNT_CATEGORY_LIST, accountCategories());
             model.addAttribute(AttributeName.REGISTER_ACCOUNT, RegisterAccount.empty());
             return "account/registration/registration";
         }
