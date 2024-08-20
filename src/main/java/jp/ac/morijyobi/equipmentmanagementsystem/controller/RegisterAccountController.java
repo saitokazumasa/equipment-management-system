@@ -44,7 +44,6 @@ public class RegisterAccountController {
         model.addAttribute(AttributeName.ACCOUNT_CATEGORY_LIST, accountCategories());
         model.addAttribute(AttributeName.REGISTER_ACCOUNT, RegisterAccount.empty());
         model.addAttribute(AttributeName.REGISTER_ACCOUNT_LIST, registerAccountList);
-
         return "account/registration/registration";
     }
 

@@ -37,8 +37,8 @@ public class RegisterStudentAccountController {
     @GetMapping()
     public String get(final Model model) {
         // リダイレクトの場合はリセットしない
-        final var isRedirected = model.containsAttribute(AttributeName.REGISTER_STUDENT_ACCOUNT_LIST);
-        final var registerStudentAccountList = isRedirected ?
+        final boolean isRedirected = model.containsAttribute(AttributeName.REGISTER_STUDENT_ACCOUNT_LIST);
+        final RegisterStudentAccountList registerStudentAccountList = isRedirected ?
                 (RegisterStudentAccountList) model.getAttribute(AttributeName.REGISTER_STUDENT_ACCOUNT_LIST) :
                 RegisterStudentAccountList.empty();
 
