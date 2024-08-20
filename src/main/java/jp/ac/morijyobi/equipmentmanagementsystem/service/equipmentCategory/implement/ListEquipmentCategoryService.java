@@ -12,12 +12,20 @@ import java.util.List;
 public class ListEquipmentCategoryService implements IListEquipmentCategoryService {
     private final IEquipmentCategoriesMapper equipmentCategoriesMapper;
 
-    public ListEquipmentCategoryService(IEquipmentCategoriesMapper equipmentCategoriesMapper) {
+    public ListEquipmentCategoryService(final IEquipmentCategoriesMapper equipmentCategoriesMapper) {
         this.equipmentCategoriesMapper = equipmentCategoriesMapper;
     }
 
     @Override
     public List<EquipmentCategory> execute() {
         return equipmentCategoriesMapper.selectAll();
+    }
+
+    @Override
+    public List<Integer> ids() {
+        final List<EquipmentCategory> equipmentCategoryList = execute();
+        return equipmentCategoryList.stream()
+                .map(EquipmentCategory::getId)
+                .toList();
     }
 }

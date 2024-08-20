@@ -1,10 +1,13 @@
 package jp.ac.morijyobi.equipmentmanagementsystem.service.equipment.implement;
 
+import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.EquipmentSearchCriteria;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Equipment;
+import jp.ac.morijyobi.equipmentmanagementsystem.constant.EquipmentState;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IEquipmentsMapper;
 import jp.ac.morijyobi.equipmentmanagementsystem.service.equipment.IListEquipmentService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,5 +21,14 @@ public class ListEquipmentService implements IListEquipmentService {
     @Override
     public List<Equipment> execute() {
         return this.equipmentsMapper.selectAll();
+    }
+
+    @Override
+    public List<Equipment> search(final EquipmentSearchCriteria equipmentSearchCriteria) {
+        return this.equipmentsMapper.selectBySearchCriteria(
+                equipmentSearchCriteria.getName(),
+                equipmentSearchCriteria.getEquipmentCategoryIdList(),
+                equipmentSearchCriteria.getEquipmentStateList()
+        );
     }
 }
