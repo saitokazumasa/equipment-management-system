@@ -1,41 +1,46 @@
 <!DOCTYPE html>
-<html lang="ja" xmlns:sec="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <title>備品一覧</title>
-</head>
+<html lang="ja" xmlns:th="http://www.w3.org/1999/html">
+<th:block th:replace="layout :: head('備品一覧')"/>
 <body>
-<div th:if="${message}" th:text="${message}">message info</div>
 
-<form th:action="@{/equipment/list}" method="post" th:object="${form}">
-    備品名：<input type="text" th:field="*{name}" maxlength="255"><br>
-    カテゴリ
-    <div th:each="category: ${categories}">
-        <input type="checkbox" th:field="*{categoryIdList}" th:value="${category.id}" th:id="${category.name}"><label
-            th:text="${category.name}" th:for="${category.name}"></label>
+<th:block th:replace="layout :: header"/>
+
+<main class="w-2/5 mx-auto">
+    <form th:action="@{/equipment/list}" method="post" th:object="${equipmentSearchCriteria}">
+        <label for="name">備品名</label>
+        <input type="text" id="name" th:field="*{name}" maxlength="255">
+
+        <p>カテゴリ</p>
+        <th:block th:each="equipmentCategory : ${equipmentCategoryList}">
+            <label th:for="'equipmentCategoryIdList' + ${equipmentCategory.id}"
+                   th:text="${equipmentCategory.name}">カテゴリ</label>
+            <input type="checkbox"
+                   th:field="*{equipmentCategoryIdList}"
+                   th:value="${equipmentCategory.id}" aria-label>
+        </th:block>
+
+        <p>状態</p>
+        <th:block th:each="equipmentState : ${equipmentStateList}">
+            <label th:for="'equipmentStateList' + ${equipmentState.ordinal + 1}"
+                   th:text="${equipmentState.text}">状態</label>
+            <input type="checkbox"
+                   th:field="*{equipmentStateList}"
+                   th:value="${equipmentState}" aria-label>
+        </th:block>
+
+        <button type="submit">検索</button>
+    </form>
+
+    <div th:each="equipment : ${equipmentList}">
+        <p>ID: <span th:text="${equipment.id}"></span></p>
+        <p>備品名: <a href="@" th:text="${equipment.name}"></a></p>
+        <p>貸出期間: <span th:text="${equipment.lendingPeriod}"></span>日</p>
+        <th:block sec:authorize="hasAnyRole('EQUIPMENT_MANAGER', 'SYSTEM_MANAGER')">
+            <a href="@">編集</a>
+        </th:block>
     </div>
-    状態
-    <div>
-        <input type="checkbox" th:field="*{stateList}" id="available" th:value="${states[0]}"><label for="available">貸出可能</label>
-        <input type="checkbox" th:field="*{stateList}" id="on-loan" th:value="${states[1]}"><label for="on-loan">貸出中</label>
-        <input type="checkbox" th:field="*{stateList}" id="not-available" th:value="${states[2]}"><label for="not-available">貸出不可</label><br>
-    </div>
-    <button type="submit">検索</button>
-</form>
-<br>
+</main>
 
-<div th:each="equipment : ${equipments}">
-    ID: <span th:text="${equipment.id}">equipment id</span>
-    備品名：<a th:href="@{/equipment/detail(equipmentId=${equipment.id})}" th:text="${equipment.name}">equipment name</a>
-
-    <span th:if="${equipment.state == states[0]}">貸出可能</span>
-    <span th:if="${equipment.state == states[1]}">貸出中</span>
-    <span th:if="${equipment.state == states[2]}">貸出不可</span>
-
-
-    貸出期間：<span th:text="${equipment.lendingPeriod}">equipment lendingPeriod</span>日
-
-    <a th:href="@{/equipment/edit(equipmentId=${equipment.id})}" sec:authorize="hasAnyRole('USER', 'EQUIPMENT_MANAGER', 'SYSTEM_MANAGER')">編集</a>
-</div>
 </body>
 </html>
+<th:block th:replace="layout :: scripts"/>
