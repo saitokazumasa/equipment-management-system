@@ -9,6 +9,7 @@
     <form th:action="@{/equipment/list}" method="post" th:object="${equipmentSearchCriteria}">
         <label for="name">備品名</label>
         <input type="text" id="name" th:field="*{name}" maxlength="255">
+        <p th:errors="*{name}"></p>
 
         <p>カテゴリ</p>
         <th:block th:each="equipmentCategory : ${equipmentCategoryList}">
@@ -18,6 +19,7 @@
                    th:field="*{equipmentCategoryIdList}"
                    th:value="${equipmentCategory.id}" aria-label>
         </th:block>
+        <p th:errors="*{equipmentCategoryIdList}"></p>
 
         <p>状態</p>
         <th:block th:each="equipmentState : ${equipmentStateList}">
@@ -27,6 +29,7 @@
                    th:field="*{equipmentStateList}"
                    th:value="${equipmentState}" aria-label>
         </th:block>
+        <p th:errors="*{equipmentStateList}"></p>
 
         <button type="submit">検索</button>
     </form>
