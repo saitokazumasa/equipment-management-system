@@ -15,7 +15,16 @@ public class ListEquipmentCategoryService implements IListEquipmentCategoryServi
         this.equipmentCategoriesMapper = equipmentCategoriesMapper;
     }
 
+    @Override
     public List<EquipmentCategory> execute() {
-        return this.equipmentCategoriesMapper.selectAll();
+        return equipmentCategoriesMapper.selectAll();
+    }
+
+    @Override
+    public List<Integer> ids() {
+        final List<EquipmentCategory> equipmentCategoryList = execute();
+        return equipmentCategoryList.stream()
+                .map(EquipmentCategory::getId)
+                .toList();
     }
 }

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.w3.org/1999/html">
+<th:block th:replace="layout :: head('アカウント登録')"/>
+<body>
+
+<th:block th:replace="layout :: header"/>
+
+<main class="w-2/5 mx-auto">
+    <div class="w-full flex justify-center my-10 ">
+        <h1 class="w-11/12 py-1.5 text-center text-4xl font-bold border-b-2 border-primary">アカウント登録</h1>
+    </div>
+
+    <form th:action="@{/student/registration}" method="post">
+        <div th:object="${registerStudentAccount}">
+            <label for="id">学籍番号</label>
+            <input type="number" id="id" th:field="*{id}">
+            <p th:errors="*{id}"></p>
+
+            <label for="name">名前</label>
+            <input type="text" id="name" th:field="*{name}">
+            <p th:errors="*{name}"></p>
+
+            <label for="mail">メールアドレス</label>
+            <input type="text" id="mail" th:field="*{mail}">
+            <p th:errors="*{mail}"></p>
+
+            <label for="course">学科</label>
+            <select id="course" th:field="*{courseId}">
+                <option th:each="course : ${courseList}"
+                        th:text="${course.name}"
+                        th:value="${course.id}">学科名</option>
+            </select>
+            <p th:errors="*{courseId}"></p>
+
+            <label for="admissionYear">入学年度</label>
+            <input type="number" id="admissionYear" th:field="*{admissionYear}">
+            <p th:errors="*{admissionYear}"></p>
+
+            <label for="graduationYear">卒業年度</label>
+            <input type="number" id="graduationYear" th:field="*{graduationYear}">
+            <p th:errors="*{graduationYear}"></p>
+        </div>
+        <button type="submit" name="add">追加</button>
+
+        <div th:each="value, status: ${registerStudentAccountList.values}" th:object="${registerStudentAccountList}">
+            <p th:text="${value.id}"></p>
+            <p th:text="${value.name}"></p>
+            <p th:text="${value.mail}"></p>
+            <th:block th:each="course : ${courseList}">
+                <th:block th:if="${course.id == value.courseId}">
+                    <p th:text="${course.name}"></p>
+                </th:block>
+            </th:block>
+            <p th:text="${value.admissionYear}"></p>
+            <p th:text="${value.graduationYear}"></p>
+
+            <input type="text" th:field="*{values[__${status.index}__].id}" hidden aria-label="">
+            <input type="text" th:field="*{values[__${status.index}__].name}" hidden aria-label="">
+            <input type="text" th:field="*{values[__${status.index}__].mail}" hidden aria-label="">
+            <input type="text" th:field="*{values[__${status.index}__].courseId}" hidden aria-label="">
+            <input type="text" th:field="*{values[__${status.index}__].admissionYear}" hidden aria-label="">
+            <input type="text" th:field="*{values[__${status.index}__].graduationYear}" hidden aria-label="">
+            <button type="submit" name="remove" th:value="${status.index}">×</button>
+        </div>
+
+        <button type="submit" name="confirm">確認</button>
+    </form>
+</main>
+
+</body>
+</html>
+<th:block th:replace="layout :: scripts"/>

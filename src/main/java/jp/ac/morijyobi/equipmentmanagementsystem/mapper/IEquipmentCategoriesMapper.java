@@ -1,6 +1,5 @@
 package jp.ac.morijyobi.equipmentmanagementsystem.mapper;
 
-import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Equipment;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.EquipmentCategory;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -15,9 +14,9 @@ public interface IEquipmentCategoriesMapper {
     @Options(useGeneratedKeys = true, keyProperty = "id")
     public void insert(final EquipmentCategory equipmentCategory);
 
-    @Select("SELECT * FROM equipment_categories")
-    public List<EquipmentCategory> selectAll();
-
     @Select("SELECT * FROM equipment_categories WHERE name = #{name}")
     public EquipmentCategory selectByName(final String name);
+
+    @Select("SELECT * FROM equipment_categories ORDER BY id")
+    public List<EquipmentCategory> selectAll();
 }

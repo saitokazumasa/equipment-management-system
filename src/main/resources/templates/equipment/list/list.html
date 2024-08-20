@@ -1,11 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<html lang="ja" xmlns:th="http://www.w3.org/1999/html">
+<th:block th:replace="layout :: head('備品一覧')"/>
 <body>
-<div th:if="${message}" th:text="${message}">message info</div>
+
+<th:block th:replace="layout :: header"/>
+
+<main class="w-2/5 mx-auto">
+    <form th:action="@{/equipment/list}" method="post" th:object="${equipmentSearchCriteria}">
+        <label for="name">備品名</label>
+        <input type="text" id="name" th:field="*{name}" maxlength="255">
+        <p th:errors="*{name}"></p>
+
+        <p>カテゴリ</p>
+        <th:block th:each="equipmentCategory : ${equipmentCategoryList}">
+            <label th:for="'equipmentCategoryIdList' + ${equipmentCategory.id}"
+                   th:text="${equipmentCategory.name}">カテゴリ</label>
+            <input type="checkbox"
+                   th:field="*{equipmentCategoryIdList}"
+                   th:value="${equipmentCategory.id}" aria-label>
+        </th:block>
+        <p th:errors="*{equipmentCategoryIdList}"></p>
+
+        <p>状態</p>
+        <th:block th:each="equipmentState : ${equipmentStateList}">
+            <label th:for="'equipmentStateList' + ${equipmentState.ordinal + 1}"
+                   th:text="${equipmentState.text}">状態</label>
+            <input type="checkbox"
+                   th:field="*{equipmentStateList}"
+                   th:value="${equipmentState}" aria-label>
+        </th:block>
+        <p th:errors="*{equipmentStateList}"></p>
+
+        <button type="submit">検索</button>
+    </form>
+
+    <div th:each="equipment : ${equipmentList}">
+        <p>ID: <span th:text="${equipment.id}"></span></p>
+        <p>備品名: <a href="@" th:text="${equipment.name}"></a></p>
+        <p>貸出期間: <span th:text="${equipment.lendingPeriod}"></span>日</p>
+        <th:block sec:authorize="hasAnyRole('EQUIPMENT_MANAGER', 'SYSTEM_MANAGER')">
+            <a href="@">編集</a>
+        </th:block>
+    </div>
+</main>
 
 </body>
 </html>
+<th:block th:replace="layout :: scripts"/>
