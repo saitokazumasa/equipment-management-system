@@ -117,11 +117,13 @@ public class RegisterAccountController {
             return "account/registration/registration";
         }
 
-        final boolean result = registerAccountService.execute(registerAccountList);
-
-        if (result) return "redirect:/account/registration/success";
-
-        return "redirect:/account/registration/failed";
+        try {
+            this.registerAccountService.execute(registerAccountList);
+            return "redirect:/account/registration/success";
+        } catch (final Exception e) {
+            System.out.println(e.getMessage());
+            return "redirect:/account/registration/failed";
+        }
     }
 
     @PostMapping(params = "cancel")

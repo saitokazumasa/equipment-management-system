@@ -9,8 +9,7 @@ public class JsonUtil {
             new ObjectMapper()
                     .registerModule(new JavaTimeModule());
     
-    private JsonUtil() {
-    }
+    private JsonUtil() {}
 
     public static <T> T tryToObject(final Object json, final Class<T> javaType) {
         if (json == null) return null;

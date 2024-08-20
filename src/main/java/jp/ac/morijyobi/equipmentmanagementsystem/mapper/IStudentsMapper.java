@@ -7,8 +7,7 @@ import org.apache.ibatis.annotations.Options;
 
 @Mapper
 public interface IStudentsMapper {
-    @Insert("INSERT INTO students (account_id, course_id, admission_year, graduation_year) " +
-            "VALUES (#{account_id}, #{course_id}, #{admission_year}, #{graduation_year})")
-    @Options(useGeneratedKeys = true, keyProperty = "id")
+    @Insert("INSERT INTO students (id, account_id, course_id, admission_year, graduation_year) " +
+            "VALUES (#{id}, #{account_id}, #{course_id}, #{admission_year}, #{graduation_year})")
     public void insert(final Student student);
 }
