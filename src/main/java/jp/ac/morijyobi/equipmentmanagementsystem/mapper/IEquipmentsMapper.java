@@ -19,20 +19,19 @@ public interface IEquipmentsMapper {
     @Select("SELECT * FROM equipments WHERE id = #{id} ORDER BY id")
     public Equipment selectById(final int id);
 
-    @Select("SELECT * FROM equipments ORDER BY id")
-    public List<Equipment> selectAll();
-
     @Select("<script>" +
             "SELECT * FROM equipments WHERE name LIKE CONCAT('%', #{name}, '%') " +
-            "AND category_id IN " +
-            "<foreach collection='categoryIdList' item='categoryId' open='(' separator=',' close=')'>" +
-            "#{categoryId}" +
-            "</foreach>" +
-            "AND state IN" +
-            "<foreach collection='stateList' item='state' open='(' separator=',' close=')'>" +
-            "#{state}" +
-            "</foreach>" +
+            "AND category_id IN (<foreach collection='categoryIdList' item='categoryId' separator=','>#{categoryId}</foreach>) " +
+            "AND state IN (<foreach collection='stateList' item='state' separator=','>#{state}</foreach>) " +
             "ORDER BY id" +
-            "</script>")
-    public List<Equipment> selectByUserInput(final String name, final List<Integer> categoryIdList, final List<EquipmentState> stateList);
+            "</script>"
+    )
+    public List<Equipment> selectBySearchCriteria(
+            final String name,
+            final List<Integer> categoryIdList,
+            final List<EquipmentState> stateList
+    );
+
+    @Select("SELECT * FROM equipments ORDER BY id")
+    public List<Equipment> selectAll();
 }

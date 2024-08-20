@@ -1,5 +1,7 @@
 package jp.ac.morijyobi.equipmentmanagementsystem.bean.dto;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.EquipmentCategory;
 import jp.ac.morijyobi.equipmentmanagementsystem.constant.EquipmentState;
@@ -17,7 +19,12 @@ public class EquipmentSearchCriteria implements Serializable {
     @Size(max = 255)
     private String name;
 
+    @NotNull
+    @NotEmpty
     private List<Integer> equipmentCategoryIdList;
+
+    @NotNull
+    @NotEmpty
     private List<EquipmentState> equipmentStateList;
 
     public static EquipmentSearchCriteria generate(

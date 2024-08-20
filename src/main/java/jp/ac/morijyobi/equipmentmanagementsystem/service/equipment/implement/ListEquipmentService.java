@@ -2,12 +2,10 @@ package jp.ac.morijyobi.equipmentmanagementsystem.service.equipment.implement;
 
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.EquipmentSearchCriteria;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Equipment;
-import jp.ac.morijyobi.equipmentmanagementsystem.constant.EquipmentState;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IEquipmentsMapper;
 import jp.ac.morijyobi.equipmentmanagementsystem.service.equipment.IListEquipmentService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
