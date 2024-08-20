@@ -22,9 +22,9 @@
 
             <label for="category">区分</label>
             <select id="category" th:field="*{category}">
-                <option th:each="accountCategory : ${accountCategories}"
+                <option th:each="accountCategory : ${accountCategoryList}"
                         th:text="${accountCategory.text}"
-                        th:value="${accountCategory.toString()}">テキスト</option>
+                        th:value="${accountCategory}">テキスト</option>
             </select>
             <p th:errors="*{category}"></p>
         </div>
@@ -34,9 +34,9 @@
             <p th:text="${value.name}"></p>
             <p th:text="${value.mail}"></p>
             <p th:text="${value.category.text}"></p>
-            <input type="text" th:field="*{values[__${status.index}__].name}" hidden aria-label="">
-            <input type="text" th:field="*{values[__${status.index}__].mail}" hidden aria-label="">
-            <input type="text" th:field="*{values[__${status.index}__].category}" hidden aria-label="">
+            <input type="text" th:field="*{values[__${status.index}__].name}" hidden aria-label>
+            <input type="text" th:field="*{values[__${status.index}__].mail}" hidden aria-label>
+            <input type="text" th:field="*{values[__${status.index}__].category}" hidden aria-label>
             <button type="submit" name="remove" th:value="${status.index}">×</button>
         </div>
 

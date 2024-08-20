@@ -62,7 +62,7 @@
                     <a class="block mt-3 py-4 text-center text-primary text-4xl font-bold border-2 border-primary">返す</a>
                 </li>
                 <li class="w-full">
-                    <a class="block mt-10 py-4 text-center text-primary text-3xl font-bold border-2 border-primary">備品一覧</a>
+                    <a th:href="@{/equipment/list}" class="block mt-10 py-4 text-center text-primary text-3xl font-bold border-2 border-primary">備品一覧</a>
                 </li>
                 <li sec:authorize="hasAnyRole('EQUIPMENT_MANAGER', 'SYSTEM_MANAGER')" class="w-full">
                     <a class="block mt-3 py-4 text-center text-primary text-3xl font-bold border-2 border-primary">備品登録</a>
