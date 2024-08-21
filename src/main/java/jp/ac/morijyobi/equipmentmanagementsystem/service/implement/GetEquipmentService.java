@@ -17,4 +17,14 @@ public class GetEquipmentService implements IGetEquipmentService {
     public Equipment executeById(final int id) {
         return this.equipmentsMapper.selectById(id);
     }
+
+    @Override
+    public Equipment executeOnLoanById(final int id) {
+        return this.equipmentsMapper.selectOnLoanById(id);
+    }
+
+    @Override
+    public Equipment executeAvailableForLoanById(final int id) {
+        return this.equipmentsMapper.selectAvailableForLoanById(id);
+    }
 }

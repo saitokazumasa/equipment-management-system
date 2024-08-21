@@ -1,6 +1,6 @@
 package jp.ac.morijyobi.equipmentmanagementsystem.service;
-import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.ReturnApplicationForm;
+import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.ReturnEquipmentList;
 
 public interface IApplyReturnService {
-    int execute(final ReturnApplicationForm returnApplicationForm);
+    public void execute(final ReturnEquipmentList returnEquipmentList) throws Exception;
 }

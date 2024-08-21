@@ -1,15 +1,17 @@
 package jp.ac.morijyobi.equipmentmanagementsystem.service.implement;
 
-import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Account;
+import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.ReturnEquipment;
+import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.ReturnEquipmentList;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.CheckoutApplication;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Equipment;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.ReturnApplication;
-import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.ReturnApplicationForm;
+import jp.ac.morijyobi.equipmentmanagementsystem.constant.EquipmentState;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IAccountsMapper;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.ICheckoutApplicationsMapper;
+import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IEquipmentsMapper;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IReturnApplicationsMapper;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.IApplyDamagedService;
 import jp.ac.morijyobi.equipmentmanagementsystem.service.IApplyReturnService;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,40 +19,42 @@ import java.time.LocalDateTime;
 
 @Service
 public class ApplyReturnService implements IApplyReturnService {
-    private final IReturnApplicationsMapper returnApplicationsMapper;
-    private final IAccountsMapper accountsMapper;
     private final ICheckoutApplicationsMapper checkoutApplicationsMapper;
+    private final IReturnApplicationsMapper returnApplicationsMapper;
+    private final IApplyDamagedService applyDamagedService;
 
     public ApplyReturnService(
             final IReturnApplicationsMapper returnApplicationsMapper,
-            final IAccountsMapper accountsMapper,
-            final ICheckoutApplicationsMapper checkoutApplicationsMapper) {
+            final ICheckoutApplicationsMapper checkoutApplicationsMapper,
+            final IApplyDamagedService applyDamagedService
+    ) {
         this.returnApplicationsMapper = returnApplicationsMapper;
-        this.accountsMapper = accountsMapper;
         this.checkoutApplicationsMapper = checkoutApplicationsMapper;
+        this.applyDamagedService = applyDamagedService;
     }
 
     @Override
     @Transactional
-    public int execute(ReturnApplicationForm returnApplicationForm) {
-        System.out.println("ログイン中：" + SecurityContextHolder.getContext().getAuthentication().getName());
+    public void execute(final ReturnEquipmentList returnEquipmentList) throws Exception {
+        for (final ReturnEquipment returnEquipment : returnEquipmentList.getValues()) {
+            final int equipmentId = returnEquipment.getEquipment().getId();
+            final CheckoutApplication checkoutApplication = this.checkoutApplicationsMapper
+                    .selectNotReturnedByEquipmentId(equipmentId);
 
-        // TODO
-        final Account account = accountsMapper.selectByMail("kawaguchi@gmail.com");
-
-        for (final Equipment equipment : returnApplicationForm.equipments()) {
-            final CheckoutApplication checkoutApplication = checkoutApplicationsMapper.selectNotReturned(account.getId(), equipment.getId());
-            final var returnApplication = new ReturnApplication(
+            final var value = new ReturnApplication(
                     -1,
                     checkoutApplication.getId(),
                     LocalDateTime.now()
             );
+            this.returnApplicationsMapper.insert(value);
 
-            final int result = returnApplicationsMapper.insert(returnApplication);
+            // TODO: 返却申請承認時に更新する
+//            final int result = this.equipmentsMapper.updateState(equipmentId, EquipmentState.AVAILABLE_FOR_LOAN);
+//            if (result != 1) throw new Exception("更新に失敗しました");
 
-            if (result != 1) return result;
+            if (!returnEquipment.isHasDamaged()) return;
+
+            this.applyDamagedService.execute(returnEquipment.getDamagedReason(), checkoutApplication.getId());
         }
-
-        return 1;
     }
 }
