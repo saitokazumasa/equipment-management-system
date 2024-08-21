@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/equipment/registration")
-public class RegisterEquipmentController {
+public class RegisterEquipmentController extends BaseController {
     private final IListEquipmentCategoryService listEquipmentCategoryService;
     private final IListStorageLocationService listStorageLocationService;
     private final IRegisterEquipmentService registerEquipmentService;

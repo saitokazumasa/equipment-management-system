@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/student/registration")
-public class RegisterStudentAccountController {
+public class RegisterStudentAccountController extends BaseController {
     private final IListCourseService listCourseService;
     private final IRegisterStudentService registerStudentService;
 

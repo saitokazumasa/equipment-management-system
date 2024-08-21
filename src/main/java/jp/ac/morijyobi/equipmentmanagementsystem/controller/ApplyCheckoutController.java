@@ -18,7 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/checkout/application")
-public class ApplyCheckoutController {
+public class ApplyCheckoutController extends BaseController {
     private final IGetEquipmentService getEquipmentService;
     private final IApplyCheckoutService applyCheckoutService;
 

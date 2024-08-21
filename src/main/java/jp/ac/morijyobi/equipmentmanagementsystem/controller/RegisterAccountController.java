@@ -20,7 +20,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/account/registration")
-public class RegisterAccountController {
+public class RegisterAccountController extends BaseController {
     private final IRegisterAccountService registerAccountService;
 
     private static class AttributeName {

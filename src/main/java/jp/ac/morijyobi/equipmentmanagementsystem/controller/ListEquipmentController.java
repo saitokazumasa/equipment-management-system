@@ -18,7 +18,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/equipment/list")
-public class ListEquipmentController {
+public class ListEquipmentController extends BaseController {
     private final IListEquipmentCategoryService listEquipmentCategoryService;
     private final IListEquipmentService listEquipmentService;
 
