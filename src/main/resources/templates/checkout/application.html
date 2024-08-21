@@ -11,7 +11,7 @@
     </div>
 
     <form th:action="@{/checkout/application}" method="post">
-        <div th:object="${equipmentId}">
+        <div th:object="${checkoutEquipmentId}">
             <div>
                 <input type="number" th:field="*{value}" aria-label>
                 <p th:errors="*{value}"></p>
@@ -20,7 +20,7 @@
         </div>
         <button type="submit" name="add">追加</button>
 
-        <div th:each="value, status: ${equipmentList.values}" th:object="${equipmentList}">
+        <div th:each="value, status: ${checkoutEquipmentList.values}" th:object="${checkoutEquipmentList}">
             <p th:text="${value.name}"></p>
             <p th:text="${value.lendingPeriod}"></p>
             <input type="text" th:field="*{values[__${status.index}__].id}" hidden aria-label>

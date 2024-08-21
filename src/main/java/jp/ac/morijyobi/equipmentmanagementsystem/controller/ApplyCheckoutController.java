@@ -1,8 +1,8 @@
 package jp.ac.morijyobi.equipmentmanagementsystem.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.EquipmentId;
-import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.EquipmentList;
+import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.CheckoutEquipmentId;
+import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.CheckoutEquipmentList;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Equipment;
 import jp.ac.morijyobi.equipmentmanagementsystem.constant.ErrorMessage;
 import jp.ac.morijyobi.equipmentmanagementsystem.service.IApplyCheckoutService;
@@ -24,8 +24,8 @@ public class ApplyCheckoutController extends BaseController {
 
     private static class AttributeName {
         public static final String ERROR_MESSAGE = "errorMessage";
-        public static final String EQUIPMENT_ID = "equipmentId";
-        public static final String EQUIPMENT_LIST = "equipmentList";
+        public static final String CHECKOUT_EQUIPMENT_ID = "checkoutEquipmentId";
+        public static final String CHECKOUT_EQUIPMENT_LIST = "checkoutEquipmentList";
     }
 
     public ApplyCheckoutController(
@@ -39,21 +39,21 @@ public class ApplyCheckoutController extends BaseController {
     @GetMapping()
     public String get(final Model model) {
         // リダイレクトの場合はリセットしない
-        final boolean isRedirected = model.containsAttribute(AttributeName.EQUIPMENT_LIST);
-        final EquipmentList equipmentList = isRedirected ?
-                (EquipmentList) model.getAttribute(AttributeName.EQUIPMENT_LIST) :
-                EquipmentList.empty();
+        final boolean isRedirected = model.containsAttribute(AttributeName.CHECKOUT_EQUIPMENT_LIST);
+        final CheckoutEquipmentList checkoutEquipmentList = isRedirected ?
+                (CheckoutEquipmentList) model.getAttribute(AttributeName.CHECKOUT_EQUIPMENT_LIST) :
+                CheckoutEquipmentList.empty();
 
-        model.addAttribute(AttributeName.EQUIPMENT_ID, EquipmentId.empty());
-        model.addAttribute(AttributeName.EQUIPMENT_LIST, equipmentList);
+        model.addAttribute(AttributeName.CHECKOUT_EQUIPMENT_ID, CheckoutEquipmentId.empty());
+        model.addAttribute(AttributeName.CHECKOUT_EQUIPMENT_LIST, checkoutEquipmentList);
         return "checkout/application";
     }
 
     @PostMapping(params = "add")
     public String add(
-            final @Validated EquipmentId equipmentId,
+            final @Validated CheckoutEquipmentId checkoutEquipmentId,
             final BindingResult bindingResult,
-            final @Validated EquipmentList equipmentList,
+            final @Validated CheckoutEquipmentList checkoutEquipmentList,
             // これがないと初期状態の空リストを通せない
             final BindingResult __,
             final Model model,
@@ -61,52 +61,52 @@ public class ApplyCheckoutController extends BaseController {
     ) {
         if (bindingResult.hasErrors()) return "checkout/application";
 
-        final Equipment equipment = this.getEquipmentService.executeById(equipmentId.toInt());
+        final Equipment equipment = this.getEquipmentService.executeById(checkoutEquipmentId.toInt());
         if (equipment == null) {
             model.addAttribute(AttributeName.ERROR_MESSAGE, ErrorMessage.NOT_EXIST_VALUE.getText());
             return "checkout/application";
         }
 
         // values が null の状態で入ってくることがあるため、その場合は初期化してから追加する
-        final EquipmentList newEquipmentList = equipmentList.isNull() ?
-                EquipmentList.empty().add(equipment) :
-                equipmentList.add(equipment);
+        final CheckoutEquipmentList newCheckoutEquipmentList = checkoutEquipmentList.isNull() ?
+                CheckoutEquipmentList.empty().add(equipment) :
+                checkoutEquipmentList.add(equipment);
 
-        redirectAttributes.addFlashAttribute(AttributeName.EQUIPMENT_LIST, newEquipmentList);
+        redirectAttributes.addFlashAttribute(AttributeName.CHECKOUT_EQUIPMENT_LIST, newCheckoutEquipmentList);
         return "redirect:/checkout/application";
     }
 
     @PostMapping(params = "remove")
     public String remove(
-            final @Validated EquipmentId equipmentId,
+            final @Validated CheckoutEquipmentId checkoutEquipmentId,
             final BindingResult _1,
-            final @Validated EquipmentList equipmentList,
+            final @Validated CheckoutEquipmentList checkoutEquipmentList,
             final BindingResult _2,
             final HttpServletRequest request,
             final RedirectAttributes redirectAttributes
     ) {
         final int index = Integer.parseInt(request.getParameter("remove"));
-        final EquipmentList newEquipmentList = equipmentList.remove(index);
+        final CheckoutEquipmentList newCheckoutEquipmentList = checkoutEquipmentList.remove(index);
 
-        redirectAttributes.addFlashAttribute(AttributeName.EQUIPMENT_LIST, newEquipmentList);
+        redirectAttributes.addFlashAttribute(AttributeName.CHECKOUT_EQUIPMENT_LIST, newCheckoutEquipmentList);
         return "redirect:/checkout/application";
     }
 
     @PostMapping(params = "submit")
     public String submit(
             final @AuthenticationPrincipal UserDetails userDetails,
-            final @Validated EquipmentList equipmentList,
+            final @Validated CheckoutEquipmentList checkoutEquipmentList,
             final BindingResult bindingResult,
             final Model model
     ) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute(AttributeName.EQUIPMENT_ID, EquipmentId.empty());
+            model.addAttribute(AttributeName.CHECKOUT_EQUIPMENT_ID, CheckoutEquipmentId.empty());
             return "checkout/application";
         }
 
         try {
             final String mail = userDetails.getUsername();
-            this.applyCheckoutService.execute(mail, equipmentList);
+            this.applyCheckoutService.execute(mail, checkoutEquipmentList);
             return "redirect:/checkout/application/success";
         } catch (final Exception e) {
             System.out.println(e.getMessage());

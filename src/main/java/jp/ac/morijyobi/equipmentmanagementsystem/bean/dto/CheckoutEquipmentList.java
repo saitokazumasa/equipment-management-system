@@ -12,29 +12,29 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class EquipmentList implements Serializable {
+public class CheckoutEquipmentList implements Serializable {
     @NotNull
     @NotEmpty
     private List<Equipment> values;
 
-    public static EquipmentList empty() {
+    public static CheckoutEquipmentList empty() {
         final var list = new ArrayList<Equipment>();
-        return new EquipmentList(list);
+        return new CheckoutEquipmentList(list);
     }
 
     public boolean isNull() {
         return this.values == null;
     }
 
-    public EquipmentList add(final Equipment value) {
+    public CheckoutEquipmentList add(final Equipment value) {
         final var list = new ArrayList<>(this.values);
         list.add(value);
-        return new EquipmentList(list);
+        return new CheckoutEquipmentList(list);
     }
 
-    public EquipmentList remove(final int index) {
+    public CheckoutEquipmentList remove(final int index) {
         final var list = new ArrayList<>(this.values);
         list.remove(index);
-        return new EquipmentList(list);
+        return new CheckoutEquipmentList(list);
     }
 }
