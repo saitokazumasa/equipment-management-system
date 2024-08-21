@@ -11,12 +11,12 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EquipmentId implements Serializable {
+public class CheckoutEquipmentId implements Serializable {
     @NotBlank
     private String value;
 
-    public static EquipmentId empty() {
-        return new EquipmentId();
+    public static CheckoutEquipmentId empty() {
+        return new CheckoutEquipmentId();
     }
 
     public int toInt() {

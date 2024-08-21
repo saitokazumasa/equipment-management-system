@@ -19,8 +19,10 @@ public class WebSecurityConfiguration {
                         .requestMatchers("/images/**").permitAll()
                         .requestMatchers("/css/**").permitAll()
                         .requestMatchers("/js/**").permitAll()
+
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/password_reset").permitAll()
+                        .requestMatchers("/return/**").permitAll()
                         .requestMatchers("/checkout/**").authenticated()
                         .requestMatchers("/equipment/list/**").authenticated()
                         .requestMatchers("/equipment/registration/**").hasAnyRole(
@@ -28,6 +30,7 @@ public class WebSecurityConfiguration {
                                 AccountCategory.SYSTEM_MANAGER.toString())
                         .requestMatchers("/account/**").hasRole(AccountCategory.SYSTEM_MANAGER.toString())
                         .requestMatchers("/student/**").hasRole(AccountCategory.SYSTEM_MANAGER.toString())
+
                         .anyRequest().denyAll()
                 ).formLogin(a -> a
                         .loginPage("/login")
