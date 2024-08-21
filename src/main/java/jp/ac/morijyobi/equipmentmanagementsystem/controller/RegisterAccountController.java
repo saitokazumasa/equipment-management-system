@@ -68,7 +68,6 @@ public class RegisterAccountController {
                 registerAccountList.add(registerAccount);
 
         redirectAttributes.addFlashAttribute(AttributeName.REGISTER_ACCOUNT_LIST, newRegisterAccountList);
-
         return "redirect:/account/registration";
     }
 
@@ -85,7 +84,6 @@ public class RegisterAccountController {
         final RegisterAccountList newRegisterAccountList = registerAccountList.remove(index);
 
         redirectAttributes.addFlashAttribute(AttributeName.REGISTER_ACCOUNT_LIST, newRegisterAccountList);
-
         return "redirect:/account/registration";
     }
 
@@ -100,7 +98,6 @@ public class RegisterAccountController {
             model.addAttribute(AttributeName.REGISTER_ACCOUNT, RegisterAccount.empty());
             return "account/registration";
         }
-
         return "account/confirm_registration";
     }
 
@@ -132,7 +129,6 @@ public class RegisterAccountController {
             final RedirectAttributes redirectAttributes
     ) {
         redirectAttributes.addFlashAttribute(AttributeName.REGISTER_ACCOUNT_LIST, registerAccountList);
-
         return "redirect:/account/registration";
     }
 

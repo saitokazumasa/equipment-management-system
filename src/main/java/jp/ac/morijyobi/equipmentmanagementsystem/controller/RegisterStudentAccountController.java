@@ -69,7 +69,6 @@ public class RegisterStudentAccountController {
                 registerStudentAccountList.add(registerStudentAccount);
 
         redirectAttributes.addFlashAttribute(AttributeName.REGISTER_STUDENT_ACCOUNT_LIST, newRegisterStudentAccountList);
-
         return "redirect:/student/registration";
     }
 
@@ -86,7 +85,6 @@ public class RegisterStudentAccountController {
         final RegisterStudentAccountList newRegisterStudentAccountList = registerStudentAccountList.remove(index);
 
         redirectAttributes.addFlashAttribute(AttributeName.REGISTER_STUDENT_ACCOUNT_LIST, newRegisterStudentAccountList);
-
         return "redirect:/student/registration";
     }
 
@@ -101,7 +99,6 @@ public class RegisterStudentAccountController {
             model.addAttribute(AttributeName.REGISTER_STUDENT_ACCOUNT, RegisterStudentAccount.empty());
             return "student/registration";
         }
-
         return "student/confirm_registration";
     }
 
@@ -133,7 +130,6 @@ public class RegisterStudentAccountController {
             final RedirectAttributes redirectAttributes
     ) {
         redirectAttributes.addFlashAttribute(AttributeName.REGISTER_STUDENT_ACCOUNT_LIST, registerStudentAccountList);
-
         return "redirect:/student/registration";
     }
 
