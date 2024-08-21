@@ -1,10 +1,10 @@
 package jp.ac.morijyobi.equipmentmanagementsystem.service.implement;
 
 
+import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.EquipmentList;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Account;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.CheckoutApplication;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Equipment;
-import jp.ac.morijyobi.equipmentmanagementsystem.bean.form.CheckoutApplicationForm;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IAccountsMapper;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.ICheckoutApplicationsMapper;
 import jp.ac.morijyobi.equipmentmanagementsystem.service.IApplyCheckoutService;
@@ -28,24 +28,17 @@ public class ApplyCheckoutService implements IApplyCheckoutService {
 
     @Override
     @Transactional
-    public int execute(final String mail, final CheckoutApplicationForm checkoutApplicationForm) {
+    public void execute(final String mail, final EquipmentList equipmentList) {
         final Account account = this.accountsMapper.selectByMail(mail);
 
-        for (final Equipment equipment : checkoutApplicationForm.equipments()) {
-            final var checkoutApplication = new CheckoutApplication(
+        for (final Equipment equipment : equipmentList.getValues()) {
+            final var value = new CheckoutApplication(
                     -1,
                     equipment.getId(),
                     account.getId(),
                     LocalDateTime.now()
             );
-
-            final int result = this.checkoutApplicationsMapper.insert(checkoutApplication);
-
-            // 1 以外はエラー
-            if (result != 1) return result;
+            this.checkoutApplicationsMapper.insert(value);
         }
-
-        // 1 は成功
-        return 1;
     }
 }

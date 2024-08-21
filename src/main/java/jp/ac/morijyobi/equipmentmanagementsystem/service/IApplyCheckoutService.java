@@ -1,7 +1,7 @@
 package jp.ac.morijyobi.equipmentmanagementsystem.service;
 
-import jp.ac.morijyobi.equipmentmanagementsystem.bean.form.CheckoutApplicationForm;
+import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.EquipmentList;
 
 public interface IApplyCheckoutService {
-    public int execute(final String mail, final CheckoutApplicationForm checkoutApplicationForm);
+    public void execute(final String mail, final EquipmentList equipmentList);
 }

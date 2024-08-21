@@ -10,5 +10,5 @@ public interface ICheckoutApplicationsMapper {
     @Insert("INSERT INTO checkout_applications (equipment_id, account_id) " +
             "VALUES (#{equipmentId}, #{accountId})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    public int insert(final CheckoutApplication checkoutApplication);
+    public void insert(final CheckoutApplication checkoutApplication);
 }

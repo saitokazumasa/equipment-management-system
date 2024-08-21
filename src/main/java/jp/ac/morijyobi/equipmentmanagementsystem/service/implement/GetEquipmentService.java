@@ -2,14 +2,14 @@ package jp.ac.morijyobi.equipmentmanagementsystem.service.implement;
 
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Equipment;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IEquipmentsMapper;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.IFetchEquipmentService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.IGetEquipmentService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FetchEquipmentService implements IFetchEquipmentService {
+public class GetEquipmentService implements IGetEquipmentService {
     private final IEquipmentsMapper equipmentsMapper;
 
-    public FetchEquipmentService(final IEquipmentsMapper equipmentsMapper) {
+    public GetEquipmentService(final IEquipmentsMapper equipmentsMapper) {
         this.equipmentsMapper = equipmentsMapper;
     }
 
