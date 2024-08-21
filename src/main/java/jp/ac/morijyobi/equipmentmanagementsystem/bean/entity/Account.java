@@ -14,5 +14,5 @@ public class Account {
     public String mail;
     public String password;
     public AccountCategory category;
-    public Boolean state;
+    public Boolean isEnable;
 }

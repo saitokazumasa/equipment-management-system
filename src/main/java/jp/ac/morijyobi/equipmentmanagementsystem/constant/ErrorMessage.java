@@ -5,10 +5,8 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum EquipmentState {
-    AVAILABLE_FOR_LOAN("貸出可能"),
-    ON_LOAN("貸出中"),
-    NOT_AVAILABLE_FOR_LOAN("貸出不可");
+public enum ErrorMessage {
+    NOT_EXIST_VALUE("存在しない値が指定されました");
 
     private final String text;
 }

@@ -6,14 +6,12 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 
-import java.util.List;
-
 @Mapper
 public interface ICheckoutApplicationsMapper {
     @Insert("INSERT INTO checkout_applications (equipment_id, account_id) " +
             "VALUES (#{equipmentId}, #{accountId})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    public int insert(final CheckoutApplication checkoutApplication);
+    public void insert(final CheckoutApplication checkoutApplication);
 
     @Select("SELECT c_apply.account_id FROM checkout_applications c_apply " +
             "LEFT OUTER JOIN checkout_approvals c_approve on c_approve.checkout_application_id = c_apply.id " +
