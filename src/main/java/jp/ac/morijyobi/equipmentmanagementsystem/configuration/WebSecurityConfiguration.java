@@ -23,7 +23,7 @@ public class WebSecurityConfiguration {
                         .requestMatchers("/password_reset").permitAll()
                         .requestMatchers("/checkout/**").authenticated()
                         .requestMatchers("/equipment/list/**").authenticated()
-                        .requestMatchers("/equipment/register/**").hasAnyRole(
+                        .requestMatchers("/equipment/registration/**").hasAnyRole(
                                 AccountCategory.EQUIPMENT_MANAGER.toString(),
                                 AccountCategory.SYSTEM_MANAGER.toString())
                         .requestMatchers("/account/**").hasRole(AccountCategory.SYSTEM_MANAGER.toString())
