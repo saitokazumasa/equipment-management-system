@@ -141,12 +141,12 @@ public class RegisterEquipmentController {
         return "redirect:/equipment/registration";
     }
 
-    @GetMapping("success")
+    @GetMapping("/success")
     public String success() {
         return "equipment/success_registration";
     }
 
-    @GetMapping("failed")
+    @GetMapping("/failed")
     public String failed() {
         return "equipment/failed_registration";
     }

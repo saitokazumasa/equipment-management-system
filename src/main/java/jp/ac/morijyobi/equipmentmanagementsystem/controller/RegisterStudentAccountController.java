@@ -137,12 +137,12 @@ public class RegisterStudentAccountController {
         return "redirect:/student/registration";
     }
 
-    @GetMapping("success")
+    @GetMapping("/success")
     public String success() {
         return "student/success_registration";
     }
 
-    @GetMapping("failed")
+    @GetMapping("/failed")
     public String failed() {
         return "student/failed_registration";
     }

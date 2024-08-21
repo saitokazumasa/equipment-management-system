@@ -136,12 +136,12 @@ public class RegisterAccountController {
         return "redirect:/account/registration";
     }
 
-    @GetMapping("success")
+    @GetMapping("/success")
     public String success() {
         return "account/success_registration";
     }
 
-    @GetMapping("failed")
+    @GetMapping("/failed")
     public String failed() {
         return "account/failed_registration";
     }
