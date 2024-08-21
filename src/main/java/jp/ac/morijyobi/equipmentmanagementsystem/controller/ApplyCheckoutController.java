@@ -61,7 +61,7 @@ public class ApplyCheckoutController extends BaseController {
     ) {
         if (bindingResult.hasErrors()) return "checkout/application";
 
-        final Equipment equipment = this.getEquipmentService.executeById(checkoutEquipmentId.toInt());
+        final Equipment equipment = this.getEquipmentService.executeAvailableForLoanById(checkoutEquipmentId.toInt());
         if (equipment == null) {
             model.addAttribute(AttributeName.ERROR_MESSAGE, ErrorMessage.NOT_EXIST_VALUE.getText());
             return "checkout/application";
