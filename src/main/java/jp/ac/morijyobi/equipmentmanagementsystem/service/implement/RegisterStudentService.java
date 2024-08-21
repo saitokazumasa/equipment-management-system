@@ -1,4 +1,4 @@
-package jp.ac.morijyobi.equipmentmanagementsystem.service.stuedent.implement;
+package jp.ac.morijyobi.equipmentmanagementsystem.service.implement;
 
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.RegisterStudentAccount;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.RegisterStudentAccountList;
@@ -6,7 +6,7 @@ import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Account;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Student;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IAccountsMapper;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IStudentsMapper;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.stuedent.IRegisterStudentService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.IRegisterStudentService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

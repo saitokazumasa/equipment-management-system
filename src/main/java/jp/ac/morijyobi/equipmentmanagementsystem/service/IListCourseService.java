@@ -1,4 +1,4 @@
-package jp.ac.morijyobi.equipmentmanagementsystem.service.course;
+package jp.ac.morijyobi.equipmentmanagementsystem.service;
 
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Course;
 

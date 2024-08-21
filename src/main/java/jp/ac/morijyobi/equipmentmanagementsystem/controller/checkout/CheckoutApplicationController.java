@@ -2,8 +2,8 @@ package jp.ac.morijyobi.equipmentmanagementsystem.controller.checkout;
 
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Equipment;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.form.CheckoutApplicationForm;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.checkout.IApplyCheckoutService;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.equipment.IListEquipmentService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.IApplyCheckoutService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.IListEquipmentService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;

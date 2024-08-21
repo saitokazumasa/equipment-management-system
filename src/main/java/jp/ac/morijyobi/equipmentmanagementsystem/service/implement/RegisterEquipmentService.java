@@ -1,4 +1,4 @@
-package jp.ac.morijyobi.equipmentmanagementsystem.service.equipment.implement;
+package jp.ac.morijyobi.equipmentmanagementsystem.service.implement;
 
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.RegisterEquipmentList;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Equipment;
@@ -6,9 +6,9 @@ import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.EquipmentCategory;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.RegisterEquipment;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.StorageLocation;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IEquipmentsMapper;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.equipment.IRegisterEquipmentService;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.equipmentCategory.IRegisterEquipmentCategoryService;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.storageLocation.IRegisterStorageLocationService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.IRegisterEquipmentService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.IRegisterEquipmentCategoryService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.IRegisterStorageLocationService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

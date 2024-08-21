@@ -1,9 +1,9 @@
-package jp.ac.morijyobi.equipmentmanagementsystem.service.equipment.implement;
+package jp.ac.morijyobi.equipmentmanagementsystem.service.implement;
 
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.EquipmentSearchCriteria;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Equipment;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IEquipmentsMapper;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.equipment.IListEquipmentService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.IListEquipmentService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

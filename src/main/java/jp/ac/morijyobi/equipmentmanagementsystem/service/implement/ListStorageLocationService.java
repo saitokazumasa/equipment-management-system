@@ -1,8 +1,8 @@
-package jp.ac.morijyobi.equipmentmanagementsystem.service.storageLocation.implement;
+package jp.ac.morijyobi.equipmentmanagementsystem.service.implement;
 
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.StorageLocation;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IStorageLocationsMapper;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.storageLocation.IListStorageLocationService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.IListStorageLocationService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

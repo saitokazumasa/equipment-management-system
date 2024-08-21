@@ -4,7 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.RegisterAccount;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.RegisterAccountList;
 import jp.ac.morijyobi.equipmentmanagementsystem.constant.AccountCategory;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.account.IRegisterAccountService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.IRegisterAccountService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

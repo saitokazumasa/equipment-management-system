@@ -2,9 +2,9 @@ package jp.ac.morijyobi.equipmentmanagementsystem.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.*;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.equipment.IRegisterEquipmentService;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.equipmentCategory.IListEquipmentCategoryService;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.storageLocation.IListStorageLocationService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.IRegisterEquipmentService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.IListEquipmentCategoryService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.IListStorageLocationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

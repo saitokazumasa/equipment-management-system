@@ -1,4 +1,4 @@
-package jp.ac.morijyobi.equipmentmanagementsystem.service.checkout.implement;
+package jp.ac.morijyobi.equipmentmanagementsystem.service.implement;
 
 
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Account;
@@ -7,7 +7,7 @@ import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Equipment;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.form.CheckoutApplicationForm;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IAccountsMapper;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.ICheckoutApplicationsMapper;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.checkout.IApplyCheckoutService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.IApplyCheckoutService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

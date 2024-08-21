@@ -1,10 +1,10 @@
-package jp.ac.morijyobi.equipmentmanagementsystem.service.account.implement;
+package jp.ac.morijyobi.equipmentmanagementsystem.service.implement;
 
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.RegisterAccountList;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Account;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.RegisterAccount;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IAccountsMapper;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.account.IRegisterAccountService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.IRegisterAccountService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

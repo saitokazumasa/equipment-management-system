@@ -1,8 +1,8 @@
-package jp.ac.morijyobi.equipmentmanagementsystem.service.equipmentCategory.implement;
+package jp.ac.morijyobi.equipmentmanagementsystem.service.implement;
 
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.EquipmentCategory;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IEquipmentCategoriesMapper;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.equipmentCategory.IListEquipmentCategoryService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.IListEquipmentCategoryService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

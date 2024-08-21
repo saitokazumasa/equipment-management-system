@@ -1,8 +1,8 @@
-package jp.ac.morijyobi.equipmentmanagementsystem.service.course.implement;
+package jp.ac.morijyobi.equipmentmanagementsystem.service.implement;
 
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Course;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.ICoursesMapper;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.course.IListCourseService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.IListCourseService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
