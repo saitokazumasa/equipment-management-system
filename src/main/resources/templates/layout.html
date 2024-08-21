@@ -32,7 +32,7 @@
 <th:block th:fragment="header">
     <header class="flex justify-center items-center w-full h-12">
         <div sec:authorize="isAnonymous()" class="w-10/12 h-9 flex items-center">
-            <a href="#" class="text-primary underline">返却はこちら</a>
+            <a th:href="@{/return/application}" class="text-primary underline">返却はこちら</a>
         </div>
 
         <div sec:authorize="isAuthenticated()" class="flex justify-between w-10/12 h-9 z-50">
@@ -59,7 +59,7 @@
                     <a th:href="@{/checkout/application}" class="block py-4 text-center text-primary text-4xl font-bold border-2 border-primary">借りる</a>
                 </li>
                 <li class="w-full">
-                    <a class="block mt-3 py-4 text-center text-primary text-4xl font-bold border-2 border-primary">返す</a>
+                    <a th:href="@{/return/application}" class="block mt-3 py-4 text-center text-primary text-4xl font-bold border-2 border-primary">返す</a>
                 </li>
                 <li class="w-full">
                     <a th:href="@{/equipment/list}" class="block mt-10 py-4 text-center text-primary text-3xl font-bold border-2 border-primary">備品一覧</a>
