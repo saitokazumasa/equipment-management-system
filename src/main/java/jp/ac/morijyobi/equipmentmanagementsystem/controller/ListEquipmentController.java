@@ -3,8 +3,8 @@ package jp.ac.morijyobi.equipmentmanagementsystem.controller;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Equipment;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.EquipmentSearchCriteria;
 import jp.ac.morijyobi.equipmentmanagementsystem.constant.EquipmentState;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.equipment.IListEquipmentService;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.equipmentCategory.IListEquipmentCategoryService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.IListEquipmentService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.IListEquipmentCategoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,7 +18,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/equipment/list")
-public class ListEquipmentController {
+public class ListEquipmentController extends BaseController {
     private final IListEquipmentCategoryService listEquipmentCategoryService;
     private final IListEquipmentService listEquipmentService;
 
@@ -47,7 +47,7 @@ public class ListEquipmentController {
         model.addAttribute(AttributeName.EQUIPMENT_CATEGORY_LIST, listEquipmentCategoryService.execute());
         model.addAttribute(AttributeName.EQUIPMENT_LIST, listEquipmentService.execute());
         model.addAttribute(AttributeName.EQUIPMENT_SEARCH_CRITERIA, searchCriteria);
-        return "equipment/list/list";
+        return "equipment/list";
     }
 
     @PostMapping()
@@ -60,7 +60,7 @@ public class ListEquipmentController {
             model.addAttribute(AttributeName.EQUIPMENT_STATE_LIST, equipmentStateList());
             model.addAttribute(AttributeName.EQUIPMENT_CATEGORY_LIST, listEquipmentCategoryService.execute());
             model.addAttribute(AttributeName.EQUIPMENT_LIST, listEquipmentService.execute());
-            return "equipment/list/list";
+            return "equipment/list";
         }
 
         final List<Equipment> equipments = listEquipmentService.search(equipmentSearchCriteria);
@@ -68,7 +68,7 @@ public class ListEquipmentController {
         model.addAttribute(AttributeName.EQUIPMENT_STATE_LIST, equipmentStateList());
         model.addAttribute(AttributeName.EQUIPMENT_CATEGORY_LIST, listEquipmentCategoryService.execute());
         model.addAttribute(AttributeName.EQUIPMENT_LIST, equipments);
-        return "equipment/list/list";
+        return "equipment/list";
     }
 
     private List<EquipmentState> equipmentStateList() {

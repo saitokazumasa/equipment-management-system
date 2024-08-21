@@ -3,8 +3,8 @@ package jp.ac.morijyobi.equipmentmanagementsystem.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.RegisterStudentAccount;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.RegisterStudentAccountList;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.course.IListCourseService;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.stuedent.IRegisterStudentService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.IListCourseService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.IRegisterStudentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/student/registration")
-public class RegisterStudentAccountController {
+public class RegisterStudentAccountController extends BaseController {
     private final IListCourseService listCourseService;
     private final IRegisterStudentService registerStudentService;
 
@@ -45,7 +45,7 @@ public class RegisterStudentAccountController {
         model.addAttribute(AttributeName.COURSE_LIST, listCourseService.execute());
         model.addAttribute(AttributeName.REGISTER_STUDENT_ACCOUNT, RegisterStudentAccount.empty());
         model.addAttribute(AttributeName.REGISTER_STUDENT_ACCOUNT_LIST, registerStudentAccountList);
-        return "student/registration/registration";
+        return "student/registration";
     }
 
     @PostMapping(params = "add")
@@ -60,7 +60,7 @@ public class RegisterStudentAccountController {
     ) {
         if (bindingResult.hasErrors()) {
             model.addAttribute(AttributeName.COURSE_LIST, listCourseService.execute());
-            return "student/registration/registration";
+            return "student/registration";
         }
 
         // values が null の状態で入ってくることがあるため、その場合は初期化してから追加する
@@ -69,7 +69,6 @@ public class RegisterStudentAccountController {
                 registerStudentAccountList.add(registerStudentAccount);
 
         redirectAttributes.addFlashAttribute(AttributeName.REGISTER_STUDENT_ACCOUNT_LIST, newRegisterStudentAccountList);
-
         return "redirect:/student/registration";
     }
 
@@ -86,7 +85,6 @@ public class RegisterStudentAccountController {
         final RegisterStudentAccountList newRegisterStudentAccountList = registerStudentAccountList.remove(index);
 
         redirectAttributes.addFlashAttribute(AttributeName.REGISTER_STUDENT_ACCOUNT_LIST, newRegisterStudentAccountList);
-
         return "redirect:/student/registration";
     }
 
@@ -99,10 +97,9 @@ public class RegisterStudentAccountController {
         if (bindingResult.hasErrors()) {
             model.addAttribute(AttributeName.COURSE_LIST, listCourseService.execute());
             model.addAttribute(AttributeName.REGISTER_STUDENT_ACCOUNT, RegisterStudentAccount.empty());
-            return "student/registration/registration";
+            return "student/registration";
         }
-
-        return "student/registration/confirmation";
+        return "student/confirm_registration";
     }
 
     @PostMapping(params = "submit")
@@ -114,7 +111,7 @@ public class RegisterStudentAccountController {
         if (bindingResult.hasErrors()) {
             model.addAttribute(AttributeName.COURSE_LIST, listCourseService.execute());
             model.addAttribute(AttributeName.REGISTER_STUDENT_ACCOUNT, RegisterStudentAccount.empty());
-            return "student/registration/registration";
+            return "student/registration";
         }
 
         try {
@@ -133,17 +130,16 @@ public class RegisterStudentAccountController {
             final RedirectAttributes redirectAttributes
     ) {
         redirectAttributes.addFlashAttribute(AttributeName.REGISTER_STUDENT_ACCOUNT_LIST, registerStudentAccountList);
-
         return "redirect:/student/registration";
     }
 
-    @GetMapping("success")
+    @GetMapping("/success")
     public String success() {
-        return "student/registration/success";
+        return "student/success_registration";
     }
 
-    @GetMapping("failed")
+    @GetMapping("/failed")
     public String failed() {
-        return "student/registration/failed";
+        return "student/failed_registration";
     }
 }

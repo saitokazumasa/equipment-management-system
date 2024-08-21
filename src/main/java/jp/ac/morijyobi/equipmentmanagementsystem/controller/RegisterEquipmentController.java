@@ -2,9 +2,9 @@ package jp.ac.morijyobi.equipmentmanagementsystem.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.*;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.equipment.IRegisterEquipmentService;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.equipmentCategory.IListEquipmentCategoryService;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.storageLocation.IListStorageLocationService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.IRegisterEquipmentService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.IListEquipmentCategoryService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.IListStorageLocationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/equipment/registration")
-public class RegisterEquipmentController {
+public class RegisterEquipmentController extends BaseController {
     private final IListEquipmentCategoryService listEquipmentCategoryService;
     private final IListStorageLocationService listStorageLocationService;
     private final IRegisterEquipmentService registerEquipmentService;
@@ -50,7 +50,7 @@ public class RegisterEquipmentController {
         model.addAttribute(AttributeName.STORAGE_LOCATION_LIST, listStorageLocationService.execute());
         model.addAttribute(AttributeName.REGISTER_EQUIPMENT, RegisterEquipment.empty());
         model.addAttribute(AttributeName.REGISTER_EQUIPMENT_LIST, registerEquipmentList);
-        return "equipment/registration/registration";
+        return "equipment/registration";
     }
 
     @PostMapping(params = "add")
@@ -66,7 +66,7 @@ public class RegisterEquipmentController {
         if (bindingResult.hasErrors()) {
             model.addAttribute(AttributeName.EQUIPMENT_CATEGORY_LIST, listEquipmentCategoryService.execute());
             model.addAttribute(AttributeName.STORAGE_LOCATION_LIST, listStorageLocationService.execute());
-            return "equipment/registration/registration";
+            return "equipment/registration";
         }
 
         // values が null の状態で入ってくることがあるため、その場合は初期化してから追加する
@@ -104,9 +104,9 @@ public class RegisterEquipmentController {
             model.addAttribute(AttributeName.EQUIPMENT_CATEGORY_LIST, listEquipmentCategoryService.execute());
             model.addAttribute(AttributeName.STORAGE_LOCATION_LIST, listStorageLocationService.execute());
             model.addAttribute(AttributeName.REGISTER_EQUIPMENT, RegisterEquipment.empty());
-            return "equipment/registration/registration";
+            return "equipment/registration";
         }
-        return "equipment/registration/confirmation";
+        return "equipment/confirm_registration";
     }
 
     @PostMapping(params = "submit")
@@ -119,7 +119,7 @@ public class RegisterEquipmentController {
             model.addAttribute(AttributeName.EQUIPMENT_CATEGORY_LIST, listEquipmentCategoryService.execute());
             model.addAttribute(AttributeName.STORAGE_LOCATION_LIST, listStorageLocationService.execute());
             model.addAttribute(AttributeName.REGISTER_EQUIPMENT, RegisterEquipment.empty());
-            return "equipment/registration/registration";
+            return "equipment/registration";
         }
 
         try {
@@ -141,13 +141,13 @@ public class RegisterEquipmentController {
         return "redirect:/equipment/registration";
     }
 
-    @GetMapping("success")
+    @GetMapping("/success")
     public String success() {
-        return "equipment/registration/success";
+        return "equipment/success_registration";
     }
 
-    @GetMapping("failed")
+    @GetMapping("/failed")
     public String failed() {
-        return "equipment/registration/failed";
+        return "equipment/failed_registration";
     }
 }

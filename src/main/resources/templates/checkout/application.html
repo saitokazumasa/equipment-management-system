@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.w3.org/1999/html">
+<th:block th:replace="layout :: head('貸出申請')"/>
+<body>
+
+<th:block th:replace="layout :: header"/>
+
+<main class="w-2/5 mx-auto">
+    <div class="w-full flex justify-center my-10 ">
+        <h1 class="w-11/12 py-1.5 text-center text-4xl font-bold border-b-2 border-primary">借りる</h1>
+    </div>
+
+    <form th:action="@{/checkout/application}" method="post">
+        <div th:object="${equipmentId}">
+            <div>
+                <input type="number" th:field="*{value}" aria-label>
+                <p th:errors="*{value}"></p>
+                <p th:if="${errorMessage}" th:text="${errorMessage}"></p>
+            </div>
+        </div>
+        <button type="submit" name="add">追加</button>
+
+        <div th:each="value, status: ${equipmentList.values}" th:object="${equipmentList}">
+            <p th:text="${value.name}"></p>
+            <p th:text="${value.lendingPeriod}"></p>
+            <input type="text" th:field="*{values[__${status.index}__].id}" hidden aria-label>
+            <input type="text" th:field="*{values[__${status.index}__].name}" hidden aria-label>
+            <input type="text" th:field="*{values[__${status.index}__].categoryId}" hidden aria-label>
+            <input type="text" th:field="*{values[__${status.index}__].storageLocationId}" hidden aria-label>
+            <input type="text" th:field="*{values[__${status.index}__].state}" hidden aria-label>
+            <input type="text" th:field="*{values[__${status.index}__].lendingPeriod}" hidden aria-label>
+            <input type="text" th:field="*{values[__${status.index}__].notificationDate}" hidden aria-label>
+            <input type="text" th:field="*{values[__${status.index}__].remark}" hidden aria-label>
+            <input type="text" th:field="*{values[__${status.index}__].createdAt}" hidden aria-label>
+            <button type="submit" name="remove" th:value="${status.index}">×</button>
+        </div>
+        <button type="submit" name="submit">申請</button>
+    </form>
+</main>
+
+</body>
+</html>
+<th:block th:replace="layout :: scripts"/>
+<!--<script th:inline="javascript">-->
+<!--    const equipmentList = /*[[${equipmentList}]]*/"equipmentList";-->
+<!--</script>-->
+<!--<script src="/js/checkout/checkout-application.js"></script>-->
