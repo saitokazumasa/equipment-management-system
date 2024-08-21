@@ -45,7 +45,7 @@ public class RegisterStudentAccountController {
         model.addAttribute(AttributeName.COURSE_LIST, listCourseService.execute());
         model.addAttribute(AttributeName.REGISTER_STUDENT_ACCOUNT, RegisterStudentAccount.empty());
         model.addAttribute(AttributeName.REGISTER_STUDENT_ACCOUNT_LIST, registerStudentAccountList);
-        return "student/registration/registration";
+        return "student/registration";
     }
 
     @PostMapping(params = "add")
@@ -60,7 +60,7 @@ public class RegisterStudentAccountController {
     ) {
         if (bindingResult.hasErrors()) {
             model.addAttribute(AttributeName.COURSE_LIST, listCourseService.execute());
-            return "student/registration/registration";
+            return "student/registration";
         }
 
         // values が null の状態で入ってくることがあるため、その場合は初期化してから追加する
@@ -99,10 +99,10 @@ public class RegisterStudentAccountController {
         if (bindingResult.hasErrors()) {
             model.addAttribute(AttributeName.COURSE_LIST, listCourseService.execute());
             model.addAttribute(AttributeName.REGISTER_STUDENT_ACCOUNT, RegisterStudentAccount.empty());
-            return "student/registration/registration";
+            return "student/registration";
         }
 
-        return "student/registration/confirmation";
+        return "student/confirm_registration";
     }
 
     @PostMapping(params = "submit")
@@ -114,7 +114,7 @@ public class RegisterStudentAccountController {
         if (bindingResult.hasErrors()) {
             model.addAttribute(AttributeName.COURSE_LIST, listCourseService.execute());
             model.addAttribute(AttributeName.REGISTER_STUDENT_ACCOUNT, RegisterStudentAccount.empty());
-            return "student/registration/registration";
+            return "student/registration";
         }
 
         try {
@@ -139,11 +139,11 @@ public class RegisterStudentAccountController {
 
     @GetMapping("success")
     public String success() {
-        return "student/registration/success";
+        return "student/success_registration";
     }
 
     @GetMapping("failed")
     public String failed() {
-        return "student/registration/failed";
+        return "student/failed_registration";
     }
 }
