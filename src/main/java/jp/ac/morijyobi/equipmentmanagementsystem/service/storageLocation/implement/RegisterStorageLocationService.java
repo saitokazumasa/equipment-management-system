@@ -19,6 +19,7 @@ public class RegisterStorageLocationService implements IRegisterStorageLocationS
         if (value != null) return value;
 
         final var newValue = new StorageLocation(-1, name);
+        // NOTE: MyBatis により newValue.id がオートインクリメント値に書き変わっている
         this.storageLocationsMapper.insert(newValue);
         return newValue;
     }

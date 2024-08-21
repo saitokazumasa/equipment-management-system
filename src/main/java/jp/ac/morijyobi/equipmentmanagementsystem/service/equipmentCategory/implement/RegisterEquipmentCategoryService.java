@@ -19,6 +19,7 @@ public class RegisterEquipmentCategoryService implements IRegisterEquipmentCateg
         if (value != null) return value;
 
         final var newValue = new EquipmentCategory(-1, name);
+        // NOTE: MyBatis により newValue.id がオートインクリメント値に書き変わっている
         this.equipmentCategoriesMapper.insert(newValue);
         return newValue;
     }
