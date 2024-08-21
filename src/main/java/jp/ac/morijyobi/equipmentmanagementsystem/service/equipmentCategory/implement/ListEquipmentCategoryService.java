@@ -1,6 +1,5 @@
 package jp.ac.morijyobi.equipmentmanagementsystem.service.equipmentCategory.implement;
 
-
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.EquipmentCategory;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IEquipmentCategoriesMapper;
 import jp.ac.morijyobi.equipmentmanagementsystem.service.equipmentCategory.IListEquipmentCategoryService;

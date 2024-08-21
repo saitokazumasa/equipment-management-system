@@ -1,7 +1,6 @@
 package jp.ac.morijyobi.equipmentmanagementsystem.configuration;
 
 import jp.ac.morijyobi.equipmentmanagementsystem.constant.AccountCategory;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -24,6 +23,9 @@ public class WebSecurityConfiguration {
                         .requestMatchers("/password_reset").permitAll()
                         .requestMatchers("/checkout/**").authenticated()
                         .requestMatchers("/equipment/list/**").authenticated()
+                        .requestMatchers("/equipment/registration/**").hasAnyRole(
+                                AccountCategory.EQUIPMENT_MANAGER.toString(),
+                                AccountCategory.SYSTEM_MANAGER.toString())
                         .requestMatchers("/account/**").hasRole(AccountCategory.SYSTEM_MANAGER.toString())
                         .requestMatchers("/student/**").hasRole(AccountCategory.SYSTEM_MANAGER.toString())
                         .anyRequest().denyAll()

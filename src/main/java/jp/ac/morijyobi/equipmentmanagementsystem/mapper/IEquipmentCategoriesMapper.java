@@ -14,6 +14,9 @@ public interface IEquipmentCategoriesMapper {
     @Options(useGeneratedKeys = true, keyProperty = "id")
     public void insert(final EquipmentCategory equipmentCategory);
 
-    @Select("SELECT * FROM equipment_categories")
+    @Select("SELECT * FROM equipment_categories WHERE name = #{name}")
+    public EquipmentCategory selectByName(final String name);
+
+    @Select("SELECT * FROM equipment_categories ORDER BY id")
     public List<EquipmentCategory> selectAll();
 }

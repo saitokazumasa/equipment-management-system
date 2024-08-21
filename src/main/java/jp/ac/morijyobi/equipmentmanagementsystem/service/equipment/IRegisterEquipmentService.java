@@ -1,7 +1,7 @@
 package jp.ac.morijyobi.equipmentmanagementsystem.service.equipment;
 
-import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Equipment;
+import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.RegisterEquipmentList;
 
 public interface IRegisterEquipmentService {
-    public int execute(final Equipment equipment);
+    public void execute(final RegisterEquipmentList registerEquipmentList);
 }
