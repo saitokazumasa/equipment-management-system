@@ -65,7 +65,7 @@
                     <a th:href="@{/equipment/list}" class="block mt-10 py-4 text-center text-primary text-3xl font-bold border-2 border-primary">備品一覧</a>
                 </li>
                 <li sec:authorize="hasAnyRole('EQUIPMENT_MANAGER', 'SYSTEM_MANAGER')" class="w-full">
-                    <a class="block mt-3 py-4 text-center text-primary text-3xl font-bold border-2 border-primary">備品登録</a>
+                    <a th:href="@{/equipment/registration}" class="block mt-3 py-4 text-center text-primary text-3xl font-bold border-2 border-primary">備品登録</a>
                 </li>
                 <li sec:authorize="hasRole('SYSTEM_MANAGER')" class="w-full">
                     <a class="block mt-3 py-4 text-center text-primary text-3xl font-bold border-2 border-primary">アカウント一覧</a>
