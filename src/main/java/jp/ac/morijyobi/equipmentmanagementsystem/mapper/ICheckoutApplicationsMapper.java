@@ -13,23 +13,18 @@ public interface ICheckoutApplicationsMapper {
     @Options(useGeneratedKeys = true, keyProperty = "id")
     public void insert(final CheckoutApplication checkoutApplication);
 
-    @Select("SELECT c_apply.account_id FROM checkout_applications c_apply " +
-            "LEFT OUTER JOIN checkout_approvals c_approve on c_approve.checkout_application_id = c_apply.id " +
-            "WHERE c_apply.equipment_id = #{equipmentId} " +
-            "AND c_approve.checkout_application_id IS NOT NULL " +
-            "ORDER BY c_approve.created_at DESC " +
-            "LIMIT 1")
-    public int selectByEquipmentId(final int equipmentId);
-
-    @Select("SELECT c_apply.* from checkout_applications c_apply " +
-            "LEFT OUTER JOIN checkout_approvals c_approve on c_approve.checkout_application_id = c_apply.id " +
-            "LEFT OUTER JOIN return_applications r_apply on r_apply.checkout_log_id = c_apply.id " +
-            "LEFT OUTER JOIN return_approvals r_approve on r_approve.return_application_id = r_apply.id " +
-            "WHERE c_apply.account_id = #{accountId} " +
-            "AND c_apply.equipment_id = #{equipmentId} " +
-            "AND c_approve.checkout_application_id = c_apply.id " +
-            "OR r_approve.return_application_id IS NULL " +
-            "ORDER BY c_apply.created_at DESC " +
-            "LIMIT 1")
-    public CheckoutApplication selectNotReturned(final int accountId, final int equipmentId);
+    @Select("SELECT * FROM checkout_applications c_application " +
+            "WHERE c_application.equipment_id = #{equipmentId} " +
+            // 貸出申請が承認されている
+            "AND EXISTS(" +
+            "   SELECT * FROM checkout_approvals c_approval " +
+            "   WHERE c_approval.checkout_application_id = c_application.id " +
+            "   AND c_approval.created_at > c_application.created_at" +
+            ") " +
+            // 返却申請を行っていない
+            "AND NOT EXISTS(" +
+            "   SELECT * FROM return_applications r " +
+            "   WHERE r.checkout_application_id = c_application.id" +
+            ")")
+    public CheckoutApplication selectNotReturnedByEquipmentId(final int equipmentId);
 }
