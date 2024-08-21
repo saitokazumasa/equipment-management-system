@@ -50,7 +50,7 @@ public class RegisterEquipmentController {
         model.addAttribute(AttributeName.STORAGE_LOCATION_LIST, listStorageLocationService.execute());
         model.addAttribute(AttributeName.REGISTER_EQUIPMENT, RegisterEquipment.empty());
         model.addAttribute(AttributeName.REGISTER_EQUIPMENT_LIST, registerEquipmentList);
-        return "equipment/registration/registration";
+        return "equipment/registration";
     }
 
     @PostMapping(params = "add")
@@ -66,7 +66,7 @@ public class RegisterEquipmentController {
         if (bindingResult.hasErrors()) {
             model.addAttribute(AttributeName.EQUIPMENT_CATEGORY_LIST, listEquipmentCategoryService.execute());
             model.addAttribute(AttributeName.STORAGE_LOCATION_LIST, listStorageLocationService.execute());
-            return "equipment/registration/registration";
+            return "equipment/registration";
         }
 
         // values が null の状態で入ってくることがあるため、その場合は初期化してから追加する
@@ -104,9 +104,9 @@ public class RegisterEquipmentController {
             model.addAttribute(AttributeName.EQUIPMENT_CATEGORY_LIST, listEquipmentCategoryService.execute());
             model.addAttribute(AttributeName.STORAGE_LOCATION_LIST, listStorageLocationService.execute());
             model.addAttribute(AttributeName.REGISTER_EQUIPMENT, RegisterEquipment.empty());
-            return "equipment/registration/registration";
+            return "equipment/registration";
         }
-        return "equipment/registration/confirmation";
+        return "equipment/confirm_registration";
     }
 
     @PostMapping(params = "submit")
@@ -119,7 +119,7 @@ public class RegisterEquipmentController {
             model.addAttribute(AttributeName.EQUIPMENT_CATEGORY_LIST, listEquipmentCategoryService.execute());
             model.addAttribute(AttributeName.STORAGE_LOCATION_LIST, listStorageLocationService.execute());
             model.addAttribute(AttributeName.REGISTER_EQUIPMENT, RegisterEquipment.empty());
-            return "equipment/registration/registration";
+            return "equipment/registration";
         }
 
         try {
@@ -143,11 +143,11 @@ public class RegisterEquipmentController {
 
     @GetMapping("success")
     public String success() {
-        return "equipment/registration/success";
+        return "equipment/success_registration";
     }
 
     @GetMapping("failed")
     public String failed() {
-        return "equipment/registration/failed";
+        return "equipment/failed_registration";
     }
 }

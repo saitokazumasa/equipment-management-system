@@ -47,7 +47,7 @@ public class ListEquipmentController {
         model.addAttribute(AttributeName.EQUIPMENT_CATEGORY_LIST, listEquipmentCategoryService.execute());
         model.addAttribute(AttributeName.EQUIPMENT_LIST, listEquipmentService.execute());
         model.addAttribute(AttributeName.EQUIPMENT_SEARCH_CRITERIA, searchCriteria);
-        return "equipment/list/list";
+        return "equipment/list";
     }
 
     @PostMapping()
@@ -60,7 +60,7 @@ public class ListEquipmentController {
             model.addAttribute(AttributeName.EQUIPMENT_STATE_LIST, equipmentStateList());
             model.addAttribute(AttributeName.EQUIPMENT_CATEGORY_LIST, listEquipmentCategoryService.execute());
             model.addAttribute(AttributeName.EQUIPMENT_LIST, listEquipmentService.execute());
-            return "equipment/list/list";
+            return "equipment/list";
         }
 
         final List<Equipment> equipments = listEquipmentService.search(equipmentSearchCriteria);
@@ -68,7 +68,7 @@ public class ListEquipmentController {
         model.addAttribute(AttributeName.EQUIPMENT_STATE_LIST, equipmentStateList());
         model.addAttribute(AttributeName.EQUIPMENT_CATEGORY_LIST, listEquipmentCategoryService.execute());
         model.addAttribute(AttributeName.EQUIPMENT_LIST, equipments);
-        return "equipment/list/list";
+        return "equipment/list";
     }
 
     private List<EquipmentState> equipmentStateList() {
