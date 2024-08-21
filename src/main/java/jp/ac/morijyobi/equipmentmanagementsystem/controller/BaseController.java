@@ -13,6 +13,8 @@ public class BaseController {
             final @AuthenticationPrincipal UserDetails userDetails,
             final Model model
     ) {
+        if (userDetails == null) return;
+
         model.addAttribute("mail", userDetails.getUsername());
     }
 }

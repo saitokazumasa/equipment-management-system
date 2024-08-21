@@ -17,7 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/return/application")
-public class ApplyReturnController {
+public class ApplyReturnController extends BaseController {
     private final IGetEquipmentService getEquipmentService;
     private final IApplyReturnService applyReturnService;
 
