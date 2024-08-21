@@ -44,7 +44,7 @@ public class RegisterAccountController {
         model.addAttribute(AttributeName.ACCOUNT_CATEGORY_LIST, accountCategories());
         model.addAttribute(AttributeName.REGISTER_ACCOUNT, RegisterAccount.empty());
         model.addAttribute(AttributeName.REGISTER_ACCOUNT_LIST, registerAccountList);
-        return "account/registration/registration";
+        return "account/registration";
     }
 
     @PostMapping(params = "add")
@@ -59,7 +59,7 @@ public class RegisterAccountController {
     ) {
         if (bindingResult.hasErrors()) {
             model.addAttribute(AttributeName.ACCOUNT_CATEGORY_LIST, accountCategories());
-            return "account/registration/registration";
+            return "account/registration";
         }
 
         // values が null の状態で入ってくることがあるため、その場合は初期化してから追加する
@@ -98,10 +98,10 @@ public class RegisterAccountController {
         if (bindingResult.hasErrors()) {
             model.addAttribute(AttributeName.ACCOUNT_CATEGORY_LIST, accountCategories());
             model.addAttribute(AttributeName.REGISTER_ACCOUNT, RegisterAccount.empty());
-            return "account/registration/registration";
+            return "account/registration";
         }
 
-        return "account/registration/confirmation";
+        return "account/confirm_registration";
     }
 
     @PostMapping(params = "submit")
@@ -113,7 +113,7 @@ public class RegisterAccountController {
         if (bindingResult.hasErrors()) {
             model.addAttribute(AttributeName.ACCOUNT_CATEGORY_LIST, accountCategories());
             model.addAttribute(AttributeName.REGISTER_ACCOUNT, RegisterAccount.empty());
-            return "account/registration/registration";
+            return "account/registration";
         }
 
         try {
@@ -138,12 +138,12 @@ public class RegisterAccountController {
 
     @GetMapping("success")
     public String success() {
-        return "account/registration/success";
+        return "account/success_registration";
     }
 
     @GetMapping("failed")
     public String failed() {
-        return "account/registration/failed";
+        return "account/failed_registration";
     }
 
     private List<AccountCategory> accountCategories() {
