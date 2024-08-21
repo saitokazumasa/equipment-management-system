@@ -34,6 +34,19 @@ public class ApplyReturnService implements IApplyReturnService {
     }
 
     @Override
+    public void execute(final int equipmentId) {
+        final CheckoutApplication checkoutApplication = this.checkoutApplicationsMapper
+                .selectNotReturnedByEquipmentId(equipmentId);
+
+        final var value = new ReturnApplication(
+                -1,
+                checkoutApplication.getId(),
+                LocalDateTime.now()
+        );
+        this.returnApplicationsMapper.insert(value);
+    }
+
+    @Override
     @Transactional
     public void execute(final ReturnEquipmentList returnEquipmentList) throws Exception {
         for (final ReturnEquipment returnEquipment : returnEquipmentList.getValues()) {

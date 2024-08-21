@@ -13,18 +13,17 @@ public interface ICheckoutApplicationsMapper {
     @Options(useGeneratedKeys = true, keyProperty = "id")
     public void insert(final CheckoutApplication checkoutApplication);
 
-    @Select("SELECT * FROM checkout_applications c_application " +
-            "WHERE c_application.equipment_id = #{equipmentId} " +
+    @Select("SELECT * FROM checkout_applications " +
+            "WHERE checkout_applications.equipment_id = #{equipmentId} " +
             // 貸出申請が承認されている
             "AND EXISTS(" +
-            "   SELECT * FROM checkout_approvals c_approval " +
-            "   WHERE c_approval.checkout_application_id = c_application.id " +
-            "   AND c_approval.created_at > c_application.created_at" +
+            "   SELECT * FROM checkout_approvals c " +
+            "   WHERE c.checkout_application_id = checkout_applications.id " +
             ") " +
             // 返却申請を行っていない
             "AND NOT EXISTS(" +
             "   SELECT * FROM return_applications r " +
-            "   WHERE r.checkout_application_id = c_application.id" +
+            "   WHERE r.checkout_application_id = checkout_applications.id" +
             ")")
     public CheckoutApplication selectNotReturnedByEquipmentId(final int equipmentId);
 }

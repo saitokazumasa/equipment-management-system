@@ -17,7 +17,7 @@ public interface IEquipmentsMapper {
     public Equipment selectById(final int id);
 
     @Select("SELECT equipments.* FROM equipments " +
-            "LEFT OUTER JOIN checkout_applications ON checkout_applications.equipment_id = equipments.id " +
+            "LEFT OUTER JOIN checkout_applications ON checkout_applications.equipment_id = e.id " +
             "WHERE equipments.id = #{id} " +
             "AND equipments.state = 'ON_LOAN' " +
             // 貸出申請承認が存在する
@@ -38,11 +38,13 @@ public interface IEquipmentsMapper {
             "WHERE equipments.id = #{id} " +
             "AND equipments.state <> 'NOT_AVAILABLE_FOR_LOAN' " +
             // 貸出申請が存在しない
-            "AND checkout_applications.id IS NULL " +
+            "AND (" +
+            "   checkout_applications.id IS NULL " +
             // 貸出申請承認が存在する (貸出申請中の物は除外する)
-            "OR EXISTS(" +
-            "   SELECT * FROM checkout_approvals c" +
-            "   WHERE c.checkout_application_id = checkout_applications.id" +
+            "   OR EXISTS(" +
+            "       SELECT * FROM checkout_approvals c " +
+            "       WHERE c.checkout_application_id = checkout_applications.id" +
+            "   )" +
             ")")
     public Equipment selectAvailableForLoanById(final int id);
 
