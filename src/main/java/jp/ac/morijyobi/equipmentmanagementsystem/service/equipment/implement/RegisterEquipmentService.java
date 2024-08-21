@@ -1,56 +1,51 @@
 package jp.ac.morijyobi.equipmentmanagementsystem.service.equipment.implement;
 
+import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.RegisterEquipmentList;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Equipment;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.EquipmentCategory;
-import jp.ac.morijyobi.equipmentmanagementsystem.bean.form.equipmentRegisterForm;
-import jp.ac.morijyobi.equipmentmanagementsystem.constant.EquipmentState;
-import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IEquipmentCategoriesMapper;
+import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.RegisterEquipment;
+import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.StorageLocation;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IEquipmentsMapper;
 import jp.ac.morijyobi.equipmentmanagementsystem.service.equipment.IRegisterEquipmentService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.equipmentCategory.IRegisterEquipmentCategoryService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.storageLocation.IRegisterStorageLocationService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 @Service
 public class RegisterEquipmentService implements IRegisterEquipmentService {
+    private final IRegisterEquipmentCategoryService registerEquipmentCategoryService;
+    private final IRegisterStorageLocationService registerStorageLocationService;
     private final IEquipmentsMapper equipmentsMapper;
-    private final IEquipmentCategoriesMapper equipmentCategoriesMapper;
 
-    public RegisterEquipmentService(final IEquipmentsMapper equipmentsMapper, IEquipmentCategoriesMapper equipmentCategoriesMapper) {
+    public RegisterEquipmentService(
+            final IRegisterEquipmentCategoryService registerEquipmentCategoryService,
+            final IRegisterStorageLocationService registerStorageLocationService,
+            final IEquipmentsMapper equipmentsMapper
+    ) {
+        this.registerEquipmentCategoryService = registerEquipmentCategoryService;
+        this.registerStorageLocationService = registerStorageLocationService;
         this.equipmentsMapper = equipmentsMapper;
-        this.equipmentCategoriesMapper = equipmentCategoriesMapper;
     }
 
-
     @Override
-    public int execute(equipmentRegisterForm equipmentRegisterForm) {
-        final Equipment equipment = new Equipment();
-        final EquipmentCategory equipmentCategory = new EquipmentCategory();
+    @Transactional
+    public void execute(final RegisterEquipmentList registerEquipmentList) {
+        for (final RegisterEquipment registerEquipment : registerEquipmentList.getValues()) {
+            final EquipmentCategory category =
+                    this.registerEquipmentCategoryService.execute(registerEquipment.getCategory());
+            final StorageLocation storageLocation =
+                    this.registerStorageLocationService.execute(registerEquipment.getStorageLocation());
 
+            final Equipment equipment = registerEquipment.toEquipment(
+                    category.getId(),
+                    storageLocation.getId(),
+                    LocalDateTime.now()
+            );
 
-        final EquipmentCategory a = equipmentCategoriesMapper.selectByName(equipmentRegisterForm.getCategory());
-
-        // aの結果がnullの場合、新規登録
-        if (a == null) {
-            equipmentCategory.setName(equipmentRegisterForm.getCategory());
-            equipmentCategoriesMapper.insert(equipmentCategory);
-            equipment.setCategoryId(equipmentCategoriesMapper.selectByName(equipmentRegisterForm.getCategory()).getId());
-        } else {
-            equipment.setCategoryId(a.getId());
+            this.equipmentsMapper.insert(equipment);
         }
-
-        equipment.setName(equipmentRegisterForm.getEquipmentName());
-        equipment.setStorageLocationId(1);
-        equipment.setState(EquipmentState.AVAILABLE_FOR_LOAN);
-
-        if (equipmentRegisterForm.getIsPeriod()) {
-            equipment.setLendingPeriod(equipmentRegisterForm.getLendingPeriod());
-            equipment.setNotificationDate(equipmentRegisterForm.getNotificationDate());
-        } else {
-            equipment.setLendingPeriod(-1);
-            equipment.setNotificationDate(-1);
-        }
-
-        equipment.setRemark(equipmentRegisterForm.getRemark());
-
-        return this.equipmentsMapper.insert(equipment);
     }
 }
