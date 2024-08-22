@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>紛失申請確認</title>
+</head>
+<body>
+<h2>紛失申請確認</h2>
+以下の内容で申請します。
+<form th:action="@{application/confirm(equipmentId=${equipmentId})}" th:object="${form}" method="post">
+    <div>
+        <span th:text="${equipment.id}">equipment id</span>
+        <span th:text="${equipment.name}">equipment name</span>
+    </div>
+    <div>
+        <label for="damageReason">紛失理由</label>
+        <span id="damageReason" th:text="${form.getDamageReason()}">damageReason</span>
+    </div>
+
+    <input type="hidden" th:field="*{damageReason}" th:value="${form.getDamageReason()}">
+    <input type="hidden" th:field="*{checkoutApplicationId}" th:value="${form.getCheckoutApplicationId()}">
+
+    <button type="submit" name="complete">送信</button>
+    <button type="submit" name="edit">戻る</button>
+</form>
+</body>
+</html>

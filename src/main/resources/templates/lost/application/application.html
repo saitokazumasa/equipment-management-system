@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>紛失申請</title>
+</head>
+<body>
+<form th:action="@{/lost/application(equipmentId=${equipmentId})}" th:object="${form}" method="post">
+    <h2>紛失申請</h2>
+    <div>
+        <span th:text="${equipment.id}">equipment id</span>
+        <span th:text="${equipment.name}">equipment name</span>
+    </div>
+    <div>
+        <label for="damageReason" class="form-label">紛失理由</label>
+        <textarea id="damageReason" name="damageReason" th:field="*{damageReason}" required></textarea>
+        <div th:errors="*{damageReason}">error message</div>
+    </div>
+
+    <input type="hidden" th:field="*{checkoutApplicationId}" th:value="${checkoutApplicationId}">
+
+    <button type="submit" class="btn btn-primary">申請</button>
+</form>
+</body>
+</html>
