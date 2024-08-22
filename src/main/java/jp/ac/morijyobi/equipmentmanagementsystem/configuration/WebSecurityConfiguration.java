@@ -25,6 +25,7 @@ public class WebSecurityConfiguration {
                         .requestMatchers("/checkout/**").authenticated()
                         .requestMatchers("/account/**").hasRole(AccountCategory.SYSTEM_MANAGER.toString())
                         .requestMatchers("/student/**").hasRole(AccountCategory.SYSTEM_MANAGER.toString())
+                        .requestMatchers("/lost/**").authenticated()
                         .anyRequest().denyAll()
                 ).formLogin(a -> a
                         .loginPage("/login")
