@@ -23,4 +23,18 @@ public interface ICheckoutApplicationsMapper {
             "AND c_apply.account_id = #{accountId} " +
             "ORDER BY r_approve.created_at DESC LIMIT 1")
     public CheckoutApplication selectByEquipmentIdAndAccountId(final int equipmentId, final int accountId);
+
+    @Select("SELECT * FROM checkout_applications " +
+            "WHERE checkout_applications.equipment_id = #{equipmentId} " +
+            // 貸出申請が承認されている
+            "AND EXISTS(" +
+            "   SELECT * FROM checkout_approvals c " +
+            "   WHERE c.checkout_application_id = checkout_applications.id " +
+            ") " +
+            // 返却申請を行っていない
+            "AND NOT EXISTS(" +
+            "   SELECT * FROM return_applications r " +
+            "   WHERE r.checkout_application_id = checkout_applications.id" +
+            ")")
+    public CheckoutApplication selectNotReturnedByEquipmentId(final int equipmentId);
 }
