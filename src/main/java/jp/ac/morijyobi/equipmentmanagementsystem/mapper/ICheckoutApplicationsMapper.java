@@ -18,6 +18,7 @@ public interface ICheckoutApplicationsMapper {
             "LEFT OUTER JOIN return_applications r_apply ON c_apply.id = r_apply.checkout_log_id " +
             "LEFT OUTER JOIN return_approvals r_approve ON r_apply.id = r_approve.return_application_id " +
             "WHERE c_approve.checkout_application_id IS NOT NULL " +
+            "AND r_apply.checkout_log_id IS NULL " +
             "AND r_approve.return_application_id IS NULL " +
             "AND c_apply.equipment_id = #{equipmentId} " +
             "AND c_apply.account_id = #{accountId} " +
