@@ -5,6 +5,7 @@ import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.DamagedApplication;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.form.LostApplicationForm;
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IAccountsMapper;
 import jp.ac.morijyobi.equipmentmanagementsystem.service.damage.IApplyDamageService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.lost.IApplyLostService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.Model;
@@ -25,13 +26,13 @@ import static jp.ac.morijyobi.equipmentmanagementsystem.constant.DamagedCategory
 public class LostApplicationController {
     private final IFetchCheckoutService fetchCheckoutService;
     private final IFetchEquipmentService fetchEquipmentService;
-    private final IApplyDamageService applyDamageService;
+    private final IApplyLostService applyLostService;
     private final IAccountsMapper IAccountsMapper;
 
-    public LostApplicationController(IFetchCheckoutService fetchCheckoutService, IFetchEquipmentService fetchEquipmentService, IApplyDamageService applyDamageService, jp.ac.morijyobi.equipmentmanagementsystem.mapper.IAccountsMapper iAccountsMapper) {
+    public LostApplicationController(IFetchCheckoutService fetchCheckoutService, IFetchEquipmentService fetchEquipmentService, IApplyLostService applyLostService, jp.ac.morijyobi.equipmentmanagementsystem.mapper.IAccountsMapper iAccountsMapper) {
         this.fetchCheckoutService = fetchCheckoutService;
         this.fetchEquipmentService = fetchEquipmentService;
-        this.applyDamageService = applyDamageService;
+        this.applyLostService = applyLostService;
         this.IAccountsMapper = iAccountsMapper;
     }
 
@@ -41,7 +42,7 @@ public class LostApplicationController {
                         @ModelAttribute("form")LostApplicationForm form,
                         @AuthenticationPrincipal UserDetails userDetails) {
         if (equipmentId < 1) {
-            // TODO:遷移先を変更する
+            // TODO:遷移先は要検討
             return "redirect:/checkout/application";
         }
 
@@ -49,7 +50,7 @@ public class LostApplicationController {
         CheckoutApplication checkoutApplication = fetchCheckoutService.executeByEquipmentIdAndAccountId(equipmentId, account.getId());;
 
         if (checkoutApplication == null) {
-            // TODO:遷移先を変更する
+            // TODO:遷移先を要検討
             return "redirect:/checkout/application";
         }
 
@@ -83,21 +84,12 @@ public class LostApplicationController {
 
     @PostMapping(value="confirm", params = "complete")
     public String complete(@Validated LostApplicationForm form,
-                           @RequestParam int equipmentId,
                            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "redirect:/lost/application/failed";
         }
 
-        final DamagedApplication damagedApplication = new DamagedApplication(
-                -1,
-                Integer.parseInt(form.getCheckoutApplicationId()),
-                form.getDamageReason(),
-                LOST,
-                null
-        );
-
-        final int result = applyDamageService.execute(damagedApplication);
+        final int result = applyLostService.execute(form.getDamageReason(), Integer.parseInt(form.getCheckoutApplicationId()));
 
         if (result == 1) {
             return "redirect:/lost/application/success";
