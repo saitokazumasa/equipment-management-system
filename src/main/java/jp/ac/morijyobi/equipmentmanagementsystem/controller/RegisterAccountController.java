@@ -4,7 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.RegisterAccount;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.RegisterAccountList;
 import jp.ac.morijyobi.equipmentmanagementsystem.constant.AccountCategory;
-import jp.ac.morijyobi.equipmentmanagementsystem.service.account.IRegisterAccountService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.IRegisterAccountService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,11 +20,11 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/account/registration")
-public class RegisterAccountController {
+public class RegisterAccountController extends BaseController {
     private final IRegisterAccountService registerAccountService;
 
     private static class AttributeName {
-        public static final String ACCOUNT_CATEGORIES = "accountCategories";
+        public static final String ACCOUNT_CATEGORY_LIST = "accountCategoryList";
         public static final String REGISTER_ACCOUNT = "registerAccount";
         public static final String REGISTER_ACCOUNT_LIST = "registerAccountList";
     }
@@ -36,16 +36,15 @@ public class RegisterAccountController {
     @GetMapping()
     public String get(final Model model) {
         // リダイレクトの場合はリセットしない
-        final var isRedirected = model.containsAttribute(AttributeName.REGISTER_ACCOUNT_LIST);
-        final var registerAccountList = isRedirected ?
+        final boolean isRedirected = model.containsAttribute(AttributeName.REGISTER_ACCOUNT_LIST);
+        final RegisterAccountList registerAccountList = isRedirected ?
                 (RegisterAccountList) model.getAttribute(AttributeName.REGISTER_ACCOUNT_LIST) :
                 RegisterAccountList.empty();
 
-        model.addAttribute(AttributeName.ACCOUNT_CATEGORIES, accountCategories());
+        model.addAttribute(AttributeName.ACCOUNT_CATEGORY_LIST, accountCategories());
         model.addAttribute(AttributeName.REGISTER_ACCOUNT, RegisterAccount.empty());
         model.addAttribute(AttributeName.REGISTER_ACCOUNT_LIST, registerAccountList);
-
-        return "account/registration/registration";
+        return "account/registration";
     }
 
     @PostMapping(params = "add")
@@ -59,8 +58,8 @@ public class RegisterAccountController {
             final RedirectAttributes redirectAttributes
     ) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute(AttributeName.ACCOUNT_CATEGORIES, accountCategories());
-            return "account/registration/registration";
+            model.addAttribute(AttributeName.ACCOUNT_CATEGORY_LIST, accountCategories());
+            return "account/registration";
         }
 
         // values が null の状態で入ってくることがあるため、その場合は初期化してから追加する
@@ -69,7 +68,6 @@ public class RegisterAccountController {
                 registerAccountList.add(registerAccount);
 
         redirectAttributes.addFlashAttribute(AttributeName.REGISTER_ACCOUNT_LIST, newRegisterAccountList);
-
         return "redirect:/account/registration";
     }
 
@@ -86,7 +84,6 @@ public class RegisterAccountController {
         final RegisterAccountList newRegisterAccountList = registerAccountList.remove(index);
 
         redirectAttributes.addFlashAttribute(AttributeName.REGISTER_ACCOUNT_LIST, newRegisterAccountList);
-
         return "redirect:/account/registration";
     }
 
@@ -97,12 +94,11 @@ public class RegisterAccountController {
             final Model model
     ) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute(AttributeName.ACCOUNT_CATEGORIES, accountCategories());
+            model.addAttribute(AttributeName.ACCOUNT_CATEGORY_LIST, accountCategories());
             model.addAttribute(AttributeName.REGISTER_ACCOUNT, RegisterAccount.empty());
-            return "account/registration/registration";
+            return "account/registration";
         }
-
-        return "account/registration/confirmation";
+        return "account/confirm_registration";
     }
 
     @PostMapping(params = "submit")
@@ -112,9 +108,9 @@ public class RegisterAccountController {
             final Model model
     ) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute(AttributeName.ACCOUNT_CATEGORIES, accountCategories());
+            model.addAttribute(AttributeName.ACCOUNT_CATEGORY_LIST, accountCategories());
             model.addAttribute(AttributeName.REGISTER_ACCOUNT, RegisterAccount.empty());
-            return "account/registration/registration";
+            return "account/registration";
         }
 
         try {
@@ -133,18 +129,17 @@ public class RegisterAccountController {
             final RedirectAttributes redirectAttributes
     ) {
         redirectAttributes.addFlashAttribute(AttributeName.REGISTER_ACCOUNT_LIST, registerAccountList);
-
         return "redirect:/account/registration";
     }
 
-    @GetMapping("success")
+    @GetMapping("/success")
     public String success() {
-        return "account/registration/success";
+        return "account/success_registration";
     }
 
-    @GetMapping("failed")
+    @GetMapping("/failed")
     public String failed() {
-        return "account/registration/failed";
+        return "account/failed_registration";
     }
 
     private List<AccountCategory> accountCategories() {

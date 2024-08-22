@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.w3.org/1999/html">
+<th:block th:replace="layout :: head('返却申請')"/>
+<body>
+
+<th:block th:replace="layout :: header"/>
+
+<main class="w-2/5 mx-auto">
+    <div class="w-full flex justify-center my-10 ">
+        <h1 class="w-11/12 py-1.5 text-center text-4xl font-bold border-b-2 border-primary">返す</h1>
+    </div>
+
+    <form th:action="@{/return/application}" method="post">
+        <div th:object="${returnEquipment}">
+            <div>
+                <input type="number" th:field="*{equipmentId}" aria-label>
+                <p th:errors="*{equipmentId}"></p>
+                <p th:if="${errorMessage}" th:text="${errorMessage}"></p>
+            </div>
+
+            <div>
+                <input type="checkbox" id="hasDamaged" th:field="*{hasDamaged}" aria-label>
+                <label for="hasDamaged">汚損/破損あり</label>
+            </div>
+
+            <div>
+                <textarea type="text" th:field="*{damagedReason}" aria-label></textarea>
+            </div>
+        </div>
+        <button type="submit" name="add">追加</button>
+
+        <div th:each="value, status: ${returnEquipmentList.values}" th:object="${returnEquipmentList}">
+            <p th:text="${value.equipment.name}"></p>
+            <input type="text" th:field="*{values[__${status.index}__].equipmentId}" hidden aria-label>
+            <input type="text" th:field="*{values[__${status.index}__].equipment.id}" hidden aria-label>
+            <input type="text" th:field="*{values[__${status.index}__].equipment.name}" hidden aria-label>
+            <input type="text" th:field="*{values[__${status.index}__].equipment.categoryId}" hidden aria-label>
+            <input type="text" th:field="*{values[__${status.index}__].equipment.storageLocationId}" hidden aria-label>
+            <input type="text" th:field="*{values[__${status.index}__].equipment.state}" hidden aria-label>
+            <input type="text" th:field="*{values[__${status.index}__].equipment.lendingPeriod}" hidden aria-label>
+            <input type="text" th:field="*{values[__${status.index}__].equipment.notificationDate}" hidden aria-label>
+            <input type="text" th:field="*{values[__${status.index}__].equipment.remark}" hidden aria-label>
+            <input type="text" th:field="*{values[__${status.index}__].equipment.createdAt}" hidden aria-label>
+            <input type="checkbox" th:field="*{values[__${status.index}__].hasDamaged}" hidden aria-label>
+            <input type="text" th:field="*{values[__${status.index}__].damagedReason}" hidden aria-label>
+            <button type="submit" name="remove" th:value="${status.index}">×</button>
+        </div>
+        <button type="submit" name="submit">申請</button>
+    </form>
+</main>
+
+</body>
+</html>
+<th:block th:replace="layout :: scripts"/>
