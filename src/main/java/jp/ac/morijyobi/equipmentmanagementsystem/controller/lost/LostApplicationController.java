@@ -89,15 +89,11 @@ public class LostApplicationController {
             return "redirect:/lost/application/failed";
         }
 
-        final DamagedApplication damagedApplication = new DamagedApplication(
-                -1,
-                Integer.parseInt(form.getCheckoutApplicationId()),
+        final int result = applyDamageService.execute(
                 form.getDamageReason(),
-                LOST,
-                null
+                Integer.parseInt(form.getCheckoutApplicationId()),
+                LOST
         );
-
-        final int result = applyDamageService.execute(damagedApplication);
 
         if (result == 1) {
             return "redirect:/lost/application/success";
