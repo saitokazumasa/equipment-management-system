@@ -10,10 +10,11 @@
     <link rel="stylesheet" type="text/css" href="/css/common/dialog.css">
 </head>
 
-<header th:fragment="header">
+<header class="header" th:fragment="header(isReturnPage)">
     <div class="header-left">
         <th:block sec:authorize="isAnonymous()">
-            <a class="link" th:href="@{/return/application}">返却はこちら</a>
+            <a th:unless="${isReturnPage}" class="link" th:href="@{/return/application}">返却はこちら</a>
+            <a th:if="${isReturnPage}" class="link" th:href="@{/login}">ログイン</a>
         </th:block>
 
         <th:block sec:authorize="isAuthenticated()">
@@ -35,8 +36,8 @@
         <nav id="header-menu">
             <ul>
                 <th:block>
-                    <li><a class="header-content" id="checkout" th:href="@{/checkout/application}">借りる</a></li>
-                    <li><a class="header-content" id="return" th:href="@{/return/application}">返す</a></li>
+                    <li><a class="header-content checkout" th:href="@{/checkout/application}">借りる</a></li>
+                    <li><a class="header-content return" th:href="@{/return/application}">返す</a></li>
                     <li><a class="header-content" th:href="@{/equipment/list}">備品一覧</a></li>
                 </th:block>
 
@@ -52,7 +53,7 @@
                 <th:block>
                     <li>
                         <form class="header-content" th:action="@{/logout}" method="post">
-                            <button type="submit">ログアウト</button>
+                            <button class="logout" type="submit">ログアウト</button>
                         </form>
                     </li>
                 </th:block>
@@ -65,14 +66,14 @@
     <div class="success-icon">
         <img src="/images/check-icon.png" alt="チェックアイコン">
     </div>
-    <p th:text="${message}">メッセージ</p>
+    <p th:text="${message}">success message</p>
 </div>
 
 <div class="dialog" th:fragment="error-dialog(message)">
     <div class="error-icon">
         <img src="/images/check-icon.png" alt="バツアイコン">
     </div>
-    <p th:text="${message}">メッセージ</p>
+    <p class="dialog-message" th:text="${message}">error message</p>
 </div>
 
 </html>

@@ -19,7 +19,7 @@
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-.dialog p {
+.dialog-message {
     margin-left: 0.5rem;
     font-weight: bold;
 }

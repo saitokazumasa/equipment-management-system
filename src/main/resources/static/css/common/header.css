@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-header {
+.header {
     width: 83.333333%;
     height: 3rem;
 
@@ -26,6 +26,26 @@ header {
     align-items: center;
 }
 
+#hamburger-menu {
+    width: 2.25rem;
+    height: 2.25rem;
+
+    z-index: 50;
+
+    background: none;
+    border: none;
+}
+
+.hamburger-line {
+    width: 2.25rem;
+    height: 0.5rem;
+
+    position: absolute;
+
+    border-radius: 9999px;
+    background-color: #A8DCFF;
+}
+
 #header-menu {
     width: 50vw;
     min-width: 500px;
@@ -42,15 +62,6 @@ header {
 #header-menu ul {
     list-style: none;
     margin-top: 3.5rem;
-}
-
-#checkout {
-    height: 4rem;
-}
-
-#return {
-    height: 4rem;
-    margin-bottom: 2rem;
 }
 
 .header-content {
@@ -73,7 +84,16 @@ header {
     line-height: 2.5rem;
 }
 
-.header-content button {
+.checkout {
+    height: 4rem;
+}
+
+.return {
+    height: 4rem;
+    margin-bottom: 2rem;
+}
+
+.logout {
     color: #0078C8;
     font-size: 1.8rem;
     line-height: 2.5rem;
@@ -82,24 +102,9 @@ header {
     border: none;
 }
 
-#hamburger-menu {
-    width: 2.25rem;
-    height: 2.25rem;
-
-    z-index: 50;
-
-    background: none;
-    border: none;
-}
-
-.hamburger-line {
-    width: 2.25rem;
-    height: 0.5rem;
-
-    position: absolute;
-
-    border-radius: 9999px;
-    background-color: #A8DCFF;
+.link {
+    color: #0078C8;
+    text-decoration-line: underline;
 }
 
 .mail {

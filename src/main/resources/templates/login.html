@@ -6,7 +6,7 @@
 </head>
 
 <body>
-<th:block th:replace="layout :: header"/>
+<th:block th:replace="layout :: header(false)"/>
 
 <th:block th:if="${errorMessage}">
     <th:block th:replace="layout :: error-dialog(${errorMessage})"></th:block>
@@ -17,16 +17,16 @@
 
     <form th:action="@{/login}" method="post">
         <div class="form-content">
-            <label for="mail">メールアドレス</label>
-            <input type="email" id="mail" name="mail" placeholder="メールアドレス" required>
+            <label for="mail" class="form-label">メールアドレス</label>
+            <input type="email" id="mail" class="form-input" name="mail" placeholder="メールアドレス" required>
         </div>
 
         <div class="form-content">
-            <label for="password">パスワード</label>
-            <input type="password" id="password" name="password" placeholder="パスワード" required>
+            <label for="password" class="form-label">パスワード</label>
+            <input type="password" id="password" class="form-input" name="password" placeholder="パスワード" required>
         </div>
 
-        <button type="submit">ログイン</button>
+        <button type="submit" class="submit-button">ログイン</button>
         <a th:href="@{/password_reset}" class="password-reset">パスワードを忘れた方はこちら</a>
     </form>
 </main>
