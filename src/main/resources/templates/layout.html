@@ -1,99 +1,83 @@
 <!DOCTYPE html>
-<html lang="ja">
-<th:block th:fragment="head(title)">
-    <head>
-        <meta charset="UTF-8">
-        <title th:text="${title}">タイトル</title>
-        <link rel="stylesheet" type="text/css" href="/css/tailwind.css">
-        <link rel="stylesheet" type="text/css" href="/css/common.css">
-    </head>
-</th:block>
-<body>
+<html lang="ja" xmlns:th="http://www.w3.org/1999/html">
 
-<th:block th:fragment="message(category, content)">
-    <div class="absolute top-2 left-1/2 flex justify-center items-center pl-4 pr-6 py-3 font-semibold rounded-xl bg-white shadow-lg"
-         style="transform: translate(-50%, 0);">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <title th:text="${title}">タイトル</title>
+    <link rel="stylesheet" type="text/css" href="/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="/css/common.css">
+    <link rel="stylesheet" type="text/css" href="/css/header.css">
+    <link rel="stylesheet" type="text/css" href="/css/dialog.css">
+</head>
 
-        <th:block th:if="${category} == 'SUCCESS'">
-            <div class="flex justify-center items-center bg-success rounded-full w-9 h-9">
-                <img src="/images/check-icon.png" alt="チェックアイコン" class="w-3/5 h-3/5">
-            </div>
+<header th:fragment="header">
+    <div class="header-left">
+        <th:block sec:authorize="isAnonymous()">
+            <a class="link" th:href="@{/return/application}">返却はこちら</a>
         </th:block>
-        <!-- TODO: アイコンを置き換える -->
-        <th:block th:if="${category} == 'ERROR'">
-            <div class="flex justify-center items-center bg-error rounded-full w-9 h-9">
-                <img src="/images/check-icon.png" alt="バツアイコン" class="w-3/5 h-3/5">
-            </div>
+
+        <th:block sec:authorize="isAuthenticated()">
+            <button id="hamburger-menu">
+                <div class="hamburger-line" id="top-hamburger-line"></div>
+                <div class="hamburger-line" id="middle-hamburger-line"></div>
+                <div class="hamburger-line" id="bottom-hamburger-line"></div>
+            </button>
         </th:block>
-        <span class="ml-2" th:text="${content}">メッセージ</span>
     </div>
-</th:block>
 
-<th:block th:fragment="header">
-    <header class="flex justify-center items-center w-full h-12">
-        <div sec:authorize="isAnonymous()" class="w-10/12 h-9 flex items-center">
-            <a th:href="@{/return/application}" class="text-primary underline">返却はこちら</a>
-        </div>
+    <div class="header-right">
+        <th:block sec:authorize="isAuthenticated()">
+            <a class="mail" th:text="${mail}">xxx@mail.com</a>
+        </th:block>
+    </div>
 
-        <div sec:authorize="isAuthenticated()" class="flex justify-between w-10/12 h-9 z-50">
-            <ul class="w-9 h-9" id="hamburger-menu">
-                <li class="absolute w-9 h-2 rounded-full bg-secondary" id="top-hamburger-line"></li>
-                <li class="absolute w-9 h-2 rounded-full bg-secondary" id="middle-hamburger-line"></li>
-                <li class="absolute w-9 h-2 rounded-full bg-secondary" id="bottom-hamburger-line"></li>
-            </ul>
+    <th:block sec:authorize="isAuthenticated()">
+        <nav id="header-menu">
+            <ul>
+                <th:block>
+                    <li><a class="header-content" id="checkout" th:href="@{/checkout/application}">借りる</a></li>
+                    <li><a class="header-content" id="return" th:href="@{/return/application}">返す</a></li>
+                    <li><a class="header-content" th:href="@{/equipment/list}">備品一覧</a></li>
+                </th:block>
 
-            <div>
-                <a class="flex justify-center items-center">
-                    <span class="text-gray" th:text="${mail}">xxx@mail.com</span>
-                    <div class="flex justify-center items-center ml-2 bg-secondary rounded-full w-9 h-9">
-                        <img src="/images/account-icon.png" alt="アカウントアイコン" class="w-3/5 h-3/5">
-                    </div>
-                </a>
-            </div>
-        </div>
+                <th:block sec:authorize="hasAnyRole('EQUIPMENT_MANAGER', 'SYSTEM_MANAGER')">
+                    <li><a class="header-content" th:href="@{/equipment/registration}">備品登録</a></li>
+                </th:block>
 
-        <nav sec:authorize="isAuthenticated()" class="absolute top-0 left-0 w-screen h-screen bg-white z-0" style="width: 50vw; min-width: 500px"
-             id="menu" hidden>
-            <ul class="w-10/12 mt-14 mx-auto">
-                <li class="w-full">
-                    <a th:href="@{/checkout/application}" class="block py-4 text-center text-primary text-4xl font-bold border-2 border-primary">借りる</a>
-                </li>
-                <li class="w-full">
-                    <a th:href="@{/return/application}" class="block mt-3 py-4 text-center text-primary text-4xl font-bold border-2 border-primary">返す</a>
-                </li>
-                <li class="w-full">
-                    <a th:href="@{/equipment/list}" class="block mt-10 py-4 text-center text-primary text-3xl font-bold border-2 border-primary">備品一覧</a>
-                </li>
-                <li sec:authorize="hasAnyRole('EQUIPMENT_MANAGER', 'SYSTEM_MANAGER')" class="w-full">
-                    <a th:href="@{/equipment/registration}" class="block mt-3 py-4 text-center text-primary text-3xl font-bold border-2 border-primary">備品登録</a>
-                </li>
-                <li sec:authorize="hasRole('SYSTEM_MANAGER')" class="w-full">
-                    <a class="block mt-3 py-4 text-center text-primary text-3xl font-bold border-2 border-primary">アカウント一覧</a>
-                </li>
-                <li sec:authorize="hasRole('SYSTEM_MANAGER')" class="w-full">
-                    <a th:href="@{/account/registration}" class="block mt-3 py-4 text-center text-primary text-3xl font-bold border-2 border-primary">アカウント登録</a>
-                </li>
-                <li sec:authorize="hasRole('SYSTEM_MANAGER')" class="w-full">
-                    <a th:href="@{/student/registration}" class="block mt-3 py-4 text-center text-primary text-3xl font-bold border-2 border-primary">生徒登録</a>
-                </li>
-                <li class="w-full">
-                    <div class="h-1 mt-10 border-b-2 border-primary"></div>
-                </li>
-                <li class="w-full">
-                    <form th:action="@{/logout}" method="post">
-                        <button type="submit"
-                                class="block w-full mt-10 py-4 text-center text-error text-3xl font-bold border-2 border-error">
-                            ログアウト
-                        </button>
-                    </form>
-                </li>
+                <th:block sec:authorize="hasRole('SYSTEM_MANAGER')">
+                    <li><a class="header-content" th:href="@{/account/registration}">アカウント登録</a></li>
+                    <li><a class="header-content" th:href="@{/student/registration}">生徒登録</a></li>
+                </th:block>
+
+                <th:block>
+                    <li>
+                        <form class="header-content" th:action="@{/logout}" method="post">
+                            <button type="submit">ログアウト</button>
+                        </form>
+                    </li>
+                </th:block>
             </ul>
         </nav>
-    </header>
-</th:block>
-</body>
+    </th:block>
+</header>
+
+<div class="dialog" th:fragment="success-dialog(message)">
+    <div class="success-icon">
+        <img src="/images/check-icon.png" alt="チェックアイコン">
+    </div>
+    <p th:text="${message}">メッセージ</p>
+</div>
+
+<div class="dialog" th:fragment="error-dialog(message)">
+    <div class="error-icon">
+        <img src="/images/check-icon.png" alt="バツアイコン">
+    </div>
+    <p th:text="${message}">メッセージ</p>
+</div>
+
 </html>
+
 <th:block th:fragment="scripts">
     <script src="/js/header-menu.js"></script>
-    <script src="/js/label.js"></script>
+    <!--    <script src="/js/label.js"></script>-->
 </th:block>
