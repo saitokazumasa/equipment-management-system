@@ -1,28 +1,45 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.w3.org/1999/html">
-<th:block th:replace="layout :: head('貸出申請')"/>
+<th:block th:include="layout :: head(貸出申請)"/>
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/checkout/application.css">
+</head>
+
 <body>
+<th:block th:replace="layout :: header(false)"/>
 
-<th:block th:replace="layout :: header"/>
-
-<main class="w-2/5 mx-auto">
-    <div class="w-full flex justify-center my-10 ">
-        <h1 class="w-11/12 py-1.5 text-center text-4xl font-bold border-b-2 border-primary">借りる</h1>
-    </div>
+<main>
+    <h1 class="title">借りる</h1>
 
     <form th:action="@{/checkout/application}" method="post">
         <div th:object="${checkoutEquipmentId}">
-            <div>
-                <input type="number" th:field="*{value}" aria-label>
-                <p th:errors="*{value}"></p>
-                <p th:if="${errorMessage}" th:text="${errorMessage}"></p>
+            <div class="form-content">
+                <input class="form-input" type="number" th:field="*{value}"
+                       placeholder="バーコードをスキャン、または入力" aria-label>
+                <p class="form-error" th:errors="*{value}"></p>
+                <p class="form-error" th:if="${errorMessage}" th:text="${errorMessage}"></p>
             </div>
         </div>
-        <button type="submit" name="add">追加</button>
+        <button type="submit" name="add" class="add-button">追加</button>
 
         <div th:each="value, status: ${checkoutEquipmentList.values}" th:object="${checkoutEquipmentList}">
-            <p th:text="${value.name}"></p>
-            <p th:text="${value.lendingPeriod}"></p>
+            <div class="list-content">
+                <div class="list-top">
+                    <p th:text="${value.id}">id</p>
+                    <button type="submit" name="remove" class="delete-button" th:value="${status.index}">×</button>
+                </div>
+
+                <p th:text="${value.name}">name</p>
+
+                <div class="list-bottom">
+                    <p class="lendingPeriod-label">貸出日数</p>
+                    <div>
+                        <span th:text="${value.lendingPeriod}">貸出日数</span>
+                        <span class="lendingPeriod-label">日間</span>
+                    </div>
+                </div>
+            </div>
+
             <input type="text" th:field="*{values[__${status.index}__].id}" hidden aria-label>
             <input type="text" th:field="*{values[__${status.index}__].name}" hidden aria-label>
             <input type="text" th:field="*{values[__${status.index}__].categoryId}" hidden aria-label>
@@ -32,9 +49,8 @@
             <input type="text" th:field="*{values[__${status.index}__].notificationDate}" hidden aria-label>
             <input type="text" th:field="*{values[__${status.index}__].remark}" hidden aria-label>
             <input type="text" th:field="*{values[__${status.index}__].createdAt}" hidden aria-label>
-            <button type="submit" name="remove" th:value="${status.index}">×</button>
         </div>
-        <button type="submit" name="submit">申請</button>
+        <button type="submit" name="submit" class="submit-button">申請</button>
     </form>
 </main>
 
