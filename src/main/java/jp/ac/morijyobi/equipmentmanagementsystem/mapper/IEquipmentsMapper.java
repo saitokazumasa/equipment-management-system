@@ -17,7 +17,7 @@ public interface IEquipmentsMapper {
     public Equipment selectById(final int id);
 
     @Select("SELECT equipments.* FROM equipments " +
-            "LEFT OUTER JOIN checkout_applications ON checkout_applications.equipment_id = e.id " +
+            "LEFT OUTER JOIN checkout_applications ON checkout_applications.equipment_id = equipments.id " +
             "WHERE equipments.id = #{id} " +
             "AND equipments.state = 'ON_LOAN' " +
             // 貸出申請承認が存在する
