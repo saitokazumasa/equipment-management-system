@@ -45,7 +45,9 @@ public interface IEquipmentsMapper {
             "       SELECT * FROM checkout_approvals c " +
             "       WHERE c.checkout_application_id = checkout_applications.id" +
             "   )" +
-            ")")
+            ")" +
+            "ORDER BY checkout_applications.created_at DESC " +
+            "LIMIT 1")
     public Equipment selectAvailableForLoanById(final int id);
 
     @Select("<script>" +
