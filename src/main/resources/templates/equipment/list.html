@@ -1,46 +1,88 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.w3.org/1999/html">
-<th:block th:replace="layout :: head('備品一覧')"/>
+<th:block th:include="layout :: head(備品一覧)"/>
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/equipment/list.css">
+</head>
+
 <body>
+<th:block th:replace="layout :: header(false)"/>
 
-<th:block th:replace="layout :: header"/>
+<main>
+    <h1 class="title">備品一覧</h1>
 
-<main class="w-2/5 mx-auto">
     <form th:action="@{/equipment/list}" method="post" th:object="${equipmentSearchCriteria}">
-        <label for="name">備品名</label>
-        <input type="text" id="name" th:field="*{name}" maxlength="255">
-        <p th:errors="*{name}"></p>
+        <div class="form-content">
+            <input class="form-input" type="text" th:field="*{name}" placeholder="検索" maxlength="255" aria-label>
+            <p class="form-error" th:errors="*{name}"></p>
+        </div>
 
-        <p>カテゴリ</p>
-        <th:block th:each="equipmentCategory : ${equipmentCategoryList}">
-            <label th:for="'equipmentCategoryIdList' + ${equipmentCategory.id}"
-                   th:text="${equipmentCategory.name}">カテゴリ</label>
-            <input type="checkbox"
-                   th:field="*{equipmentCategoryIdList}"
-                   th:value="${equipmentCategory.id}" aria-label>
-        </th:block>
-        <p th:errors="*{equipmentCategoryIdList}"></p>
+        <div>
+            <p class="category-label">備品区分</p>
+            <th:block th:each="equipmentCategory, status : ${equipmentCategoryList}">
+                <label th:for="'equipmentCategoryIdList' + ${status.index + 1}"
+                       th:text="${equipmentCategory.name}">カテゴリ</label>
+                <input type="checkbox"
+                       th:field="*{equipmentCategoryIdList}"
+                       th:value="${equipmentCategory.id}" aria-label>
+            </th:block>
+            <p th:errors="*{equipmentCategoryIdList}"></p>
+        </div>
 
-        <p>状態</p>
-        <th:block th:each="equipmentState : ${equipmentStateList}">
-            <label th:for="'equipmentStateList' + ${equipmentState.ordinal + 1}"
-                   th:text="${equipmentState.text}">状態</label>
-            <input type="checkbox"
-                   th:field="*{equipmentStateList}"
-                   th:value="${equipmentState}" aria-label>
-        </th:block>
-        <p th:errors="*{equipmentStateList}"></p>
-
-        <button type="submit">検索</button>
+        <div class="status">
+            <p class="status-label">状態</p>
+            <th:block th:each="equipmentState, status : ${equipmentStateList}">
+                <label th:for="'equipmentStateList' + ${status.index + 1}"
+                       th:text="${equipmentState.text}">状態</label>
+                <input type="checkbox"
+                       th:field="*{equipmentStateList}"
+                       th:value="${equipmentState}" aria-label>
+            </th:block>
+            <p th:errors="*{equipmentStateList}"></p>
+        </div>
+        <button type="submit" class="search-button">検索</button>
     </form>
 
     <div th:each="equipment : ${equipmentList}">
-        <p>ID: <span th:text="${equipment.id}"></span></p>
-        <p>備品名: <a href="@" th:text="${equipment.name}"></a></p>
-        <p>貸出期間: <span th:text="${equipment.lendingPeriod}"></span>日</p>
-        <th:block sec:authorize="hasAnyRole('EQUIPMENT_MANAGER', 'SYSTEM_MANAGER')">
-            <a href="@">編集</a>
-        </th:block>
+        <div class="list-content">
+            <div class="list-top">
+                <p th:text="${equipment.id}">id</p>
+                <th:block sec:authorize="hasAnyRole('EQUIPMENT_MANAGER', 'SYSTEM_MANAGER')">
+                    <a href="@">編集</a>
+                </th:block>
+            </div>
+
+            <a href="@" th:text="${equipment.name}">name</a>
+
+            <div class="list-bottom">
+                <div class="list-bottom-left">
+                    <p>貸出期間</p>
+                    <p>
+                        <th:block th:if="${equipment.lendingPeriod == -1}">
+                            &nbsp;-&nbsp;日
+                        </th:block>
+                        <th:block th:if="${equipment.lendingPeriod != -1}">
+                            <span th:text="${equipment.lendingPeriod}">lendingPeriod</span>&nbsp;日
+                        </th:block>
+                    </p>
+                </div>
+
+                <div class="list-bottom-right">
+                    <th:block th:if="${equipment.state == equipmentStateList.get(0)}">
+                        <div class="available-for-loan-icon"></div>
+                        <p th:text="${equipment.state.text}"></p>
+                    </th:block>
+                    <th:block th:if="${equipment.state == equipmentStateList.get(1)}">
+                        <div class="on-loan-icon"></div>
+                        <p th:text="${equipment.state.text}"></p>
+                    </th:block>
+                    <th:block th:if="${equipment.state == equipmentStateList.get(2)}">
+                        <div class="not-available-for-loan-icon"></div>
+                        <p th:text="${equipment.state.text}"></p>
+                    </th:block>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
 

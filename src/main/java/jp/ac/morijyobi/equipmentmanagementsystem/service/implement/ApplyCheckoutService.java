@@ -12,6 +12,7 @@ import jp.ac.morijyobi.equipmentmanagementsystem.mapper.ICheckoutApplicationsMap
 import jp.ac.morijyobi.equipmentmanagementsystem.mapper.IEquipmentsMapper;
 import jp.ac.morijyobi.equipmentmanagementsystem.service.IApplyCheckoutService;
 import jp.ac.morijyobi.equipmentmanagementsystem.service.IApplyReturnService;
+import jp.ac.morijyobi.equipmentmanagementsystem.service.IGetAccountService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,16 +20,16 @@ import java.time.LocalDateTime;
 
 @Service
 public class ApplyCheckoutService implements IApplyCheckoutService {
-    private final IAccountsMapper accountsMapper;
+    private final IGetAccountService getAccountService;
     private final ICheckoutApplicationsMapper checkoutApplicationsMapper;
     private final IApplyReturnService applyReturnService;
 
     public ApplyCheckoutService(
-            final IAccountsMapper accountsMapper,
+            final IGetAccountService getAccountService,
             final ICheckoutApplicationsMapper checkoutApplicationsMapper,
             final IApplyReturnService applyReturnService
     ) {
-        this.accountsMapper = accountsMapper;
+        this.getAccountService = getAccountService;
         this.checkoutApplicationsMapper = checkoutApplicationsMapper;
         this.applyReturnService = applyReturnService;
     }
@@ -36,7 +37,7 @@ public class ApplyCheckoutService implements IApplyCheckoutService {
     @Override
     @Transactional
     public void execute(final String mail, final CheckoutEquipmentList checkoutEquipmentList) throws Exception {
-        final Account account = this.accountsMapper.selectByMail(mail);
+        final Account account = this.getAccountService.executeByMail(mail);
 
         for (final CheckoutEquipment checkoutEquipment : checkoutEquipmentList.getValues()) {
             // 未返却処理の備品は同時に返却処理を行う
