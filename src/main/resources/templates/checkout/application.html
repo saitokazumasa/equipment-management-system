@@ -12,11 +12,11 @@
     <h1 class="title">借りる</h1>
 
     <form th:action="@{/checkout/application}" method="post">
-        <div th:object="${checkoutEquipmentId}">
+        <div th:object="${checkoutEquipment}">
             <div class="form-content">
-                <input class="form-input" type="number" th:field="*{value}"
-                       placeholder="バーコードをスキャン、または入力" aria-label>
-                <p class="form-error" th:errors="*{value}"></p>
+                <input class="form-input" type="number" th:field="*{equipmentId}"
+                       placeholder="バーコードをスキャン、またはIDを入力" aria-label autofocus>
+                <p class="form-error" th:errors="*{equipmentId}"></p>
                 <p class="form-error" th:if="${errorMessage}" th:text="${errorMessage}"></p>
             </div>
         </div>
@@ -25,30 +25,33 @@
         <div th:each="value, status: ${checkoutEquipmentList.values}" th:object="${checkoutEquipmentList}">
             <div class="list-content">
                 <div class="list-top">
-                    <p th:text="${value.id}">id</p>
-                    <button type="submit" name="remove" class="delete-button" th:value="${status.index}">×</button>
+                    <p th:text="${value.equipmentId}">id</p>
+                    <button type="submit" name="remove" class="delete-button" th:value="${status.index}">削除</button>
                 </div>
 
-                <p th:text="${value.name}">name</p>
+                <p th:text="${value.equipment.name}" class="equipment-name">name</p>
 
                 <div class="list-bottom">
-                    <p class="lendingPeriod-label">貸出日数</p>
-                    <div>
-                        <span th:text="${value.lendingPeriod}">貸出日数</span>
-                        <span class="lendingPeriod-label">日間</span>
-                    </div>
+                    <p>返却期日</p>
+                    <p>
+                        <span th:text="${value.returnDate}" class="return-date">返却期日</span>&nbsp;まで
+                        (<span th:text="${value.equipment.lendingPeriod}">貸出日数</span>日間)
+                    </p>
                 </div>
             </div>
 
-            <input type="text" th:field="*{values[__${status.index}__].id}" hidden aria-label>
-            <input type="text" th:field="*{values[__${status.index}__].name}" hidden aria-label>
-            <input type="text" th:field="*{values[__${status.index}__].categoryId}" hidden aria-label>
-            <input type="text" th:field="*{values[__${status.index}__].storageLocationId}" hidden aria-label>
-            <input type="text" th:field="*{values[__${status.index}__].state}" hidden aria-label>
-            <input type="text" th:field="*{values[__${status.index}__].lendingPeriod}" hidden aria-label>
-            <input type="text" th:field="*{values[__${status.index}__].notificationDate}" hidden aria-label>
-            <input type="text" th:field="*{values[__${status.index}__].remark}" hidden aria-label>
-            <input type="text" th:field="*{values[__${status.index}__].createdAt}" hidden aria-label>
+            <input type="text" th:field="*{values[__${status.index}__].equipmentId}" hidden aria-label>
+            <input type="date" th:field="*{values[__${status.index}__].returnDate}" hidden aria-label>
+
+            <input type="text" th:field="*{values[__${status.index}__].equipment.id}" hidden aria-label>
+            <input type="text" th:field="*{values[__${status.index}__].equipment.name}" hidden aria-label>
+            <input type="text" th:field="*{values[__${status.index}__].equipment.categoryId}" hidden aria-label>
+            <input type="text" th:field="*{values[__${status.index}__].equipment.storageLocationId}" hidden aria-label>
+            <input type="text" th:field="*{values[__${status.index}__].equipment.state}" hidden aria-label>
+            <input type="text" th:field="*{values[__${status.index}__].equipment.lendingPeriod}" hidden aria-label>
+            <input type="text" th:field="*{values[__${status.index}__].equipment.notificationDate}" hidden aria-label>
+            <input type="text" th:field="*{values[__${status.index}__].equipment.remark}" hidden aria-label>
+            <input type="text" th:field="*{values[__${status.index}__].equipment.createdAt}" hidden aria-label>
         </div>
         <button type="submit" name="submit" class="submit-button">申請</button>
     </form>

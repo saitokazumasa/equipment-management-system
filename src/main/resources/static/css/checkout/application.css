@@ -75,13 +75,21 @@
     background: none;
 }
 
-.list-bottom {
-    margin-top: 0.3rem;
+.equipment-name {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
 }
 
-.lendingPeriod-label {
+.list-bottom {
+    margin-top: 0.3rem;
+
     font-size: 0.875rem;
     line-height: 1.25rem;
+}
+
+.return-date {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
 }
 
 .submit-button {

@@ -15,7 +15,7 @@
         <div th:object="${returnEquipment}">
             <div class="form-content">
                 <input class="form-input" type="number" th:field="*{equipmentId}"
-                       placeholder="バーコードをスキャン、または入力" aria-label>
+                       placeholder="バーコードをスキャン、またはIDを入力" aria-label required autofocus>
                 <p class="form-error" th:errors="*{equipmentId}"></p>
                 <p class="form-error" th:if="${errorMessage}" th:text="${errorMessage}"></p>
             </div>
@@ -37,7 +37,7 @@
             <div class="list-content">
                 <div class="list-top">
                     <p th:text="${value.equipment.id}">id</p>
-                    <button type="submit" name="remove" class="delete-button" th:value="${status.index}">×</button>
+                    <button type="submit" name="remove" class="delete-button" th:value="${status.index}">削除</button>
                 </div>
 
                 <p th:text="${value.equipment.name}">name</p>
