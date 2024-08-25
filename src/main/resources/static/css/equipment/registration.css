@@ -1,0 +1,102 @@
+@charset "UTF-8";
+
+.title {
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+    padding-top: 0.375rem;
+    padding-bottom: 0.375rem;
+
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: bold;
+    line-height: 2.5rem;
+
+    border-bottom: #0078C8 2px solid;
+}
+
+.form-content {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.form-content-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form-label {
+    margin-left: 0.75rem;
+
+    color: #323232;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+.form-input {
+    width: 100%;
+
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+
+    text-align: center;
+
+    border: #0078C8 4px solid;
+    border-radius: 0.375rem;
+    outline: 0;
+
+    background: white;
+}
+
+.has-lending-period-content {
+    margin-top: 1.3rem;
+    margin-bottom: -0.2rem;
+}
+
+.lending-period-form {
+    width: 100%;
+}
+
+.notification-form {
+    width: 100%;
+
+    margin-left: 10px;
+}
+
+.lending-period-group {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    white-space: nowrap
+}
+
+.notification-date-group {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    white-space: nowrap
+}
+
+.add-button {
+    display: block;
+    margin: 1.5rem auto 2.5rem auto;
+    padding: 0.5rem 5rem;
+
+    color: #0078C8;
+
+    border: none;
+    border-radius: 9999px;
+    background-color: #A8DCFF;
+}
+
+.submit-button {
+    display: block;
+    margin: 1.5rem auto 1.25rem auto;
+    padding: 0.5rem 5rem;
+
+    color: #0078C8;
+
+    border: none;
+    border-radius: 9999px;
+    background-color: #A8DCFF;
+}
