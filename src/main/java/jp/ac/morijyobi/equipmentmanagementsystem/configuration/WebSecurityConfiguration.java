@@ -34,7 +34,7 @@ public class WebSecurityConfiguration {
                         .requestMatchers("/account/**").hasRole(AccountCategory.SYSTEM_MANAGER.toString())
                         .requestMatchers("/student/**").hasRole(AccountCategory.SYSTEM_MANAGER.toString())
 
-                        .anyRequest().permitAll()//.denyAll()
+                        .anyRequest().denyAll()
                 ).formLogin(a -> a
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
