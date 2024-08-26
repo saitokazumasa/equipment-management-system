@@ -40,19 +40,15 @@ public class ApproveCheckoutController {
     @RequestMapping()
     public String get(@RequestParam final List<Integer> checkoutId, final Model model) {
         final CheckoutApplication checkoutApplication = getCheckoutService.execute(checkoutId.get(0));
-
         final List<CheckoutApplication> checkoutApplications = listCheckoutService.execute(checkoutId);
 
+        final List<Integer> equipmentIds = checkoutApplications.stream().map(CheckoutApplication::getEquipmentId).toList();
         final List<Integer> checkoutIds = checkoutApplications.stream().map(CheckoutApplication::getId).toList();
 
-        final List<Integer> equipmentIds = checkoutApplications.stream().map(CheckoutApplication::getEquipmentId).toList();
-        final List<Equipment> equipments = listEquipmentService.searchByIds(equipmentIds);
-
         final Account account = getAccountService.executeById(checkoutApplication.getAccountId());
-
+        final List<Equipment> equipments = listEquipmentService.searchByIds(equipmentIds);
         final CheckoutIdList checkoutIdList = new CheckoutIdList(checkoutIds);
 
-        model.addAttribute("checkoutIds", checkoutIds);
         model.addAttribute("equipments", equipments);
         model.addAttribute("checkoutIdList", checkoutIdList);
         model.addAttribute("account", account);
