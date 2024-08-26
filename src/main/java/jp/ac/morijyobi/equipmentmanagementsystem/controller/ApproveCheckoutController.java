@@ -16,22 +16,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 @Controller
 @RequestMapping("/checkout/approval")
 public class ApproveCheckoutController {
     private final IGetCheckoutService getCheckoutService;
     private final IListCheckoutService listCheckoutService;
-    private final IGetEquipmentService getEquipmentService;
     private final IListEquipmentService listEquipmentService;
     private final IGetAccountService getAccountService;
     private final IApproveCheckoutService approveCheckoutService;
 
-    public ApproveCheckoutController(IGetCheckoutService getCheckoutService, IListCheckoutService listCheckoutService, IGetEquipmentService getEquipmentService, IListEquipmentService listEquipmentService, IGetAccountService getAccountService, IApproveCheckoutService approveCheckoutService) {
+    public ApproveCheckoutController(IGetCheckoutService getCheckoutService, IListCheckoutService listCheckoutService, IListEquipmentService listEquipmentService, IGetAccountService getAccountService, IApproveCheckoutService approveCheckoutService) {
         this.getCheckoutService = getCheckoutService;
         this.listCheckoutService = listCheckoutService;
-        this.getEquipmentService = getEquipmentService;
         this.listEquipmentService = listEquipmentService;
         this.getAccountService = getAccountService;
         this.approveCheckoutService = approveCheckoutService;
