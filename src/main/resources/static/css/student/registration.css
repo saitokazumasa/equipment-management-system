@@ -19,6 +19,21 @@
     margin-bottom: 0.5rem;
 }
 
+.form-content-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.admission-year-form {
+    width: 100%;
+}
+
+.graduation-year-form {
+    width: 100%;
+
+    margin-left: 10px;
+}
 
 .form-label {
     margin-left: 0.75rem;
@@ -83,10 +98,30 @@
     line-height: 1.25rem;
 }
 
+.list-top-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .delete-button {
     color: #C82400;
     border: none;
     background: none;
+}
+
+.list-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: 0.3rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+.list-bottom-box {
+    width: 100%;
 }
 
 .submit-button {
