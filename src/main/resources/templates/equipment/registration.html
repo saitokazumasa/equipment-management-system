@@ -63,8 +63,7 @@
                 <div class="form-content notification-form">
                     <label for="notificationDate" class="form-label">通知日</label>
                     <div class="notification-date-group">
-                        <input type="number" id="notificationDate" class="form-input" th:field="*{notificationDate}"
-                               min="1" disabled>
+                        <input type="number" id="notificationDate" class="form-input" th:field="*{notificationDate}" min="1" disabled>
                         <span>&nbsp;日前</span>
                     </div>
                     <p class="form-error" th:errors="*{notificationDate}"></p>

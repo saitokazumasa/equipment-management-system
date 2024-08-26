@@ -15,7 +15,7 @@
         <div th:object="${returnEquipment}">
             <div class="form-content">
                 <input class="form-input" type="number" th:field="*{equipmentId}"
-                       placeholder="バーコードをスキャン、またはIDを入力" aria-label required autofocus>
+                       placeholder="バーコードをスキャン、またはIDを入力" aria-label autofocus>
                 <p class="form-error" th:errors="*{equipmentId}"></p>
                 <p class="form-error" th:if="${errorMessage}" th:text="${errorMessage}"></p>
             </div>
