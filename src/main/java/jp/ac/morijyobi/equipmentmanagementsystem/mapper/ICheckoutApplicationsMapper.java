@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 @Mapper
 public interface ICheckoutApplicationsMapper {
     @Insert("INSERT INTO checkout_applications (equipment_id, account_id) " +
@@ -29,4 +31,15 @@ public interface ICheckoutApplicationsMapper {
 
     @Select("SELECT * FROM checkout_applications WHERE id = #{id}")
     public CheckoutApplication selectById(final int id);
+
+    // 配列に含まれているIDの申請を取得
+    @Select({
+            "<script>",
+            "SELECT * FROM checkout_applications WHERE id IN",
+            "<foreach item='id' collection='ids' open='(' separator=',' close=')'>",
+            "#{id}",
+            "</foreach>",
+            "</script>"
+    })
+    public List<CheckoutApplication> selectByIds(final List<Integer> ids);
 }

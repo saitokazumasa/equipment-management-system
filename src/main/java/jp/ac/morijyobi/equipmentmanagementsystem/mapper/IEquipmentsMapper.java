@@ -69,4 +69,15 @@ public interface IEquipmentsMapper {
 
     @Update("UPDATE equipments SET state = #{state}, lending_period = #{lendingPeriod}, notification_date = #{notificationDate}, remark = #{remark} WHERE id = #{id}")
     public int update(final Equipment equipment);
+
+    // 配列に含まれているIDの機材を取得
+    @Select({
+            "<script>",
+            "SELECT * FROM equipments WHERE id IN",
+            "<foreach item='id' collection='ids' open='(' separator=',' close=')'>",
+            "#{id}",
+            "</foreach>",
+            "</script>"
+    })
+    public List<Equipment> selectByIds(final List<Integer> ids);
 }

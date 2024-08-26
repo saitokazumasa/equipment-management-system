@@ -11,13 +11,13 @@
     申請者:<span th:text="*{name}"></span>
 </div>
 
-<div th:object="${equipment}">
-    ID:<span th:text="*{id}"></span>
-    備品名:<span th:text="*{name}"></span>
+<div th:each="equip:${equipments}">
+    ID:<span th:text="*{equip.getId()}"></span>
+    備品名:<span th:text="*{equip.getName()}"></span>
 </div>
 
 <form th:action="@{/checkout/approval}" method="post">
-    <input type="hidden" name="id" th:value="${checkoutApplication.getId()}">
+    <input type="hidden" name="ids" th:value="${checkoutIds}">
     <button type="submit" name="approve">承認</button>
     <button type="submit" name="cancel">却下</button>
 </form>

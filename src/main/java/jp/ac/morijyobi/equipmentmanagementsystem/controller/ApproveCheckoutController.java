@@ -13,48 +13,61 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Date;
+import java.util.List;
+import java.util.stream.Stream;
 
 @Controller
 @RequestMapping("/checkout/approval")
 public class ApproveCheckoutController {
     private final IGetCheckoutService getCheckoutService;
+    private final IListCheckoutService listCheckoutService;
     private final IGetEquipmentService getEquipmentService;
+    private final IListEquipmentService listEquipmentService;
     private final IGetAccountService getAccountService;
     private final IApproveCheckoutService approveCheckoutService;
 
-    public ApproveCheckoutController(IGetCheckoutService getCheckoutService, IGetEquipmentService getEquipmentService, IGetAccountService getAccountService, IApproveCheckoutService approveCheckoutService) {
+    public ApproveCheckoutController(IGetCheckoutService getCheckoutService, IListCheckoutService listCheckoutService, IGetEquipmentService getEquipmentService, IListEquipmentService listEquipmentService, IGetAccountService getAccountService, IApproveCheckoutService approveCheckoutService) {
         this.getCheckoutService = getCheckoutService;
+        this.listCheckoutService = listCheckoutService;
         this.getEquipmentService = getEquipmentService;
+        this.listEquipmentService = listEquipmentService;
         this.getAccountService = getAccountService;
         this.approveCheckoutService = approveCheckoutService;
     }
 
     @RequestMapping()
-    public String get(@RequestParam final int checkoutId, final Model model) {
+    public String get(@RequestParam final List<Integer> checkoutId, final Model model) {
+        System.out.println("checkoutId: " + checkoutId);
+
         // 対象の申請を取得
-        final CheckoutApplication checkoutApplication = getCheckoutService.execute(checkoutId);
+        final CheckoutApplication checkoutApplication = getCheckoutService.execute(checkoutId.get(0));
 
-        System.out.println("checkoutApplication: " + checkoutApplication);
+        final List<CheckoutApplication> checkoutApplications = listCheckoutService.execute(checkoutId);
 
-        final Equipment equipment = getEquipmentService.executeById(checkoutApplication.getEquipmentId());
+        final List<Integer> checkoutIds = checkoutApplications.stream().map(CheckoutApplication::getId).toList();
+        final List<Integer> equipmentIds = checkoutApplications.stream().map(CheckoutApplication::getEquipmentId).toList();
+        final List<Equipment> equipments = listEquipmentService.searchByIds(equipmentIds);
+
         final Account account = getAccountService.executeById(checkoutApplication.getAccountId());
 
-        model.addAttribute("checkoutApplication", checkoutApplication);
-        model.addAttribute("equipment", equipment);
+        model.addAttribute("checkoutIds", checkoutIds);
+        model.addAttribute("equipments", equipments);
         model.addAttribute("account", account);
 
         return "checkout/approval";
     }
 
     @PostMapping(value = "", params = "approve")
-    public String approve(@RequestParam final int id,
+    public String approve(@RequestParam final String ids,
                           @AuthenticationPrincipal final UserDetails userDetails) {
         final Account account = getAccountService.executeByMail(userDetails.getUsername());
 
         // 申請を承認
         try {
-            approveCheckoutService.execute(id, account.getId());
+//            for(int i : id) {
+//                approveCheckoutService.execute(i, account.getId());
+//            }
+            System.out.println("ids: " + ids);
         } catch (Exception e) {
             return "redirect:/checkout/approval/failed";
         }
