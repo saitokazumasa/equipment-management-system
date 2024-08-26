@@ -1,5 +1,6 @@
 package jp.ac.morijyobi.equipmentmanagementsystem.controller;
 
+import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.CheckoutIdList;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Account;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.CheckoutApplication;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Equipment;
@@ -37,21 +38,22 @@ public class ApproveCheckoutController {
 
     @RequestMapping()
     public String get(@RequestParam final List<Integer> checkoutId, final Model model) {
-        System.out.println("checkoutId: " + checkoutId);
-
-        // 対象の申請を取得
         final CheckoutApplication checkoutApplication = getCheckoutService.execute(checkoutId.get(0));
 
         final List<CheckoutApplication> checkoutApplications = listCheckoutService.execute(checkoutId);
 
         final List<Integer> checkoutIds = checkoutApplications.stream().map(CheckoutApplication::getId).toList();
+
         final List<Integer> equipmentIds = checkoutApplications.stream().map(CheckoutApplication::getEquipmentId).toList();
         final List<Equipment> equipments = listEquipmentService.searchByIds(equipmentIds);
 
         final Account account = getAccountService.executeById(checkoutApplication.getAccountId());
 
+        final CheckoutIdList checkoutIdList = new CheckoutIdList(checkoutIds);
+
         model.addAttribute("checkoutIds", checkoutIds);
         model.addAttribute("equipments", equipments);
+        model.addAttribute("checkoutIdList", checkoutIdList);
         model.addAttribute("account", account);
 
         return "checkout/approval";
@@ -62,12 +64,16 @@ public class ApproveCheckoutController {
                           @AuthenticationPrincipal final UserDetails userDetails) {
         final Account account = getAccountService.executeByMail(userDetails.getUsername());
 
+
+        final String idsStr = ids.substring(1, ids.length() - 1);
+        final String idsStr2 = idsStr.replaceAll(" ", "");
+        final List<Integer> idsList = Stream.of(idsStr2.split(",")).map(Integer::parseInt).toList();
+
         // 申請を承認
         try {
-//            for(int i : id) {
-//                approveCheckoutService.execute(i, account.getId());
-//            }
-            System.out.println("ids: " + ids);
+            for (Integer id : idsList) {
+                approveCheckoutService.execute(id, account.getId());
+            }
         } catch (Exception e) {
             return "redirect:/checkout/approval/failed";
         }

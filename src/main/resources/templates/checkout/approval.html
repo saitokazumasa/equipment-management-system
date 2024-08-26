@@ -17,7 +17,7 @@
 </div>
 
 <form th:action="@{/checkout/approval}" method="post">
-    <input type="hidden" name="ids" th:value="${checkoutIds}">
+    <input type="hidden" name="ids" th:value="${checkoutIdList.getValues()}">
     <button type="submit" name="approve">承認</button>
     <button type="submit" name="cancel">却下</button>
 </form>
