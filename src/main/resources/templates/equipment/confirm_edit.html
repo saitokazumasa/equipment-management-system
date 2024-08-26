@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.w3.org/1999/html">
+<th:block th:replace="layout :: head('備品編集')"/>
+<body>
+
+<th:block th:replace="layout :: header"/>
+
+<main class="w-2/5 mx-auto">
+    <div class="w-full flex justify-center my-10 ">
+        <h1 class="w-11/12 py-1.5 text-center text-4xl font-bold border-b-2 border-primary">備品編集</h1>
+    </div>
+
+    <p class="flex justify-center pb-12 text-xl font-bold">以下の内容に編集します</p>
+
+    <form th:action="@{/equipment/edit}" method="post">
+        <div th:object="${editEquipment}">
+            <p th:text="${editEquipment.getName()}"></p>
+            <p th:text="${editEquipment.getCategory()}"></p>
+            <p th:text="${editEquipment.getStorageLocation()}"></p>
+            <p th:text="${editEquipment.getLendingPeriod()}"></p>
+            <p th:text="${editEquipment.getNotificationDate}"></p>
+            <p th:text="${editEquipment.getRemark}"></p>
+            <p th:text="${editEquipment.getEditReason}"></p>
+
+            <input type="number" th:field="*{id}" hidden aria-label>
+            <input type="text" th:field="*{name}" hidden aria-label>
+            <input type="text" th:field="*{category}" hidden aria-label>
+            <input type="text" th:field="*{storageLocation}" hidden aria-label>
+            <input type="checkbox" th:field="*{hasLendingPeriod}" hidden aria-label>
+            <input type="number" th:field="*{lendingPeriod}" hidden aria-label>
+            <input type="checkbox" th:field="*{hasNotificationDate}" hidden aria-label>
+            <input type="number" th:field="*{notificationDate}" hidden aria-label>
+            <input type="text" th:field="*{remark}" hidden aria-label>
+            <input type="text" th:field="*{editReason}" hidden aria-label>
+        </div>
+        <button type="submit" name="submit">登録</button>
+        <button type="submit" name="cancel">戻る</button>
+    </form>
+</main>
+
+</body>
+</html>

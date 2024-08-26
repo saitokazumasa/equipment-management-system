@@ -15,4 +15,7 @@ public interface IAccountsMapper {
 
     @Select("SELECT * FROM accounts WHERE mail = #{mail}")
     public Account selectByMail(final String mail);
+
+    @Select("SELECT * FROM accounts WHERE id = #{id}")
+    public Account selectById(final int id);
 }

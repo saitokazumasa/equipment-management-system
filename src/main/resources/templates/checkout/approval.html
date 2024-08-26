@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>貸出申請承認</h2>
+以下の申請を承認します。
+<div th:object="${account}">
+    申請者:<span th:text="*{name}"></span>
+</div>
+
+<div th:object="${equipment}">
+    ID:<span th:text="*{id}"></span>
+    備品名:<span th:text="*{name}"></span>
+</div>
+
+<form th:action="@{/checkout/approval}" method="post">
+    <input type="hidden" name="id" th:value="${checkoutApplication.getId()}">
+    <button type="submit" name="approve">承認</button>
+    <button type="submit" name="cancel">却下</button>
+</form>
+</body>
+</html>

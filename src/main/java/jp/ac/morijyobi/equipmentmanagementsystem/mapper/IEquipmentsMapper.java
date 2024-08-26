@@ -66,4 +66,7 @@ public interface IEquipmentsMapper {
 
     @Update("UPDATE equipments SET state = #{state} WHERE id = #{id}")
     public int updateState(final int id, final EquipmentState state);
+
+    @Update("UPDATE equipments SET state = #{state}, lending_period = #{lendingPeriod}, notification_date = #{notificationDate}, remark = #{remark} WHERE id = #{id}")
+    public int update(final Equipment equipment);
 }

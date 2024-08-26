@@ -26,4 +26,7 @@ public interface ICheckoutApplicationsMapper {
             "   WHERE r.checkout_application_id = checkout_applications.id" +
             ")")
     public CheckoutApplication selectNotReturnedByEquipmentId(final int equipmentId);
+
+    @Select("SELECT * FROM checkout_applications WHERE id = #{id}")
+    public CheckoutApplication selectById(final int id);
 }
