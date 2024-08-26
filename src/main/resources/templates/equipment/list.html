@@ -8,6 +8,14 @@
 <body>
 <th:block th:replace="layout :: header(false)"/>
 
+<th:block th:if="${successMessage}">
+    <th:block th:replace="layout :: success-dialog(${successMessage})"></th:block>
+</th:block>
+
+<th:block th:if="${errorMessage}">
+    <th:block th:replace="layout :: error-dialog(${errorMessage})"></th:block>
+</th:block>
+
 <main>
     <h1 class="title">備品一覧</h1>
 
@@ -68,15 +76,15 @@
                 </div>
 
                 <div class="list-bottom-right">
-                    <th:block th:if="${equipment.state == equipmentStateList.get(0)}">
+                    <th:block th:if="${equipment.state.toString() == 'AVAILABLE_FOR_LOAN'}">
                         <div class="available-for-loan-icon"></div>
                         <p th:text="${equipment.state.text}"></p>
                     </th:block>
-                    <th:block th:if="${equipment.state == equipmentStateList.get(1)}">
+                    <th:block th:if="${equipment.state.toString() == 'ON_LOAN'}">
                         <div class="on-loan-icon"></div>
                         <p th:text="${equipment.state.text}"></p>
                     </th:block>
-                    <th:block th:if="${equipment.state == equipmentStateList.get(2)}">
+                    <th:block th:if="${equipment.state.toString() == 'NOT_AVAILABLE_FOR_LOAN'}">
                         <div class="not-available-for-loan-icon"></div>
                         <p th:text="${equipment.state.text}"></p>
                     </th:block>

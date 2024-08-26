@@ -48,6 +48,13 @@
     background: white;
 }
 
+.form-error {
+    margin-top: 0.5rem;
+
+    color: red;
+    text-align: center;
+}
+
 .has-lending-period-content {
     margin-top: 1.3rem;
     margin-bottom: -0.2rem;

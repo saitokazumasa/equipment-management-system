@@ -15,35 +15,33 @@
         <div th:object="${registerEquipment}">
             <div class="form-content">
                 <label for="name" class="form-label">品名</label>
-                <input type="text" id="name" class="form-input" th:field="*{name}" placeholder="品名" required
-                       autofocus>
-                <p th:errors="*{name}"></p>
+                <input type="text" id="name" class="form-input" th:field="*{name}" placeholder="品名" autofocus>
+                <p class="form-error" th:errors="*{name}"></p>
             </div>
 
             <div class="form-content">
                 <label for="category" class="form-label">種類</label>
-                <input type="text" id="category" list="category-list" class="form-input"
-                       th:field="*{category}" placeholder="種類" required>
+                <input type="text" id="category" list="category-list" class="form-input" th:field="*{category}" placeholder="種類">
                 <datalist id="category-list">
                     <option th:each="equipmentCategory : ${equipmentCategoryList}"
                             th:text="${equipmentCategory.name}"
                             th:value="${equipmentCategory.name}">カテゴリ
                     </option>
                 </datalist>
-                <p th:errors="*{category}"></p>
+                <p class="form-error" th:errors="*{category}"></p>
             </div>
 
             <div class="form-content">
                 <label for="storageLocation" class="form-label">保管場所</label>
                 <input type="text" id="storageLocation" list="storageLocation-list" class="form-input"
-                       th:field="*{storageLocation}" placeholder="保管場所" required>
+                       th:field="*{storageLocation}" placeholder="保管場所">
                 <datalist id="storageLocation-list">
                     <option th:each="storageLocation : ${storageLocationList}"
                             th:text="${storageLocation.name}"
                             th:value="${storageLocation.name}">保管場所
                     </option>
                 </datalist>
-                <p th:errors="*{category}"></p>
+                <p class="form-error" th:errors="*{category}"></p>
             </div>
 
             <div class="has-lending-period-content">
@@ -56,11 +54,10 @@
                 <div class="form-content lending-period-form">
                     <label for="lendingPeriod" class="form-label">貸出期間</label>
                     <div class="lending-period-group">
-                        <input type="number" id="lendingPeriod" class="form-input" th:field="*{lendingPeriod}" min="1"
-                               disabled>
+                        <input type="number" id="lendingPeriod" class="form-input" th:field="*{lendingPeriod}" min="1" disabled>
                         <span>&nbsp;日</span>
                     </div>
-                    <p th:errors="*{lendingPeriod}"></p>
+                    <p class="form-error" th:errors="*{lendingPeriod}"></p>
                 </div>
 
                 <div class="form-content notification-form">
@@ -70,14 +67,14 @@
                                min="1" disabled>
                         <span>&nbsp;日前</span>
                     </div>
-                    <p th:errors="*{notificationDate}"></p>
+                    <p class="form-error" th:errors="*{notificationDate}"></p>
                 </div>
             </div>
 
             <div class="form-content">
                 <label for="remark" class="form-label">備考</label>
                 <textarea type="text" id="remark" class="form-input" th:field="*{remark}" placeholder="備考"></textarea>
-                <p th:errors="*{remark}"></p>
+                <p class="form-error" th:errors="*{remark}"></p>
             </div>
         </div>
         <button type="submit" id="addButton" name="add" class="add-button">追加</button>
