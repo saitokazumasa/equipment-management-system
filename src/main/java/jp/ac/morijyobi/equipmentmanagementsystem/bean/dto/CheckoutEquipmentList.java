@@ -15,10 +15,10 @@ import java.util.List;
 public class CheckoutEquipmentList implements Serializable {
     @NotNull
     @NotEmpty
-    private List<Equipment> values;
+    private List<CheckoutEquipment> values;
 
     public static CheckoutEquipmentList empty() {
-        final var list = new ArrayList<Equipment>();
+        final var list = new ArrayList<CheckoutEquipment>();
         return new CheckoutEquipmentList(list);
     }
 
@@ -26,7 +26,7 @@ public class CheckoutEquipmentList implements Serializable {
         return this.values == null;
     }
 
-    public CheckoutEquipmentList add(final Equipment value) {
+    public CheckoutEquipmentList add(final CheckoutEquipment value) {
         final var list = new ArrayList<>(this.values);
         list.add(value);
         return new CheckoutEquipmentList(list);

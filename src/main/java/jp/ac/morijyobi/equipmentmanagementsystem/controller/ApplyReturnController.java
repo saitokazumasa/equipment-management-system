@@ -62,11 +62,12 @@ public class ApplyReturnController extends BaseController {
 
         final int equipmentId = IntUtil.TryToInt(returnEquipment.getEquipmentId());
         final Equipment equipment = this.getEquipmentService.executeOnLoanById(equipmentId);
-        returnEquipment.setEquipment(equipment);
         if (equipment == null) {
             model.addAttribute(AttributeName.ERROR_MESSAGE, ErrorMessage.NOT_EXIST_VALUE.getText());
             return "return/application";
         }
+
+        returnEquipment.setEquipment(equipment);
 
         // values が null の状態で入ってくることがあるため、その場合は初期化してから追加する
         final ReturnEquipmentList newReturnEquipmentList = returnEquipmentList.isNull() ?

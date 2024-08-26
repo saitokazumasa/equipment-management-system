@@ -1,12 +1,25 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.w3.org/1999/html">
-<th:block th:replace="layout :: head('アカウント登録')"/>
+<th:block th:include="layout :: head(アカウント登録)"/>
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/account/success_application.css">
+</head>
+
 <body>
+<th:block th:replace="layout :: header(true)"/>
 
-<th:block th:replace="layout :: header"/>
+<main>
+    <h1 class="title">アカウント登録</h1>
 
-<main class="w-2/5 mx-auto">
-    成功しました。
+    <div class="description">
+        <p>仮登録しました。</p>
+        <p>本人宛メールアドレスにパスワード変更メールを送信しました。</p>
+        <p>パスワードを設定後、本登録となります。</p>
+    </div>
+
+    <div class="ok-button">
+        <a th:href="@{/account/registration}" class="ok-link">確認</a>
+    </div>
 </main>
 
 </body>

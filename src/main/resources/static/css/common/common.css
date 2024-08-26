@@ -10,3 +10,8 @@ body {
     min-width: 1000px;
     background-color: #F2FAFF;
 }
+
+main {
+    width: 40%;
+    margin: 0 auto;
+}

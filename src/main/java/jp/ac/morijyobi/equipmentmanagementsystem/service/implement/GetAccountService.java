@@ -9,13 +9,7 @@ import org.springframework.stereotype.Service;
 public class GetAccountService implements IGetAccountService {
     private final IAccountsMapper accountsMapper;
 
-    public GetAccountService(IAccountsMapper accountsMapper) {
         this.accountsMapper = accountsMapper;
-    }
-
-    @Override
-    public Account executeById(final int accountId) {
-        return accountsMapper.selectById(accountId);
     }
 
     @Override
