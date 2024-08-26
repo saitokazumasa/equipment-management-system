@@ -1,45 +1,64 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.w3.org/1999/html">
-<th:block th:replace="layout :: head('アカウント登録')"/>
-<body>
+<th:block th:include="layout :: head(アカウント登録)"/>
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/account/registration.css">
+</head>
 
-<th:block th:replace="layout :: header"/>
+<body>
+<th:block th:replace="layout :: header(false)"/>
 
 <main class="w-2/5 mx-auto">
-    <div class="w-full flex justify-center my-10 ">
-        <h1 class="w-11/12 py-1.5 text-center text-4xl font-bold border-b-2 border-primary">アカウント登録</h1>
-    </div>
+    <h1 class="title">アカウント登録</h1>
 
     <form th:action="@{/account/registration}" method="post">
         <div th:object="${registerAccount}">
-            <label for="name">名前</label>
-            <input type="text" id="name" th:field="*{name}">
-            <p th:errors="*{name}"></p>
+            <div class="form-content">
+                <label for="name" class="form-label">名前</label>
+                <input class="form-input" type="text" id="name" th:field="*{name}" placeholder="名前" aria-label
+                       autofocus>
+                <p class="form-error" th:errors="*{name}"></p>
+            </div>
 
-            <label for="mail">メールアドレス</label>
-            <input type="text" id="mail" th:field="*{mail}">
-            <p th:errors="*{mail}"></p>
+            <div class="form-content">
+                <label for="mail" class="form-label">メールアドレス</label>
+                <input class="form-input" type="text" id="mail" th:field="*{mail}" placeholder="メールアドレス"
+                       aria-label>
+                <p class="form-error" th:errors="*{mail}"></p>
+            </div>
 
-            <label for="category">区分</label>
-            <select id="category" th:field="*{category}">
-                <option th:each="accountCategory : ${accountCategoryList}"
-                        th:text="${accountCategory.text}"
-                        th:value="${accountCategory}">テキスト</option>
-            </select>
-            <p th:errors="*{category}"></p>
+            <div class="form-content">
+                <label for="category" class="form-label">区分</label>
+                <select class="form-input" id="category" th:field="*{category}">
+                    <option th:each="accountCategory : ${accountCategoryList}"
+                            th:text="${accountCategory.text}"
+                            th:value="${accountCategory}">テキスト
+                    </option>
+                </select>
+                <p class="form-error" th:errors="*{category}"></p>
+            </div>
         </div>
-        <button type="submit" name="add">追加</button>
+        <button type="submit" name="add" class="add-button">追加</button>
 
         <div th:each="value, status: ${registerAccountList.values}" th:object="${registerAccountList}">
-            <p th:text="${value.name}"></p>
-            <p th:text="${value.mail}"></p>
-            <p th:text="${value.category.text}"></p>
+            <div class="list-content">
+                <div class="list-top">
+                    <div class="list-top-row">
+                        <span th:text="${value.mail}">mail</span>
+                        <span>&nbsp;</span>
+                        <span th:text="${value.category.text}">category</span>
+                    </div>
+                    <button type="submit" name="remove" class="delete-button" th:value="${status.index}">削除</button>
+                </div>
+
+                <p class="list-title" th:text="${value.name}">name</p>
+            </div>
+
             <input type="text" th:field="*{values[__${status.index}__].name}" hidden aria-label>
             <input type="text" th:field="*{values[__${status.index}__].mail}" hidden aria-label>
             <input type="text" th:field="*{values[__${status.index}__].category}" hidden aria-label>
-            <button type="submit" name="remove" th:value="${status.index}">×</button>
         </div>
-        <button type="submit" name="confirm">確認</button>
+        <button type="submit" class="submit-button" name="confirm">確認</button>
     </form>
 </main>
 
