@@ -1,6 +1,7 @@
 package jp.ac.morijyobi.equipmentmanagementsystem.bean.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CheckoutIdList {
-    @NotBlank
+    @NotEmpty
     private List<Integer> values;
 
     public static CheckoutIdList empty() {

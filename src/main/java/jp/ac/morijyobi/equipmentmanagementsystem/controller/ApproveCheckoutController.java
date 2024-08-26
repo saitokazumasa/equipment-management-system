@@ -9,6 +9,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,25 +61,17 @@ public class ApproveCheckoutController {
     }
 
     @PostMapping(value = "", params = "approve")
-    public String approve(@RequestParam final String ids,
+    public String approve(@Validated final CheckoutIdList checkoutIdList,
                           @AuthenticationPrincipal final UserDetails userDetails) {
         final Account account = getAccountService.executeByMail(userDetails.getUsername());
 
-
-        final String idsStr = ids.substring(1, ids.length() - 1);
-        final String idsStr2 = idsStr.replaceAll(" ", "");
-        final List<Integer> idsList = Stream.of(idsStr2.split(",")).map(Integer::parseInt).toList();
-
-        // 申請を承認
         try {
-            for (Integer id : idsList) {
-                approveCheckoutService.execute(id, account.getId());
-            }
-        } catch (Exception e) {
+            approveCheckoutService.execute(checkoutIdList, account.getMail());
+            return "redirect:/checkout/approval/success";
+        } catch (final Exception e) {
+            System.out.println(e);
             return "redirect:/checkout/approval/failed";
         }
-
-        return "redirect:/checkout/approval/success";
     }
 
     @PostMapping(value = "", params = "cancel")
