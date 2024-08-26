@@ -15,7 +15,8 @@
         <div th:object="${registerEquipment}">
             <div class="form-content">
                 <label for="name" class="form-label">品名</label>
-                <input type="text" id="name" class="form-input" th:field="*{name}" placeholder="品名" required autofocus>
+                <input type="text" id="name" class="form-input" th:field="*{name}" placeholder="品名" required
+                       autofocus>
                 <p th:errors="*{name}"></p>
             </div>
 
@@ -55,7 +56,8 @@
                 <div class="form-content lending-period-form">
                     <label for="lendingPeriod" class="form-label">貸出期間</label>
                     <div class="lending-period-group">
-                        <input type="number" id="lendingPeriod" class="form-input" th:field="*{lendingPeriod}" min="1" disabled>
+                        <input type="number" id="lendingPeriod" class="form-input" th:field="*{lendingPeriod}" min="1"
+                               disabled>
                         <span>&nbsp;日</span>
                     </div>
                     <p th:errors="*{lendingPeriod}"></p>
@@ -64,7 +66,8 @@
                 <div class="form-content notification-form">
                     <label for="notificationDate" class="form-label">通知日</label>
                     <div class="notification-date-group">
-                        <input type="number" id="notificationDate" class="form-input" th:field="*{notificationDate}" min="1" disabled>
+                        <input type="number" id="notificationDate" class="form-input" th:field="*{notificationDate}"
+                               min="1" disabled>
                         <span>&nbsp;日前</span>
                     </div>
                     <p th:errors="*{notificationDate}"></p>
@@ -80,12 +83,41 @@
         <button type="submit" id="addButton" name="add" class="add-button">追加</button>
 
         <div th:each="value, status: ${registerEquipmentList.values}" th:object="${registerEquipmentList}">
-            <p th:text="${value.name}"></p>
-            <p th:text="${value.category}"></p>
-            <p th:text="${value.storageLocation}"></p>
-            <p th:if="${value.hasLendingPeriod}" th:text="${value.lendingPeriod}"></p>
-            <p th:if="${value.hasNotificationDate}" th:text="${value.notificationDate}"></p>
-            <p th:text="${value.remark}"></p>
+            <div class="list-content">
+                <div class="list-top">
+                    <div class="list-top-row">
+                        <span th:text="${value.category}">category</span>
+                        <span>&nbsp;</span>
+                        <span th:text="${value.storageLocation}">storageLocation</span>
+                    </div>
+                    <button type="submit" name="remove" class="delete-button" th:value="${status.index}">削除</button>
+                </div>
+
+                <p class="list-title" th:text="${value.name}">name</p>
+
+                <div class="list-bottom">
+                    <div class="list-bottom-row">
+                        <div class="list-bottom-box">
+                            <p>貸出期間</p>
+                            <div>
+                                <span th:text="${value.lendingPeriod}"></span>
+                                <span>&nbsp;日</span>
+                            </div>
+                        </div>
+                        <div class="list-bottom-box">
+                            <p>通知日</p>
+                            <div>
+                                <span th:text="${value.notificationDate}"></span>
+                                <span>&nbsp;日前</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p>備考</p>
+                    <p th:text="${value.remark}">remark</p>
+                </div>
+            </div>
+
             <input type="text" th:field="*{values[__${status.index}__].name}" hidden aria-label>
             <input type="text" th:field="*{values[__${status.index}__].category}" hidden aria-label>
             <input type="text" th:field="*{values[__${status.index}__].storageLocation}" hidden aria-label>
@@ -94,7 +126,6 @@
             <input type="checkbox" th:field="*{values[__${status.index}__].hasNotificationDate}" hidden aria-label>
             <input type="number" th:field="*{values[__${status.index}__].notificationDate}" hidden aria-label>
             <input type="text" th:field="*{values[__${status.index}__].remark}" hidden aria-label>
-            <button type="submit" name="remove" th:value="${status.index}">×</button>
         </div>
         <button type="submit" name="confirm" class="submit-button">確認</button>
     </form>
