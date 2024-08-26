@@ -1,77 +1,85 @@
 package jp.ac.morijyobi.equipmentmanagementsystem.controller;
 
-import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.CheckoutIdList;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Account;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.CheckoutApplication;
+import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.CheckoutApproval;
 import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Equipment;
 import jp.ac.morijyobi.equipmentmanagementsystem.service.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/checkout/approval")
 public class ApproveCheckoutController {
+    private final IGetCheckoutApprovalService getCheckoutApprovalService;
     private final IGetCheckoutService getCheckoutService;
-    private final IListCheckoutService listCheckoutService;
-    private final IListEquipmentService listEquipmentService;
     private final IGetAccountService getAccountService;
+    private final IGetEquipmentService getEquipmentService;
     private final IApproveCheckoutService approveCheckoutService;
 
-    public ApproveCheckoutController(IGetCheckoutService getCheckoutService, IListCheckoutService listCheckoutService, IListEquipmentService listEquipmentService, IGetAccountService getAccountService, IApproveCheckoutService approveCheckoutService) {
+    private static class AttributeName {
+        public static final String APPLICATOR_NAME = "applicatorName";
+        public static final String EQUIPMENT = "equipment";
+        public static final String CHECKOUT_ID = "checkoutId";
+    }
+
+    public ApproveCheckoutController(
+            final IGetCheckoutApprovalService getCheckoutApprovalService,
+            final IGetCheckoutService getCheckoutService,
+            final IGetAccountService getAccountService,
+            final IGetEquipmentService getEquipmentService,
+            final IApproveCheckoutService approveCheckoutService
+    ) {
+        this.getCheckoutApprovalService = getCheckoutApprovalService;
         this.getCheckoutService = getCheckoutService;
-        this.listCheckoutService = listCheckoutService;
-        this.listEquipmentService = listEquipmentService;
         this.getAccountService = getAccountService;
+        this.getEquipmentService = getEquipmentService;
         this.approveCheckoutService = approveCheckoutService;
     }
 
     @RequestMapping()
-    public String get(@RequestParam final List<Integer> checkoutId, final Model model) {
-        final CheckoutApplication checkoutApplication = getCheckoutService.execute(checkoutId.get(0));
-        final List<CheckoutApplication> checkoutApplications = listCheckoutService.execute(checkoutId);
+    public String get(final @RequestParam int checkoutId, final Model model) {
+//        final CheckoutApproval checkoutApproval = getCheckoutApprovalService.executeByCheckoutApplicationId(checkoutId);
+        final CheckoutApplication checkoutApplication =  getCheckoutService.execute(checkoutId);
+        final Account applicator = getAccountService.executeById(checkoutApplication.getAccountId());
+        final Equipment equipment = getEquipmentService.executeAvailableForLoanById(checkoutApplication.getEquipmentId());
 
-        final List<Integer> equipmentIds = checkoutApplications.stream().map(CheckoutApplication::getEquipmentId).toList();
-        final List<Integer> checkoutIds = checkoutApplications.stream().map(CheckoutApplication::getId).toList();
+//        if (checkoutApproval != null) return "redirect:/checkout/application";
+        if (equipment == null) return "redirect:/checkout/application";
 
-        final Account account = getAccountService.executeById(checkoutApplication.getAccountId());
-        final List<Equipment> equipments = listEquipmentService.searchByIds(equipmentIds);
-        final CheckoutIdList checkoutIdList = new CheckoutIdList(checkoutIds);
-
-        model.addAttribute("equipments", equipments);
-        model.addAttribute("checkoutIdList", checkoutIdList);
-        model.addAttribute("account", account);
-
+        model.addAttribute(AttributeName.APPLICATOR_NAME, applicator.getName());
+        model.addAttribute(AttributeName.EQUIPMENT, equipment);
+        model.addAttribute(AttributeName.CHECKOUT_ID, checkoutId);
         return "checkout/approval";
     }
 
-    @PostMapping(value = "", params = "approve")
-    public String approve(@Validated final CheckoutIdList checkoutIdList,
-                          @AuthenticationPrincipal final UserDetails userDetails) {
-        final Account account = getAccountService.executeByMail(userDetails.getUsername());
+    @PostMapping(params = "submit")
+    public String submit(
+            final @RequestParam int checkoutId,
+            final @AuthenticationPrincipal UserDetails userDetails
+    ) {
+        final String mail = userDetails.getUsername();
+        final CheckoutApplication checkoutApplication =  getCheckoutService.execute(checkoutId);
 
         try {
-            approveCheckoutService.execute(checkoutIdList, account.getMail());
+            approveCheckoutService.execute(mail, checkoutApplication);
             return "redirect:/checkout/approval/success";
         } catch (final Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
             return "redirect:/checkout/approval/failed";
         }
     }
 
-    @PostMapping(value = "", params = "cancel")
+    @PostMapping(params = "cancel")
     public String cancel() {
         return "redirect:/checkout/application";
     }
-
 
     @GetMapping("/success")
     public String success() {

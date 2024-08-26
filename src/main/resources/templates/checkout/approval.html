@@ -1,28 +1,42 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.w3.org/1999/html">
+<th:block th:include="layout :: head(貸出申請承認)"/>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/css/checkout/approval.css">
 </head>
+
 <body>
-<h2>貸出申請承認</h2>
-以下の申請を承認します。
-<div th:object="${account}">
-    申請者:<span th:text="*{name}"></span>
-</div>
+<th:block th:replace="layout :: header(false)"/>
 
-<div th:each="equip:${equipments}">
-    ID:<span th:text="*{equip.getId()}"></span>
-    備品名:<span th:text="*{equip.getName()}"></span>
-</div>
+<main>
+    <h1 class="title">貸出申請承認</h1>
 
-<form th:action="@{/checkout/approval}" method="post">
-    <div th:each="value, status: ${checkoutIdList.getValues()}" th:object="${checkoutIdList}">
-        <input type="text" th:field="*{values[__${status.index}__]}" hidden>
+    <div class="description">
+        <p>以下の内容を承認します。</p>
     </div>
 
-    <button type="submit" name="approve">承認</button>
-    <button type="submit" name="cancel">却下</button>
-</form>
+    <form th:action="@{/checkout/approval}" method="post">
+        <div class="applicator-box">
+            <span>申請者&nbsp;</span>
+            <span th:text="${applicatorName}">applicatorName</span>
+        </div>
+
+        <div class="list-content">
+            <div class="list-top">
+                <p th:text="${equipment.id}">id</p>
+            </div>
+
+            <p th:text="${equipment.name}" class="equipment-name">name</p>
+        </div>
+
+        <input type="text" name="checkoutId" th:value="${checkoutId}" aria-label hidden>
+
+        <button type="submit" name="submit" class="submit-button">承認</button>
+        <button type="submit" name="cancel" class="cancel-button">キャンセル</button>
+    </form>
+
+</main>
+
 </body>
 </html>
+<th:block th:replace="layout :: scripts"/>

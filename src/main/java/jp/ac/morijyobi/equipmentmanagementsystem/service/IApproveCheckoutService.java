@@ -1,9 +1,7 @@
 package jp.ac.morijyobi.equipmentmanagementsystem.service;
 
-import jp.ac.morijyobi.equipmentmanagementsystem.bean.dto.CheckoutIdList;
-
-import java.util.List;
+import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.CheckoutApplication;
 
 public interface IApproveCheckoutService {
-    public void execute(final CheckoutIdList checkoutIdList, final String mail);
+    public void execute(final String mail, final CheckoutApplication checkoutApplication ) throws Exception;
 }
