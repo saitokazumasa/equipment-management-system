@@ -113,6 +113,7 @@ public class RegisterEquipmentController extends BaseController {
     public String submit(
             final @Validated RegisterEquipmentList registerEquipmentList,
             final BindingResult bindingResult,
+            final RedirectAttributes redirectAttributes,
             final Model model
     ) {
         if (bindingResult.hasErrors()) {
@@ -124,10 +125,12 @@ public class RegisterEquipmentController extends BaseController {
 
         try {
             registerEquipmentService.execute(registerEquipmentList);
-            return "redirect:/equipment/registration/success";
+            redirectAttributes.addFlashAttribute("successMessage", "登録しました");
+            return "redirect:/equipment/list";
         } catch (final Exception e) {
             System.out.println(e.getMessage());
-            return "redirect:/equipment/registration/failed";
+            redirectAttributes.addFlashAttribute("errorMessage", "登録に失敗しました");
+            return "redirect:/equipment/list";
         }
     }
 
@@ -139,15 +142,5 @@ public class RegisterEquipmentController extends BaseController {
     ) {
         redirectAttributes.addFlashAttribute(AttributeName.REGISTER_EQUIPMENT_LIST, registerEquipmentList);
         return "redirect:/equipment/registration";
-    }
-
-    @GetMapping("/success")
-    public String success() {
-        return "equipment/success_registration";
-    }
-
-    @GetMapping("/failed")
-    public String failed() {
-        return "equipment/failed_registration";
     }
 }

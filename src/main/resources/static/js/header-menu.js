@@ -1,4 +1,4 @@
-const menuElement = document.getElementById('menu');
+const headerMenuElement = document.getElementById('header-menu');
 const hamburgerMenuElement = document.getElementById('hamburger-menu');
 const topHamburgerLineElement = document.getElementById('top-hamburger-line');
 const middleHamburgerLineElement = document.getElementById('middle-hamburger-line');
@@ -234,7 +234,7 @@ class Container {
     // グローバル変数に依存するのは良くないが、
     // Constructor の引数を多くするとコンテナのメリットが減るため、ここでは許容する
     constructor() {
-        this.menu = new Menu(menuElement);
+        this.menu = new Menu(headerMenuElement);
 
         const topHamburgerLine = new TopHamburgerLine(
             topHamburgerLineElement,
@@ -264,9 +264,9 @@ function onClick() {
 }
 
 function onLoad() {
-    if (menuElement === null) return;
+    if (headerMenuElement === null) return;
 
-    container = new Container(menuElement);
+    container = new Container(headerMenuElement);
     hamburgerMenuElement.addEventListener('click', onClick);
     window.addEventListener('resize', onResize);
 }
@@ -276,7 +276,7 @@ function onResize() {
     clearTimeout(timeoutID);
     // timeout: 100 は適当
     timeoutID = setTimeout(() => {
-        container = new Container(menuElement);
+        container = new Container(headerMenuElement);
     }, 100);
 }
 

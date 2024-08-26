@@ -16,8 +16,7 @@ public class LoginController {
 
     @GetMapping(params = "error")
     public String error(final Model model) {
-        final var errorMessage = new ErrorMessage("ログインに失敗しました。");
-        model.addAttribute("message", errorMessage);
+        model.addAttribute("errorMessage", "ログインに失敗しました");
         return "login";
     }
 }

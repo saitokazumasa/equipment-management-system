@@ -1,37 +1,57 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.w3.org/1999/html">
-<th:block th:replace="layout :: head('返却申請')"/>
+<th:block th:include="layout :: head(返却申請)"/>
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/return/application.css">
+</head>
+
 <body>
+<th:block th:replace="layout :: header(true)"/>
 
-<th:block th:replace="layout :: header"/>
-
-<main class="w-2/5 mx-auto">
-    <div class="w-full flex justify-center my-10 ">
-        <h1 class="w-11/12 py-1.5 text-center text-4xl font-bold border-b-2 border-primary">返す</h1>
-    </div>
+<main>
+    <h1 class="title">返す</h1>
 
     <form th:action="@{/return/application}" method="post">
         <div th:object="${returnEquipment}">
-            <div>
-                <input type="number" th:field="*{equipmentId}" aria-label>
-                <p th:errors="*{equipmentId}"></p>
-                <p th:if="${errorMessage}" th:text="${errorMessage}"></p>
+            <div class="form-content">
+                <input class="form-input" type="number" th:field="*{equipmentId}"
+                       placeholder="バーコードをスキャン、またはIDを入力" aria-label autofocus>
+                <p class="form-error" th:errors="*{equipmentId}"></p>
+                <p class="form-error" th:if="${errorMessage}" th:text="${errorMessage}"></p>
             </div>
 
-            <div>
-                <input type="checkbox" id="hasDamaged" th:field="*{hasDamaged}" aria-label>
-                <label for="hasDamaged">汚損/破損あり</label>
+            <div class="form-content has-damaged-content">
+                <input type="checkbox" class="form-checkbox" id="hasDamaged" th:field="*{hasDamaged}">
+                <label for="hasDamaged" class="form-label">汚損/破損あり</label>
             </div>
 
-            <div>
-                <textarea type="text" th:field="*{damagedReason}" aria-label></textarea>
+            <div class="form-content">
+                <textarea th:field="*{damagedReason}" id="damagedReason" class="form-textarea"
+                          placeholder="汚損/破損事由を入力" disabled aria-label>
+                </textarea>
             </div>
         </div>
-        <button type="submit" name="add">追加</button>
+        <button type="submit" name="add" class="add-button">追加</button>
 
         <div th:each="value, status: ${returnEquipmentList.values}" th:object="${returnEquipmentList}">
-            <p th:text="${value.equipment.name}"></p>
+            <div class="list-content">
+                <div class="list-top">
+                    <p th:text="${value.equipment.id}">id</p>
+                    <button type="submit" name="remove" class="delete-button" th:value="${status.index}">削除</button>
+                </div>
+
+                <p th:text="${value.equipment.name}">name</p>
+
+                <div th:if="${value.hasDamaged}" class="list-bottom">
+                    <p class="has-damaged-label">汚損/破損あり</p>
+                    <p th:text="${value.damagedReason}">damagedReason</p>
+                </div>
+            </div>
+
             <input type="text" th:field="*{values[__${status.index}__].equipmentId}" hidden aria-label>
+            <input type="checkbox" th:field="*{values[__${status.index}__].hasDamaged}" hidden aria-label>
+            <input type="text" th:field="*{values[__${status.index}__].damagedReason}" hidden aria-label>
+
             <input type="text" th:field="*{values[__${status.index}__].equipment.id}" hidden aria-label>
             <input type="text" th:field="*{values[__${status.index}__].equipment.name}" hidden aria-label>
             <input type="text" th:field="*{values[__${status.index}__].equipment.categoryId}" hidden aria-label>
@@ -41,14 +61,12 @@
             <input type="text" th:field="*{values[__${status.index}__].equipment.notificationDate}" hidden aria-label>
             <input type="text" th:field="*{values[__${status.index}__].equipment.remark}" hidden aria-label>
             <input type="text" th:field="*{values[__${status.index}__].equipment.createdAt}" hidden aria-label>
-            <input type="checkbox" th:field="*{values[__${status.index}__].hasDamaged}" hidden aria-label>
-            <input type="text" th:field="*{values[__${status.index}__].damagedReason}" hidden aria-label>
-            <button type="submit" name="remove" th:value="${status.index}">×</button>
         </div>
-        <button type="submit" name="submit">申請</button>
+        <button type="submit" name="submit" class="submit-button">申請</button>
     </form>
 </main>
 
 </body>
 </html>
 <th:block th:replace="layout :: scripts"/>
+<script src="/js/return/application.js"></script>
