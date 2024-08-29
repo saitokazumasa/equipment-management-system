@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.w3.org/1999/html">
+<th:block th:include="layout :: head(貸出申請承認)"/>
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/checkout/success_approval.css">
+</head>
+
+<body>
+<th:block th:replace="layout :: header(false)"/>
+
+<main>
+    <h1 class="title">貸出申請承認</h1>
+
+    <div class="description">
+        <p>承認しました。</p>
+    </div>
+
+    <div class="ok-button">
+        <a th:href="@{/checkout/application}" class="ok-link">確認</a>
+    </div>
+</main>
+
+</body>
+</html>
+<th:block th:replace="layout :: scripts"/>

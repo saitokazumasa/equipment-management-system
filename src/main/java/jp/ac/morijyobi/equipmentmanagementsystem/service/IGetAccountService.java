@@ -4,4 +4,6 @@ import jp.ac.morijyobi.equipmentmanagementsystem.bean.entity.Account;
 
 public interface IGetAccountService {
     public Account executeByMail(final String mail);
+
+    public Account executeById(final Integer accountId);
 }

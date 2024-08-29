@@ -28,6 +28,9 @@ public class WebSecurityConfiguration {
                         .requestMatchers("/equipment/registration/**").hasAnyRole(
                                 AccountCategory.EQUIPMENT_MANAGER.toString(),
                                 AccountCategory.SYSTEM_MANAGER.toString())
+                        .requestMatchers("/equipment/edit/**").hasAnyRole(
+                                AccountCategory.EQUIPMENT_MANAGER.toString(),
+                                AccountCategory.SYSTEM_MANAGER.toString())
                         .requestMatchers("/account/**").hasRole(AccountCategory.SYSTEM_MANAGER.toString())
                         .requestMatchers("/student/**").hasRole(AccountCategory.SYSTEM_MANAGER.toString())
 

@@ -8,4 +8,5 @@ import java.util.List;
 public interface IListEquipmentService {
     public List<Equipment> execute();
     public List<Equipment> search(final EquipmentSearchCriteria equipmentSearchCriteria);
+    public List<Equipment> searchByIds(final List<Integer> equipmentIds);
 }

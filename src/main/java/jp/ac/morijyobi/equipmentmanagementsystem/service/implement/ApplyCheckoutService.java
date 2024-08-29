@@ -51,10 +51,6 @@ public class ApplyCheckoutService implements IApplyCheckoutService {
                     LocalDateTime.now()
             );
             this.checkoutApplicationsMapper.insert(value);
-
-            // TODO: 貸出承認時に備品情報の貸出状況を更新する
-//            final int result = this.equipmentsMapper.updateState(equipment.getId(), EquipmentState.ON_LOAN);
-//            if (result != 1) throw new Exception("更新に失敗しました");
         }
     }
 

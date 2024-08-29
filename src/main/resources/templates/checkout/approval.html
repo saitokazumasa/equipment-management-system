@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.w3.org/1999/html">
+<th:block th:include="layout :: head(貸出申請承認)"/>
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/checkout/approval.css">
+</head>
+
+<body>
+<th:block th:replace="layout :: header(false)"/>
+
+<main>
+    <h1 class="title">貸出申請承認</h1>
+
+    <div class="description">
+        <p>以下の内容を承認します。</p>
+    </div>
+
+    <form th:action="@{/checkout/approval}" method="post">
+        <div class="applicator-box">
+            <span>申請者&nbsp;</span>
+            <span th:text="${applicatorName}">applicatorName</span>
+        </div>
+
+        <div class="list-content">
+            <div class="list-top">
+                <p th:text="${equipment.id}">id</p>
+            </div>
+
+            <p th:text="${equipment.name}" class="equipment-name">name</p>
+        </div>
+
+        <input type="text" name="checkoutId" th:value="${checkoutId}" aria-label hidden>
+
+        <button type="submit" name="submit" class="submit-button">承認</button>
+        <button type="submit" name="cancel" class="cancel-button">キャンセル</button>
+    </form>
+
+</main>
+
+</body>
+</html>
+<th:block th:replace="layout :: scripts"/>

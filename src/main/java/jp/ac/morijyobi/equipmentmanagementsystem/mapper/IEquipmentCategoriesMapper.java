@@ -19,4 +19,7 @@ public interface IEquipmentCategoriesMapper {
 
     @Select("SELECT * FROM equipment_categories ORDER BY id")
     public List<EquipmentCategory> selectAll();
+
+    @Select("SELECT * FROM equipment_categories WHERE id = #{id}")
+    public EquipmentCategory selectById(final int id);
 }

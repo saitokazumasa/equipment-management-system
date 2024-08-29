@@ -19,4 +19,7 @@ public interface IStorageLocationsMapper {
 
     @Select("SELECT * FROM storage_locations ORDER BY id")
     public List<StorageLocation> selectAll();
+
+    @Select("SELECT * FROM storage_locations WHERE id = #{id}")
+    public StorageLocation selectById(final int id);
 }

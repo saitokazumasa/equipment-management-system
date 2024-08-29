@@ -29,4 +29,9 @@ public class ListEquipmentService implements IListEquipmentService {
                 equipmentSearchCriteria.getEquipmentStateList()
         );
     }
+
+    @Override
+    public List<Equipment> searchByIds(final List<Integer> equipmentIds) {
+        return this.equipmentsMapper.selectByIds(equipmentIds);
+    }
 }
